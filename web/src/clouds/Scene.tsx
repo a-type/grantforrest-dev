@@ -16,7 +16,7 @@ const lightContext = {
   ambientLightColor: new Color(ambientLightColor),
 };
 
-const windVelocity = new Vector3(0.03, 0, 0);
+const windVelocity = new Vector3(0.01, 0, 0);
 
 const cameraPosition = [0, 34, 20];
 
@@ -25,10 +25,7 @@ const textPosition = new Vector3(0, 0, -10);
 export const Scene: React.FC<SceneProps> = ({}) => {
   return (
     <LightContext.Provider value={lightContext}>
-      <Canvas
-        shadowMap={{ type: PCFSoftShadowMap }}
-        style={{ backgroundColor: skyColor }}
-      >
+      <Canvas shadowMap={{ type: PCFSoftShadowMap }} style={{ backgroundColor: skyColor }}>
         <React.Suspense fallback={null}>
           <Camera position={cameraPosition} />
           <Sun />
