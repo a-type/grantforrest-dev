@@ -6,7 +6,7 @@ import {
   filterOutDocsPublishedInTheFuture,
 } from '../lib/helpers';
 import BlogPostPreviewGrid from '../components/BlogPostPreviewGrid';
-import GraphQLErrorList from '../components/GraphqlErrorList';
+import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
 import { Container, makeStyles, NoSsr } from '@material-ui/core';

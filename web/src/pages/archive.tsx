@@ -2,7 +2,7 @@ import * as React from 'react';
 import { graphql } from 'gatsby';
 import { mapEdgesToNodes } from '../lib/helpers';
 import BlogPostPreviewGrid from '../components/BlogPostPreviewGrid';
-import GraphQLErrorList from '../components/GraphqlErrorList';
+import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
 import { Typography, Container } from '@material-ui/core';

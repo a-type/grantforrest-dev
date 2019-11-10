@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
-import GraphQLErrorList from '../components/GraphqlErrorList';
+import GraphQLErrorList from '../components/GraphQLErrorList';
 import BlogPost from '../components/BlogPost';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
