@@ -49,7 +49,7 @@
     "gatsby-image": "^2.0.41",
     "gatsby-plugin-material-ui": "^2.1.6",
     "gatsby-plugin-typescript": "^2.1.15",
-    "react-three-fiber": "3.0.8",
+    "react-three-fiber": "3.0.7",
     "react-use-gesture": "^6.0.14",
     "seedrandom": "^3.0.5",
     "three": "^0.110.0",
