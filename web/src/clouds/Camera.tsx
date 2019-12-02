@@ -9,27 +9,20 @@ export type CameraProps = {
   movementFactor?: number;
 };
 
-export const Camera: React.FC<CameraProps> = ({
-  position,
-  movementFactor = 25,
-}) => {
+export const Camera: React.FC<CameraProps> = ({ position, movementFactor = 25 }) => {
   const camera = React.useRef<PerspectiveCamera>();
   const { size, setDefaultCamera } = useThree();
-  React.useEffect(() => void setDefaultCamera(camera.current), [
-    setDefaultCamera,
-  ]);
+  React.useEffect(() => void setDefaultCamera(camera.current), [setDefaultCamera]);
   useFrame(() => {
     // camera.current.updateMatrixWorld();
-    camera.current.lookAt(new Vector3(0, 2, 0));
+    camera.current.lookAt(new Vector3(0, camera.current.position.y, 0));
   });
 
   const bind = useScroll(
     ({ xy }) => {
       const scrollHeight = document.body.scrollHeight;
-      camera.current.position.y =
-        position[1] - (movementFactor * xy[1]) / scrollHeight;
-      camera.current.position.z =
-        position[2] + (movementFactor * 2 * xy[1]) / scrollHeight;
+      camera.current.position.y = position[1] - (movementFactor * xy[1]) / scrollHeight;
+      camera.current.position.z = position[2] + (movementFactor * 2 * xy[1]) / scrollHeight;
     },
     { domTarget: window },
   );
@@ -42,7 +35,7 @@ export const Camera: React.FC<CameraProps> = ({
       <a.perspectiveCamera
         ref={camera}
         aspect={size.width / size.height}
-        fov={55}
+        fov={70}
         position={position}
         // onUpdate={(self: PerspectiveCamera) => {
         //   self.updateProjectionMatrix();

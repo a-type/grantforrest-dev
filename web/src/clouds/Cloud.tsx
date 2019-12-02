@@ -25,28 +25,25 @@ export const Cloud: React.FC<CloudProps> = ({
   onExitBoundary,
   id,
   initialPosition,
-  size = 480,
+  size = 512,
   resolution: providedResolution = 64,
   boundarySize,
 }) => {
   const ref = React.useRef<Group>();
   const rotation = React.useRef(Math.random() * Math.PI * 2);
 
-  const [lodGeometries, setLodGeometries] = React.useState<
-    Map<number, GeometryState>
-  >(new Map());
+  const [lodGeometries, setLodGeometries] = React.useState<Map<number, GeometryState>>(new Map());
 
   const generateLod = React.useCallback(
     () =>
-      generateVoxelGeometries({ resolution: providedResolution }).then(
-        ({ geometry: geo }) =>
-          setLodGeometries(existing => {
-            existing.set(providedResolution, {
-              resolution: providedResolution,
-              geometry: geo,
-            });
-            return new Map(existing);
-          }),
+      generateVoxelGeometries({ resolution: providedResolution }).then(({ geometry: geo }) =>
+        setLodGeometries(existing => {
+          existing.set(providedResolution, {
+            resolution: providedResolution,
+            geometry: geo,
+          });
+          return new Map(existing);
+        }),
       ),
     [setLodGeometries, providedResolution],
   );
@@ -56,11 +53,7 @@ export const Cloud: React.FC<CloudProps> = ({
     if (!ref.current || !lodGeometries.size) return;
 
     ref.current.position.add(velocity);
-    const planePosition = new Vector3(
-      ref.current.position.x,
-      0,
-      ref.current.position.z,
-    );
+    const planePosition = new Vector3(ref.current.position.x, 0, ref.current.position.z);
     if (planePosition.x > boundarySize / 2 && !isExiting.current) {
       isExiting.current = true;
       onExitBoundary && onExitBoundary(id);
@@ -88,11 +81,11 @@ export const Cloud: React.FC<CloudProps> = ({
     return null;
   }
 
-  const { geometry, resolution } = lodGeometries.get(Array.from(
-    lodGeometries.keys(),
-  )
-    .sort()
-    .pop() as number) as GeometryState;
+  const { geometry, resolution } = lodGeometries.get(
+    Array.from(lodGeometries.keys())
+      .sort()
+      .pop() as number,
+  ) as GeometryState;
 
   const scale = size / resolution;
 
@@ -113,11 +106,7 @@ export const Cloud: React.FC<CloudProps> = ({
         scale={[scale, scale, scale]}
         rotation={[0, rotation.current, 0]}
       >
-        <mesh
-          geometry={geometry}
-          position={[0, 2 * (480 / size), 0]}
-          castShadow
-        >
+        <mesh geometry={geometry} position={[0, 2 * (480 / size), 0]} castShadow>
           <CloudShaderMaterial attach="material" />
         </mesh>
       </a.group>

@@ -19,9 +19,9 @@ const lightContext = {
 
 const windVelocity = new Vector3(0.01, 0, 0);
 
-const cameraPosition = [0, 34, 20];
+const cameraPosition = [0, 10, 8];
 
-const textPosition = new Vector3(0, 0, -10);
+const textPosition = new Vector3(0, 12, -10);
 
 export const Scene: React.FC<SceneProps> = ({}) => {
   return (

@@ -11,6 +11,7 @@ import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
 import { Container, makeStyles, NoSsr } from '@material-ui/core';
 import { Scene } from '../clouds/Scene';
+import Navigation from '../components/Navigation';
 
 export const query = graphql`
   fragment SanityImage on SanityMainImage {
@@ -62,6 +63,23 @@ export const query = graphql`
         }
       }
     }
+    projects: allSanityProject(
+      limit: 2
+      sort: { fields: [publishedAt], order: DESC }
+      filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
+    ) {
+      edges {
+        node {
+          id
+          publishedAt
+          title
+          _rawExcerpt
+          slug {
+            current
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -76,6 +94,16 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     marginTop: '50vh',
+  },
+  cover: {
+    height: '100%',
+    flex: 1,
+    position: 'relative',
+  },
+  navigation: {
+    position: 'absolute',
+    bottom: theme.spacing(3),
+    left: theme.spacing(3),
   },
 }));
 
@@ -97,6 +125,11 @@ const IndexPage = (props: any) => {
         .filter(filterOutDocsWithoutSlugs)
         .filter(filterOutDocsPublishedInTheFuture)
     : [];
+  const projectNodes = (data || {}).projects
+    ? mapEdgesToNodes(data.projects)
+        .filter(filterOutDocsWithoutSlugs)
+        .filter(filterOutDocsPublishedInTheFuture)
+    : [];
 
   if (!site) {
     throw new Error(
@@ -112,7 +145,10 @@ const IndexPage = (props: any) => {
           <Scene />
         </div>
       </NoSsr>
-      <Container className={classes.container}>
+      <div className={classes.cover}>
+        <Navigation firstTwoPortfolioProjects={projectNodes} className={classes.navigation} />
+      </div>
+      {/* <Container className={classes.container}>
         <h1 hidden>Welcome to {site.title}</h1>
         {postNodes && (
           <BlogPostPreviewGrid
@@ -121,7 +157,7 @@ const IndexPage = (props: any) => {
             browseMoreHref="/archive"
           />
         )}
-      </Container>
+      </Container> */}
     </Layout>
   );
 };

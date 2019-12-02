@@ -6,7 +6,15 @@ import Helmet from 'react-helmet';
 import { withPrefix } from 'gatsby';
 
 const useStyles = makeStyles(theme => ({
+  app: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+  },
   content: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
     minHeight: 'calc(100% - 73px - 120px)',
 
     [theme.breakpoints.up('sm')]: {
@@ -34,7 +42,7 @@ const Layout: React.FC = ({ children }) => {
   const styles = useStyles({});
 
   return (
-    <>
+    <div className={styles.app}>
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <Helmet>
@@ -76,7 +84,7 @@ const Layout: React.FC = ({ children }) => {
           </div>
         </footer>
       </MuiThemeProvider>
-    </>
+    </div>
   );
 };
 

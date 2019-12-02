@@ -48,7 +48,7 @@ async function createBlogPostPages(graphql, actions, reporter) {
     });
 }
 
-async function createPortolioPages(graphql, actions, reporter) {
+async function createPortfolioPages(graphql, actions, reporter) {
   const { createPage } = actions;
   const result = await graphql(`
     {
@@ -89,7 +89,7 @@ async function createPortolioPages(graphql, actions, reporter) {
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   await createBlogPostPages(graphql, actions, reporter);
-  await createPortolioPages(graphql, actions, reporter);
+  await createPortfolioPages(graphql, actions, reporter);
 };
 
 exports.onCreateWebpackConfig = ({ stage, rules, loaders, plugins, actions }) => {

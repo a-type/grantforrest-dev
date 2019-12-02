@@ -7,7 +7,7 @@ export default createContext<{
   pointLightColor: Color;
   ambientLightColor: Color;
 }>({
-  pointLightPosition: new Vector3(0, 100, 0),
+  pointLightPosition: new Vector3(0, 100, -40),
   pointLightColor: new Color(sunColor),
   ambientLightColor: new Color(ambientLightColor),
 });

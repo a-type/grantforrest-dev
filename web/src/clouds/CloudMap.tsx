@@ -18,8 +18,8 @@ export type CloudFieldProps = Omit<
 };
 
 export const CloudMap: React.FC<CloudFieldProps> = ({
-  size = 120,
-  numClouds = 6,
+  size = 60,
+  numClouds = 2,
   ...cloudProps
 }) => {
   const [clouds, setClouds] = React.useState<{ [id: string]: CloudData }>({});
@@ -31,7 +31,7 @@ export const CloudMap: React.FC<CloudFieldProps> = ({
     const firstId = randomId();
     initClouds[firstId] = {
       id: firstId,
-      initialPosition: new Vector3(0, 0, 0),
+      initialPosition: new Vector3(0, 0, -size / 2),
       size: randomSize(),
     };
 
@@ -60,11 +60,7 @@ export const CloudMap: React.FC<CloudFieldProps> = ({
       ))}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[planeSize, planeSize]} attach="geometry" />
-        <CloudShaderMaterial
-          attach="material"
-          baseColor={groundColor}
-          shadeColor1={shadowColor}
-        />
+        <CloudShaderMaterial attach="material" baseColor={groundColor} shadeColor1={shadowColor} />
       </mesh>
     </>
   );
@@ -85,4 +81,4 @@ const randomPosition = (boundarySize: number) =>
     Math.random() * boundarySize - boundarySize / 2,
   );
 
-const randomSize = () => Math.random() * 424 + 380;
+const randomSize = () => Math.random() * 424 + 420;

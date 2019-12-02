@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useLoader, useUpdate } from 'react-three-fiber';
+import { useLoader, useUpdate, useThree } from 'react-three-fiber';
 import { FontLoader, Vector3, Mesh, Color } from 'three';
 import { CloudShaderMaterial } from './CloudShaderMaterial';
 import { useMediaQuery } from '@material-ui/core';
@@ -15,17 +15,14 @@ export type TextProps = {
   position?: Vector3;
 };
 
-export const Text: React.FC<TextProps> = ({
-  children,
-  size = 1,
-  position = new Vector3(),
-}) => {
+export const Text: React.FC<TextProps> = ({ children, size = 1, position = new Vector3() }) => {
   const font = useLoader(FontLoader as any, '/fonts/Roboto Light_Regular.json');
+  const three = useThree();
   const config = React.useMemo(
     () => ({
       font,
-      size: 40,
-      height: 10,
+      size: 24,
+      height: 1,
       curveSegments: 32,
     }),
     [font],
@@ -37,6 +34,9 @@ export const Text: React.FC<TextProps> = ({
       self.geometry.boundingBox.getSize(size);
       self.position.x = -size.x / 2;
       self.position.y = -size.y / 2;
+
+      //self.lookAt(three.camera.position);
+      //self.rotation.y = 0;
     },
     [children],
   );
@@ -45,19 +45,12 @@ export const Text: React.FC<TextProps> = ({
 
   return (
     <group
-      scale={[
-        0.1 * size * (isNarrow ? 0.5 : 1),
-        0.1 * size * (isNarrow ? 0.5 : 1),
-        0.1,
-      ]}
-      rotation={[-Math.PI / 2, 0, 0]}
+      scale={[0.1 * size * (isNarrow ? 0.5 : 1), 0.1 * size * (isNarrow ? 0.5 : 1), 0.1]}
+      rotation={[0, 0, 0]}
       position={position}
     >
       <mesh ref={mesh} receiveShadow>
-        <textGeometry
-          attach="geometry"
-          args={[children, config] as [string, any]}
-        />
+        <textGeometry attach="geometry" args={[children, config] as [string, any]} />
         <CloudShaderMaterial
           attach="material"
           baseColor={color}
