@@ -48,8 +48,48 @@ async function createBlogPostPages(graphql, actions, reporter) {
     });
 }
 
+async function createPortolioPages(graphql, actions, reporter) {
+  const { createPage } = actions;
+  const result = await graphql(`
+    {
+      allSanityProject(filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }) {
+        edges {
+          node {
+            id
+            publishedAt
+            slug {
+              current
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  if (result.errors) throw result.errors;
+
+  const projectEdges = (result.data.allSanityProject || {}).edges || [];
+
+  projectEdges
+    .filter(edge => !isFuture(edge.node.publishedAt))
+    .forEach((edge, index) => {
+      const { id, slug = {}, publishedAt } = edge.node;
+      const dateSegment = format(publishedAt, 'YYYY/MM');
+      const path = `/portfolio/${dateSegment}/${slug.current}`;
+
+      reporter.info(`Creating portfolio page: ${path}`);
+
+      createPage({
+        path,
+        component: require.resolve('./src/templates/Project.tsx'),
+        context: { id },
+      });
+    });
+}
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   await createBlogPostPages(graphql, actions, reporter);
+  await createPortolioPages(graphql, actions, reporter);
 };
 
 exports.onCreateWebpackConfig = ({ stage, rules, loaders, plugins, actions }) => {
