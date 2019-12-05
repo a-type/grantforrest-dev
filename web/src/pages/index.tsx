@@ -43,7 +43,7 @@ export const query = graphql`
       keywords
     }
     posts: allSanityPost(
-      limit: 6
+      limit: 2
       sort: { fields: [publishedAt], order: DESC }
       filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
     ) {
@@ -146,7 +146,7 @@ const IndexPage = (props: any) => {
         </div>
       </NoSsr>
       <div className={classes.cover}>
-        <Navigation firstTwoPortfolioProjects={projectNodes} className={classes.navigation} />
+        <Navigation projects={projectNodes} blogPosts={postNodes} className={classes.navigation} />
       </div>
       {/* <Container className={classes.container}>
         <h1 hidden>Welcome to {site.title}</h1>

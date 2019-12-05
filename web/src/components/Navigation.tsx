@@ -2,33 +2,47 @@ import * as React from 'react';
 import Link from './Link';
 import { Link as MuiLink, IconButton } from '@material-ui/core';
 import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/core';
-import { getPortfolioUrl } from '../lib/helpers';
+import { getPortfolioUrl, getBlogUrl } from '../lib/helpers';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'grid',
-    gridTemplateRows: 'auto 1fr 1fr',
+    gridTemplateRows: 'auto 1fr',
     gridTemplateColumns: 'auto 1fr',
-    gridTemplateAreas: '"_0 portfolioLabel" "home portfolio" "blog _1"',
+    gridTemplateAreas: '"_0 portfolioLabel blogLabel" "home portfolio blog"',
     gridGap: theme.spacing(1),
   },
-  portfolio: {
+  postList: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     '& > * + *': {
-      marginLeft: theme.spacing(1),
+      marginTop: theme.spacing(1),
     },
   },
-  portfolioLabel: {
+  postsLabel: {
     fontSize: theme.typography.pxToRem(12),
     marginLeft: theme.spacing(1),
+  },
+  linkButton: {
+    textAlign: 'left',
+    minWidth: 0,
+    textTransform: 'capitalize',
   },
 }));
 
 type NavigationProps = {
   className?: string;
-  firstTwoPortfolioProjects: {
+  projects: {
+    slug: {
+      current: string;
+    };
+    title: string;
+    publishedAt: Date;
+    id: string;
+    _rawExcerpt: any;
+  }[];
+  blogPosts: {
     slug: {
       current: string;
     };
@@ -39,27 +53,40 @@ type NavigationProps = {
   }[];
 };
 
-const Navigation: React.FC<NavigationProps> = ({ firstTwoPortfolioProjects, ...rest }) => {
+const Navigation: React.FC<NavigationProps> = ({ projects, blogPosts, ...rest }) => {
   const classes = useStyles({});
 
   return (
     <div {...rest} className={clsx(classes.root, rest.className)}>
-      <Typography style={{ gridArea: 'portfolioLabel' }} className={classes.portfolioLabel}>
+      <Typography style={{ gridArea: 'portfolioLabel' }} className={classes.postsLabel}>
         Portfolio
       </Typography>
+      <Typography style={{ gridArea: 'blogLabel' }} className={classes.postsLabel}>
+        Blog
+      </Typography>
       <Link to="/" color="inherit" style={{ gridArea: 'home' }}>
-        <Button>Home</Button>
+        <Button className={classes.linkButton}>Home</Button>
       </Link>
-      <div style={{ gridArea: 'portfolio' }} className={classes.portfolio}>
-        {firstTwoPortfolioProjects.map(({ slug, id, publishedAt, title }) => (
+      <div style={{ gridArea: 'portfolio' }} className={classes.postList}>
+        {projects.map(({ slug, id, publishedAt, title }) => (
           <Link key={id} underline="none" to={getPortfolioUrl(publishedAt, slug)}>
-            <Button>{title}</Button>
+            <Button className={classes.linkButton}>{title}</Button>
           </Link>
         ))}
+        <Link underline="none" to="/portfolio">
+          <Button className={classes.linkButton}>All</Button>
+        </Link>
       </div>
-      <Link to="/archives" color="inherit" underline="none" style={{ gridArea: 'blog' }}>
-        <Button>Blog</Button>
-      </Link>
+      <div style={{ gridArea: 'blog' }} className={classes.postList}>
+        {blogPosts.map(({ slug, id, publishedAt, title }) => (
+          <Link key={id} underline="none" to={getBlogUrl(publishedAt, slug)}>
+            <Button className={classes.linkButton}>{title}</Button>
+          </Link>
+        ))}
+        <Link to="/archives" color="inherit" underline="none" style={{ gridArea: 'blog' }}>
+          <Button className={classes.linkButton}>All</Button>
+        </Link>
+      </div>
     </div>
   );
 };

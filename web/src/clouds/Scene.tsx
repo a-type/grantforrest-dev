@@ -21,7 +21,7 @@ const windVelocity = new Vector3(0.01, 0, 0);
 
 const cameraPosition = [0, 10, 8];
 
-const textPosition = new Vector3(0, 12, -10);
+const textPosition = new Vector3(0, 15, -10);
 
 export const Scene: React.FC<SceneProps> = ({}) => {
   return (
@@ -34,7 +34,7 @@ export const Scene: React.FC<SceneProps> = ({}) => {
             <ambientLight color={lightContext.ambientLightColor} />
             <CloudMap velocity={windVelocity} />
             <Text size={1} position={textPosition}>
-              Grant Forrest
+              {['Grant', 'Forrest'].join('\n')}
             </Text>
           </React.Suspense>
         </Canvas>

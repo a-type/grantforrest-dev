@@ -16,7 +16,7 @@ export type TextProps = {
 };
 
 export const Text: React.FC<TextProps> = ({ children, size = 1, position = new Vector3() }) => {
-  const font = useLoader(FontLoader as any, '/fonts/Roboto Light_Regular.json');
+  const font = useLoader(FontLoader as any, '/fonts/Poiret One_Regular.json');
   const three = useThree();
   const config = React.useMemo(
     () => ({

@@ -11,3 +11,4 @@ export const sunColor = '#fff';
 export const textColor = '#c06c84';
 export const textShadowColor = '#c06c84';
 export const textShadowColor2 = '#c06c84';
+export const sunVisualColor = '#ffe1a3';
