@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Header from './Header';
-import { MuiThemeProvider, makeStyles, CssBaseline } from '@material-ui/core';
+import { MuiThemeProvider, makeStyles, CssBaseline, Link } from '@material-ui/core';
 import theme from '../themes/light';
 import Helmet from 'react-helmet';
 import { withPrefix } from 'gatsby';
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Layout: React.FC = ({ children }) => {
+const Layout: React.FC<{ stickyHeader?: boolean }> = ({ children, stickyHeader = false }) => {
   const styles = useStyles({});
 
   return (
@@ -71,15 +71,15 @@ const Layout: React.FC = ({ children }) => {
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
         </Helmet>
-        <Header />
+        <Header sticky={stickyHeader} />
         <div className={styles.content}>{children}</div>
         <footer className={styles.footer}>
           <div className={styles.footerWrapper}>
             <div className={styles.siteInfo}>
               &copy; {new Date().getFullYear()}, Built with{' '}
-              <a href="https://www.sanity.io">Sanity</a> &amp;
+              <Link href="https://www.sanity.io">Sanity</Link> &amp;
               {` `}
-              <a href="https://www.gatsbyjs.org">Gatsby</a>
+              <Link href="https://www.gatsbyjs.org">Gatsby</Link>
             </div>
           </div>
         </footer>

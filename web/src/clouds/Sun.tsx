@@ -17,7 +17,7 @@ shadow.mapSize = new Vector2(1024, 1024);
 shadow.radius = 2;
 shadow.bias = 0.5;
 
-export const Sun: React.FC<SunProps> = ({ visualPosition = new Vector3(-50, 40, -100) }) => {
+export const Sun: React.FC<SunProps> = ({ visualPosition = new Vector3(-40, 45, -100) }) => {
   const colors = useColors();
   const targetRef = React.useRef();
   const { pointLightPosition, pointLightColor } = React.useContext(LightContext);

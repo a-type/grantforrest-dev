@@ -18,11 +18,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Header: React.FC = ({}) => {
+const Header: React.FC<{ sticky?: boolean }> = ({ sticky = false }) => {
   const classes = useStyles({});
 
   return (
-    <AppBar position="static" color="inherit" className={classes.appBar}>
+    <AppBar position={sticky ? 'fixed' : 'absolute'} color="inherit" className={classes.appBar}>
       <Toolbar>
         <Link to="/" className={classes.title} color="inherit">
           <Typography variant="h6">Grant Forrest</Typography>

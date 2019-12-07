@@ -17,7 +17,7 @@ export interface BlogPostPreviewProps {
   title: string;
   _rawExcerpt: string;
   mainImage: any; // todo
-  publishedAt: string;
+  publishedAt: Date;
   slug: any; // todo
 }
 

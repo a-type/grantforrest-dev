@@ -82,9 +82,11 @@ function BlogPost(props: BlogPostProps) {
   const { _rawBody, authors, categories, title, mainImage, publishedAt } = props;
   const styles = useStyles(props);
 
+  const hasImage = mainImage && mainImage.asset;
+
   return (
     <article className={styles.root}>
-      {mainImage && mainImage.asset && (
+      {hasImage && (
         <div className={styles.mainImage}>
           <img
             src={imageUrlFor(buildImageObj(mainImage))
@@ -97,7 +99,7 @@ function BlogPost(props: BlogPostProps) {
           />
         </div>
       )}
-      <Container>
+      <Container style={{ marginTop: hasImage ? 0 : 64 }}>
         <div className={styles.grid}>
           <div className={styles.mainContent}>
             <Typography variant="h1" className={styles.title}>

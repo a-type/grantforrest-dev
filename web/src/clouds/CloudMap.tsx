@@ -29,7 +29,7 @@ export const CloudMap: React.FC<CloudFieldProps> = ({
     const firstId = randomId();
     initClouds[firstId] = {
       id: firstId,
-      initialPosition: new Vector3(0, 0, -size / 2),
+      initialPosition: new Vector3(0, 0, -size[1] / 2),
       size: randomSize(),
     };
 

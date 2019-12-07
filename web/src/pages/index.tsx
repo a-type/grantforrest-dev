@@ -12,6 +12,7 @@ import Layout from '../containers/Layout';
 import { Container, makeStyles, NoSsr } from '@material-ui/core';
 import { Scene } from '../clouds/Scene';
 import Navigation from '../components/Navigation';
+import { ProjectPreview } from '../components/ProjectPreview';
 
 export const query = graphql`
   fragment SanityImage on SanityMainImage {
@@ -64,7 +65,7 @@ export const query = graphql`
       }
     }
     projects: allSanityProject(
-      limit: 2
+      limit: 4
       sort: { fields: [publishedAt], order: DESC }
       filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
     ) {
@@ -77,28 +78,51 @@ export const query = graphql`
           slug {
             current
           }
+          mainImage {
+            ...SanityImage
+            alt
+          }
         }
       }
     }
   }
 `;
 
+export type BlogPostPreviewData = {
+  id: string;
+  publishedAt: string;
+  title: string;
+  _rawExcerpt: any;
+  slug: {
+    current: string;
+  };
+  mainImage: any;
+};
+
+export type ProjectPreviewData = {
+  id: string;
+  publishedAt: string;
+  title: string;
+  _rawExcerpt: any;
+  slug: {
+    current: string;
+  };
+  mainImage: any;
+};
+
 const useStyles = makeStyles(theme => ({
+  heroContainer: {
+    width: '100%',
+    height: '99vh',
+    position: 'relative',
+    marginBottom: theme.spacing(2),
+  },
   cloudScene: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100vw',
-    height: '100vh',
-    zIndex: -1,
+    width: '100%',
+    height: '100%',
   },
   container: {
     marginTop: '50vh',
-  },
-  cover: {
-    height: '100%',
-    flex: 1,
-    position: 'relative',
   },
   navigation: {
     position: 'absolute',
@@ -113,19 +137,19 @@ const IndexPage = (props: any) => {
 
   if (errors) {
     return (
-      <Layout>
+      <Layout stickyHeader>
         <GraphQLErrorList errors={errors} />
       </Layout>
     );
   }
 
   const site = (data || {}).site;
-  const postNodes = (data || {}).posts
+  const postNodes: BlogPostPreviewData[] = (data || {}).posts
     ? mapEdgesToNodes(data.posts)
         .filter(filterOutDocsWithoutSlugs)
         .filter(filterOutDocsPublishedInTheFuture)
     : [];
-  const projectNodes = (data || {}).projects
+  const projectNodes: ProjectPreviewData[] = (data || {}).projects
     ? mapEdgesToNodes(data.projects)
         .filter(filterOutDocsWithoutSlugs)
         .filter(filterOutDocsPublishedInTheFuture)
@@ -138,26 +162,19 @@ const IndexPage = (props: any) => {
   }
 
   return (
-    <Layout>
+    <Layout stickyHeader>
       <SEO title={site.title} description={site.description} keywords={site.keywords} />
-      <NoSsr>
-        <div className={classes.cloudScene}>
-          <Scene />
-        </div>
-      </NoSsr>
-      <div className={classes.cover}>
+      <div className={classes.heroContainer}>
+        <NoSsr>
+          <div className={classes.cloudScene}>
+            <Scene />
+          </div>
+        </NoSsr>
         <Navigation projects={projectNodes} blogPosts={postNodes} className={classes.navigation} />
       </div>
-      {/* <Container className={classes.container}>
-        <h1 hidden>Welcome to {site.title}</h1>
-        {postNodes && (
-          <BlogPostPreviewGrid
-            title="Latest blog posts"
-            nodes={postNodes}
-            browseMoreHref="/archive"
-          />
-        )}
-      </Container> */}
+      {projectNodes.map(project => (
+        <ProjectPreview project={project} key={project.id} />
+      ))}
     </Layout>
   );
 };
