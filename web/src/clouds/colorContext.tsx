@@ -41,6 +41,13 @@ const colorContext = React.createContext<ColorContextValue>(wrapColors(chooseThe
 
 export const ColorContextProvider = (rest: any) => {
   const [colors, setColors] = React.useState<ColorContextValue>(wrapColors(chooseTheme()));
+  React.useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    setColors(wrapColors(chooseTheme()));
+  }, []);
 
   return <colorContext.Provider value={colors} {...rest} />;
 };

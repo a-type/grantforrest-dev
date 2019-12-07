@@ -22,7 +22,7 @@ export const day: ColorTheme = {
   ambientLight: '#aaa',
   light: '#fff',
   sun: '#ffe1a3',
-  text: '#c3f3ff',
+  text: '#ffffff',
   ray: '#a0aeff',
 };
 

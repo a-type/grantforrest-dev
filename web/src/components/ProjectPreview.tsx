@@ -1,35 +1,39 @@
 import * as React from 'react';
-import { makeStyles, Typography, Button } from '@material-ui/core';
+import { makeStyles, Typography, Button, Paper } from '@material-ui/core';
 import { imageUrlFor } from '../lib/imageUrl';
-import { buildImageObj, getPortfolioUrl } from '../lib/helpers';
+import { buildImageObj, getPortfolioUrl, getPortfolioElementId } from '../lib/helpers';
 import PortableText from './PortableText';
 import { ProjectPreviewData } from '../pages';
 import Link from './Link';
+import clsx from 'clsx';
 
 export type ProjectPreviewProps = {
   project: ProjectPreviewData;
+  className?: string;
 };
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: '99vh',
     display: 'flex',
     backgroundSize: 'cover',
     backgroundPositionX: 'center',
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
   content: {
-    marginTop: 'auto',
+    margin: 'auto',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start',
-    backgroundColor: '#00000060',
-    color: theme.palette.common.white,
+    alignItems: 'center',
+    textAlign: 'center',
     padding: theme.spacing(2),
   },
 }));
 
 export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
-  const { project } = props;
+  const { project, className } = props;
   const classes = useStyles(props);
 
   const imageSrc =
@@ -42,12 +46,13 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
 
   return (
     <div
-      className={classes.root}
+      className={clsx(classes.root, className)}
       style={{
         backgroundImage: `url(${imageSrc})`,
       }}
+      id={getPortfolioElementId(project.publishedAt, project.slug)}
     >
-      <div className={classes.content}>
+      <Paper className={classes.content}>
         <Typography variant="h2" gutterBottom>
           {project.title}
         </Typography>
@@ -59,7 +64,7 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
         >
           View project
         </Button>
-      </div>
+      </Paper>
     </div>
   );
 };

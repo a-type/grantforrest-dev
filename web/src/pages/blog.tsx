@@ -5,7 +5,7 @@ import BlogPostPreviewGrid from '../components/BlogPostPreviewGrid';
 import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
-import { Typography, Container } from '@material-ui/core';
+import { Typography, Container, makeStyles } from '@material-ui/core';
 
 export const query = graphql`
   query ArchivePageQuery {
@@ -32,8 +32,15 @@ export const query = graphql`
   }
 `;
 
+const useStyles = makeStyles(theme => ({
+  container: {
+    marginTop: 64,
+  },
+}));
+
 const ArchivePage = (props: any) => {
   const { data, errors } = props;
+  const classes = useStyles(props);
 
   if (errors) {
     return (
@@ -48,7 +55,7 @@ const ArchivePage = (props: any) => {
   return (
     <Layout>
       <SEO title="Archive" />
-      <Container>
+      <Container className={classes.container}>
         <Typography variant="h1">Archive</Typography>
         {postNodes && postNodes.length > 0 && <BlogPostPreviewGrid nodes={postNodes} />}
       </Container>

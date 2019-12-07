@@ -45,7 +45,7 @@ export const Camera: React.FC<CameraProps> = ({ position, movementFactor = 0.002
     setCameraPosition({
       currentPosition: [
         position[0] + normalizedX * allowedDragLimit,
-        position[1] - normalizedY * allowedDragLimit,
+        position[1] - normalizedY * normalizedY * allowedDragLimit,
         position[2],
       ],
     });

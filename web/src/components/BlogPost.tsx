@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     background: theme.palette.grey[50],
     paddingBottom: 'calc(9 / 16 * 100%)',
+    maxHeight: '90vh',
 
     '& img': {
       display: 'block',

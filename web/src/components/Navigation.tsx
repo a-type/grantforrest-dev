@@ -2,9 +2,10 @@ import * as React from 'react';
 import Link from './Link';
 import { Link as MuiLink, IconButton } from '@material-ui/core';
 import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/core';
-import { getPortfolioUrl, getBlogUrl } from '../lib/helpers';
+import { getPortfolioUrl, getBlogUrl, getPortfolioElementId } from '../lib/helpers';
 import clsx from 'clsx';
 import { ProjectPreviewData, BlogPostPreviewData } from '../pages';
+import { format } from 'date-fns';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,6 +43,17 @@ type NavigationProps = {
 const Navigation: React.FC<NavigationProps> = ({ projects, blogPosts, ...rest }) => {
   const classes = useStyles({});
 
+  const scrollToIdHandler = (id: string) => () => {
+    const el = document.getElementById(id);
+    if (!el) {
+      console.error(`No element ${id}`);
+    }
+    el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
+  };
+
   return (
     <div {...rest} className={clsx(classes.root, rest.className)}>
       <Typography style={{ gridArea: 'portfolioLabel' }} className={classes.postsLabel}>
@@ -54,10 +66,8 @@ const Navigation: React.FC<NavigationProps> = ({ projects, blogPosts, ...rest })
         {projects.map(({ slug, id, publishedAt, title }) => (
           <Button
             className={classes.linkButton}
-            component={Link}
             key={id}
-            underline="none"
-            to={getPortfolioUrl(publishedAt, slug)}
+            onClick={scrollToIdHandler(getPortfolioElementId(publishedAt, slug))}
           >
             {title}
           </Button>
@@ -81,7 +91,7 @@ const Navigation: React.FC<NavigationProps> = ({ projects, blogPosts, ...rest })
         <Button
           className={classes.linkButton}
           component={Link}
-          to="/archives"
+          to="/blog"
           color="inherit"
           underline="none"
           style={{ gridArea: 'blog' }}

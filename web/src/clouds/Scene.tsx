@@ -18,7 +18,7 @@ const lightValues = {
   ambientLightColor: new Color('#aaa'),
 };
 
-const windVelocity = new Vector3(0.01, 0, 0);
+const windVelocity = new Vector3(0.006, 0, 0);
 
 const cameraPosition = [0, 10, 8];
 

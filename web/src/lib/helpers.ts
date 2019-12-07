@@ -25,6 +25,10 @@ export function getPortfolioUrl(publishedAt: Date | string, slug: { current: str
   return `/portfolio/${format(publishedAt, 'YYYY/MM')}/${slug.current || slug}/`;
 }
 
+export function getPortfolioElementId(publishedAt: Date | string, slug: { current: string }) {
+  return `project-${format(publishedAt, 'YYYY-MM')}-${slug.current}`;
+}
+
 export function buildImageObj(source: any = { asset: {} }) {
   const imageObj = {
     asset: { _ref: source.asset._ref || source.asset._id },

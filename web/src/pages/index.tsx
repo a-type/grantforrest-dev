@@ -129,6 +129,9 @@ const useStyles = makeStyles(theme => ({
     bottom: theme.spacing(3),
     left: theme.spacing(3),
   },
+  projectPreview: {
+    height: '99vh',
+  },
 }));
 
 const IndexPage = (props: any) => {
@@ -173,7 +176,7 @@ const IndexPage = (props: any) => {
         <Navigation projects={projectNodes} blogPosts={postNodes} className={classes.navigation} />
       </div>
       {projectNodes.map(project => (
-        <ProjectPreview project={project} key={project.id} />
+        <ProjectPreview project={project} key={project.id} className={classes.projectPreview} />
       ))}
     </Layout>
   );

@@ -5,20 +5,20 @@ import { CloudShaderMaterial } from './CloudShaderMaterial';
 import { useColors } from './colorContext';
 
 const planeSize = 1000;
+const baseFieldSize = [400, 25];
 
 export type CloudFieldProps = Omit<
   CloudProps,
   'onExitBoundary' | 'id' | 'initialPosition' | 'boundarySize'
 > & {
-  size?: [number, number];
   numClouds?: number;
 };
 
-export const CloudMap: React.FC<CloudFieldProps> = ({
-  size = [120, 50],
-  numClouds = 2,
-  ...cloudProps
-}) => {
+export const CloudMap: React.FC<CloudFieldProps> = ({ numClouds = 2, ...cloudProps }) => {
+  const aspectRatio = document.body.clientWidth / document.body.clientHeight;
+  const fieldWidth = baseFieldSize[0] * (aspectRatio / (16.0 / 9));
+  const size: [number, number] = [fieldWidth, baseFieldSize[1]];
+
   const colors = useColors();
   const [clouds, setClouds] = React.useState<{ [id: string]: CloudData }>({});
 

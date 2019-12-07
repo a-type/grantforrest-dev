@@ -25,7 +25,7 @@ export const Cloud: React.FC<CloudProps> = ({
   onExitBoundary,
   id,
   initialPosition,
-  size = 512,
+  size = 680,
   resolution: providedResolution = 64,
   boundarySize,
 }) => {
