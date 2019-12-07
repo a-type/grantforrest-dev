@@ -27,7 +27,10 @@ const Header: React.FC<{ sticky?: boolean }> = ({ sticky = false }) => {
         <Link to="/" className={classes.title} color="inherit">
           <Typography variant="h6">Grant Forrest</Typography>
         </Link>
-        <Button component={Link} to="/blog" color="inherit">
+        <Button component={Link} to="/portfolio" color="inherit" underline="never">
+          Portfolio
+        </Button>
+        <Button component={Link} to="/blog" color="inherit" underline="never">
           Blog
         </Button>
         <MuiLink href="https://github.com/a-type" color="inherit" target="_blank" rel="noopener">

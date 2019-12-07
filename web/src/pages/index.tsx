@@ -176,7 +176,12 @@ const IndexPage = (props: any) => {
         <Navigation projects={projectNodes} blogPosts={postNodes} className={classes.navigation} />
       </div>
       {projectNodes.map(project => (
-        <ProjectPreview project={project} key={project.id} className={classes.projectPreview} />
+        <ProjectPreview
+          project={project}
+          key={project.id}
+          className={classes.projectPreview}
+          imageWidth={document.body.clientWidth}
+        />
       ))}
     </Layout>
   );

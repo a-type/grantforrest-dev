@@ -74,7 +74,11 @@ const PortfolioPage = (props: any) => {
             xl={4}
             className={classes.gridItem}
           >
-            <ProjectPreview project={project} className={classes.projectPreview} />
+            <ProjectPreview
+              project={project}
+              className={classes.projectPreview}
+              imageWidth={Math.round(document.body.clientWidth / 2)}
+            />
           </Grid>
         ))}
       </Grid>

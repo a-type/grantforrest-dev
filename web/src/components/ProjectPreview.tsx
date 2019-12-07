@@ -10,6 +10,7 @@ import clsx from 'clsx';
 export type ProjectPreviewProps = {
   project: ProjectPreviewData;
   className?: string;
+  imageWidth: number;
 };
 
 const useStyles = makeStyles(theme => ({
@@ -21,6 +22,8 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(4),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
+    textDecoration: 'none',
+    cursor: 'pointer',
   },
   content: {
     margin: 'auto',
@@ -28,7 +31,11 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     textAlign: 'center',
-    padding: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    maxWidth: 400,
   },
 }));
 
@@ -39,32 +46,29 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
   const imageSrc =
     project.mainImage &&
     imageUrlFor(buildImageObj(project.mainImage))
-      .width(600)
-      .height(Math.floor((9 / 16) * 600))
+      .width(props.imageWidth)
+      .height(Math.floor((9 / 16) * props.imageWidth))
       .auto('format')
       .url();
 
   return (
-    <div
+    <Link
+      underline="never"
+      color="inherit"
+      to={getPortfolioUrl(project.publishedAt, project.slug)}
       className={clsx(classes.root, className)}
       style={{
         backgroundImage: `url(${imageSrc})`,
       }}
       id={getPortfolioElementId(project.publishedAt, project.slug)}
     >
-      <Paper className={classes.content}>
+      <Paper className={classes.content} elevation={4}>
         <Typography variant="h2" gutterBottom>
           {project.title}
         </Typography>
         <PortableText blocks={project._rawExcerpt} />
-        <Button
-          color="inherit"
-          component={Link}
-          to={getPortfolioUrl(project.publishedAt, project.slug)}
-        >
-          View project
-        </Button>
+        <Button color="inherit">View project</Button>
       </Paper>
-    </div>
+    </Link>
   );
 };

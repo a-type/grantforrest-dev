@@ -25,7 +25,12 @@ export default ({ node }: { node: any }) => {
   const fluidProps = getFluidGatsbyImage(node.asset._id, { maxWidth: 675 }, clientConfig.sanity);
   return (
     <figure className={classes.figure}>
-      <Img fluid={fluidProps} alt={node.alt} className={classes.image} />
+      <Img
+        fluid={fluidProps}
+        alt={node.alt}
+        className={classes.image}
+        imgStyle={{ objectFit: 'contain' }}
+      />
       <Typography component="figcaption" variant="caption" className={classes.caption}>
         {node.caption}
       </Typography>
