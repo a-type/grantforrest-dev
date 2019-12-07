@@ -13,12 +13,12 @@ export type CloudFieldProps = Omit<
   CloudProps,
   'onExitBoundary' | 'id' | 'initialPosition' | 'boundarySize'
 > & {
-  size?: number;
+  size?: [number, number];
   numClouds?: number;
 };
 
 export const CloudMap: React.FC<CloudFieldProps> = ({
-  size = 60,
+  size = [120, 50],
   numClouds = 2,
   ...cloudProps
 }) => {
@@ -44,7 +44,7 @@ export const CloudMap: React.FC<CloudFieldProps> = ({
       };
     }
     setClouds(initClouds);
-  }, [size]);
+  }, [size[0], size[1]]);
 
   return (
     <>
@@ -74,11 +74,11 @@ type CloudData = {
 
 const randomId = () => `${Math.random() * 10000000}`;
 
-const randomPosition = (boundarySize: number) =>
+const randomPosition = (boundarySize: [number, number]) =>
   new Vector3(
-    Math.random() * boundarySize - boundarySize / 2,
+    Math.random() * boundarySize[0] - boundarySize[0] / 2,
     0,
-    Math.random() * boundarySize - boundarySize / 2,
+    Math.random() * (boundarySize[1] / 8) - boundarySize[1] / 2,
   );
 
 const randomSize = () => Math.random() * 424 + 420;

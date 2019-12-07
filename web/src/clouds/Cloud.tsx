@@ -10,7 +10,7 @@ export type CloudProps = {
   id: string;
   initialPosition: Vector3;
   onExitBoundary?: (id: string) => any;
-  boundarySize: number;
+  boundarySize: [number, number];
   size?: number;
   resolution?: number;
 };
@@ -54,15 +54,16 @@ export const Cloud: React.FC<CloudProps> = ({
 
     ref.current.position.add(velocity);
     const planePosition = new Vector3(ref.current.position.x, 0, ref.current.position.z);
-    if (planePosition.x > boundarySize / 2 && !isExiting.current) {
+    if (planePosition.x > boundarySize[0] / 2 && !isExiting.current) {
+      console.debug('cloud exiting', planePosition.x);
       isExiting.current = true;
       onExitBoundary && onExitBoundary(id);
       // disabled: generate a new cloud
       //generateLod().then(() => {
       isExiting.current = false;
       if (!ref.current) return;
-      ref.current.position.x = -(boundarySize / 2);
-      ref.current.position.z = Math.random() * boundarySize - boundarySize / 2;
+      ref.current.position.x = -(boundarySize[0] / 2);
+      ref.current.position.z = Math.random() * boundarySize[1] - boundarySize[1] / 2;
       //});
     }
   });
@@ -77,7 +78,6 @@ export const Cloud: React.FC<CloudProps> = ({
   });
 
   if (!lodGeometries.size) {
-    console.log('Waiting for geometry');
     return null;
   }
 

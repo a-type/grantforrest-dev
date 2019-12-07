@@ -3,11 +3,9 @@ import { useLoader, useUpdate, useThree } from 'react-three-fiber';
 import { FontLoader, Vector3, Mesh, Color } from 'three';
 import { CloudShaderMaterial } from './CloudShaderMaterial';
 import { useMediaQuery } from '@material-ui/core';
-import { textColor, textShadowColor, textShadowColor2 } from './colors';
+import { textColor } from './colors';
 
 const color = new Color(textColor);
-const shadowColor = new Color(textShadowColor);
-const shadowColor2 = new Color(textShadowColor2);
 
 export type TextProps = {
   children: string;
@@ -54,8 +52,8 @@ export const Text: React.FC<TextProps> = ({ children, size = 1, position = new V
         <CloudShaderMaterial
           attach="material"
           baseColor={color}
-          shadeColor1={shadowColor}
-          shadeColor2={shadowColor2}
+          shadeColor1={color}
+          shadeColor2={color}
         />
       </mesh>
     </group>

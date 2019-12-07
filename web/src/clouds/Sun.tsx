@@ -17,7 +17,7 @@ shadow.mapSize = new Vector2(1024, 1024);
 shadow.radius = 2;
 shadow.bias = 0.5;
 
-export const Sun: React.FC<SunProps> = ({ visualPosition = new Vector3(-8, 18, -20) }) => {
+export const Sun: React.FC<SunProps> = ({ visualPosition = new Vector3(-50, 40, -100) }) => {
   const targetRef = React.useRef();
   const { pointLightPosition, pointLightColor } = React.useContext(LightContext);
 
@@ -32,19 +32,8 @@ export const Sun: React.FC<SunProps> = ({ visualPosition = new Vector3(-8, 18, -
         shadow={shadow}
       />
       <mesh position={new Vector3(0, 0, 0)} ref={targetRef} />
-      <mesh position={visualPosition} scale={new Vector3(2, 2, 2)}>
-        <sphereBufferGeometry
-          attach="geometry"
-          parameters={{
-            radius: 50,
-            widthSegments: 64,
-            heightSegments: 64,
-            phiStart: 0,
-            phiLength: Math.PI * 2,
-            thetaStart: 0,
-            thetaLength: Math.PI * 2,
-          }}
-        />
+      <mesh position={visualPosition}>
+        <sphereBufferGeometry attach="geometry" args={[15, 32, 32]} />
         <meshBasicMaterial color={sunVisualColor} attach="material" />
       </mesh>
     </>
