@@ -3,9 +3,7 @@ import { useLoader, useUpdate, useThree } from 'react-three-fiber';
 import { FontLoader, Vector3, Mesh, Color } from 'three';
 import { CloudShaderMaterial } from './CloudShaderMaterial';
 import { useMediaQuery } from '@material-ui/core';
-import { textColor } from './colors';
-
-const color = new Color(textColor);
+import { useColors } from './colorContext';
 
 export type TextProps = {
   children: string;
@@ -14,8 +12,8 @@ export type TextProps = {
 };
 
 export const Text: React.FC<TextProps> = ({ children, size = 1, position = new Vector3() }) => {
+  const colors = useColors();
   const font = useLoader(FontLoader as any, '/fonts/Poiret One_Regular.json');
-  const three = useThree();
   const config = React.useMemo(
     () => ({
       font,
@@ -32,9 +30,6 @@ export const Text: React.FC<TextProps> = ({ children, size = 1, position = new V
       self.geometry.boundingBox.getSize(size);
       self.position.x = -size.x / 2;
       self.position.y = -size.y / 2;
-
-      //self.lookAt(three.camera.position);
-      //self.rotation.y = 0;
     },
     [children],
   );
@@ -51,9 +46,9 @@ export const Text: React.FC<TextProps> = ({ children, size = 1, position = new V
         <textGeometry attach="geometry" args={[children, config] as [string, any]} />
         <CloudShaderMaterial
           attach="material"
-          baseColor={color}
-          shadeColor1={color}
-          shadeColor2={color}
+          baseColor={colors.text}
+          shadeColor1={colors.text}
+          shadeColor2={colors.text}
         />
       </mesh>
     </group>

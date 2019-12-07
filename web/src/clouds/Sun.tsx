@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Vector3, DirectionalLightShadow, OrthographicCamera, Vector2 } from 'three';
 import LightContext from './LightContext';
-import { sunVisualColor } from './colors';
+import { useColors } from './colorContext';
 
 export type SunProps = {
   visualPosition?: Vector3;
@@ -18,6 +18,7 @@ shadow.radius = 2;
 shadow.bias = 0.5;
 
 export const Sun: React.FC<SunProps> = ({ visualPosition = new Vector3(-50, 40, -100) }) => {
+  const colors = useColors();
   const targetRef = React.useRef();
   const { pointLightPosition, pointLightColor } = React.useContext(LightContext);
 
@@ -34,7 +35,7 @@ export const Sun: React.FC<SunProps> = ({ visualPosition = new Vector3(-50, 40, 
       <mesh position={new Vector3(0, 0, 0)} ref={targetRef} />
       <mesh position={visualPosition}>
         <sphereBufferGeometry attach="geometry" args={[15, 32, 32]} />
-        <meshBasicMaterial color={sunVisualColor} attach="material" />
+        <meshBasicMaterial color={colors.sun} attach="material" />
       </mesh>
     </>
   );

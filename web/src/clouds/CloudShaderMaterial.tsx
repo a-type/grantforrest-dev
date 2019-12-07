@@ -1,35 +1,25 @@
 import * as React from 'react';
 import Shader from './shaders/CloudShader';
-import { Color } from 'three';
-import {
-  cloudWhiteColor,
-  cloudShadowColor1,
-  cloudShadowColor2,
-} from './colors';
 import LightContext from './LightContext';
+import { useColors } from './colorContext';
+import { Color } from 'three';
 
 export type CloudShaderMaterialProps = {
+  attach?: string;
   baseColor?: Color;
   shadeColor1?: Color;
   shadeColor2?: Color;
-  attach?: string;
 };
 
-const white = new Color(cloudWhiteColor);
-const shadow1 = new Color(cloudShadowColor1);
-const shadow2 = new Color(cloudShadowColor2);
-
 export const CloudShaderMaterial: React.FC<CloudShaderMaterialProps> = ({
-  baseColor = white,
-  shadeColor1 = shadow1,
-  shadeColor2 = shadow2,
+  baseColor,
+  shadeColor1,
+  shadeColor2,
   ...rest
 }) => {
-  const {
-    pointLightPosition,
-    pointLightColor,
-    ambientLightColor,
-  } = React.useContext(LightContext);
+  const colors = useColors();
+
+  const { pointLightPosition, pointLightColor, ambientLightColor } = React.useContext(LightContext);
 
   const shaderArgs = React.useMemo(
     () => ({
@@ -41,9 +31,9 @@ export const CloudShaderMaterial: React.FC<CloudShaderMaterialProps> = ({
         uDirLightPos: { value: pointLightPosition },
         uDirLightColor: { value: pointLightColor },
         ambientLightColor: { value: ambientLightColor },
-        uBaseColor: { value: baseColor },
-        uLineColor1: { value: shadeColor1 },
-        uLineColor2: { value: shadeColor2 },
+        uBaseColor: { value: baseColor || colors.cloudWhite },
+        uLineColor1: { value: shadeColor1 || colors.cloudShadow1 },
+        uLineColor2: { value: shadeColor2 || colors.cloudShadow2 },
       },
       vertexShader: Shader.vertexShader,
       fragmentShader: Shader.fragmentShader,
@@ -55,6 +45,9 @@ export const CloudShaderMaterial: React.FC<CloudShaderMaterialProps> = ({
       baseColor,
       shadeColor1,
       shadeColor2,
+      colors.cloudWhite,
+      colors.cloudShadow1,
+      colors.cloudShadow2,
     ],
   );
 

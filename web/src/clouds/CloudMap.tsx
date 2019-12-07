@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { CloudProps, Cloud } from './Cloud';
-import { Vector3, Color } from 'three';
+import { Vector3 } from 'three';
 import { CloudShaderMaterial } from './CloudShaderMaterial';
-import { groundColor1, groundShadowColor } from './colors';
+import { useColors } from './colorContext';
 
 const planeSize = 1000;
-
-const groundColor = new Color(groundColor1);
-const shadowColor = new Color(groundShadowColor);
 
 export type CloudFieldProps = Omit<
   CloudProps,
@@ -22,6 +19,7 @@ export const CloudMap: React.FC<CloudFieldProps> = ({
   numClouds = 2,
   ...cloudProps
 }) => {
+  const colors = useColors();
   const [clouds, setClouds] = React.useState<{ [id: string]: CloudData }>({});
 
   React.useEffect(() => {
@@ -60,7 +58,11 @@ export const CloudMap: React.FC<CloudFieldProps> = ({
       ))}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[planeSize, planeSize]} attach="geometry" />
-        <CloudShaderMaterial attach="material" baseColor={groundColor} shadeColor1={shadowColor} />
+        <CloudShaderMaterial
+          attach="material"
+          baseColor={colors.ground}
+          shadeColor1={colors.groundShadow}
+        />
       </mesh>
     </>
   );

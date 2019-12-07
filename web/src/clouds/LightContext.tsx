@@ -1,6 +1,5 @@
 import { createContext } from 'react';
 import { Vector3, Color } from 'three';
-import { sunColor, ambientLightColor } from './colors';
 
 export default createContext<{
   pointLightPosition: Vector3;
@@ -8,6 +7,6 @@ export default createContext<{
   ambientLightColor: Color;
 }>({
   pointLightPosition: new Vector3(0, 100, -40),
-  pointLightColor: new Color(sunColor),
-  ambientLightColor: new Color(ambientLightColor),
+  pointLightColor: new Color('#fff'),
+  ambientLightColor: new Color('#aaa'),
 });

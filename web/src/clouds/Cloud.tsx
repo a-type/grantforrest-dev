@@ -55,7 +55,6 @@ export const Cloud: React.FC<CloudProps> = ({
     ref.current.position.add(velocity);
     const planePosition = new Vector3(ref.current.position.x, 0, ref.current.position.z);
     if (planePosition.x > boundarySize[0] / 2 && !isExiting.current) {
-      console.debug('cloud exiting', planePosition.x);
       isExiting.current = true;
       onExitBoundary && onExitBoundary(id);
       // disabled: generate a new cloud

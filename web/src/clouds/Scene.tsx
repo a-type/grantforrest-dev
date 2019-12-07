@@ -1,7 +1,6 @@
 import * as React from 'react';
 import LightContext from './LightContext';
 import { Vector3, Color, PCFSoftShadowMap } from 'three';
-import { sunColor, ambientLightColor, skyColor, rayColor } from './colors';
 import { Canvas } from 'react-three-fiber';
 import { Camera } from './Camera';
 import { CloudMap } from './CloudMap';
@@ -9,13 +8,14 @@ import { Text } from './Text';
 import { Sun } from './Sun';
 import { NoSsr } from '@material-ui/core';
 import { Ray } from './Ray';
+import { ColorContextProvider, useColors } from './colorContext';
 
 export type SceneProps = {};
 
-const lightContext = {
+const lightValues = {
   pointLightPosition: new Vector3(100, 100, 0),
-  pointLightColor: new Color(sunColor),
-  ambientLightColor: new Color(ambientLightColor),
+  pointLightColor: new Color('#fff'),
+  ambientLightColor: new Color('#aaa'),
 };
 
 const windVelocity = new Vector3(0.01, 0, 0);
@@ -30,25 +30,39 @@ const rays = new Array(4).fill(null).map((_, idx) => {
   return [new Vector3(-100, y, z), new Vector3(100, y, z)];
 });
 
+const InnerScene: React.FC<SceneProps> = ({}) => {
+  const colors = useColors();
+  const lightContext = React.useContext(LightContext);
+
+  return (
+    <Canvas
+      shadowMap={{ type: PCFSoftShadowMap }}
+      style={{ backgroundColor: `#${colors.sky.getHexString()}` }}
+    >
+      <React.Suspense fallback={null}>
+        <Camera position={cameraPosition} />
+        <Sun />
+        <ambientLight color={lightContext.ambientLightColor} />
+        <CloudMap velocity={windVelocity} />
+        <Text size={1} position={textPosition}>
+          {['Grant', 'Forrest'].join('\n')}
+        </Text>
+        {rays.map(([start, end], idx) => (
+          <Ray start={start} end={end} key={idx} />
+        ))}
+      </React.Suspense>
+    </Canvas>
+  );
+};
+
 export const Scene: React.FC<SceneProps> = ({}) => {
   return (
     <NoSsr>
-      <LightContext.Provider value={lightContext}>
-        <Canvas shadowMap={{ type: PCFSoftShadowMap }} style={{ backgroundColor: skyColor }}>
-          <React.Suspense fallback={null}>
-            <Camera position={cameraPosition} />
-            <Sun />
-            <ambientLight color={lightContext.ambientLightColor} />
-            <CloudMap velocity={windVelocity} />
-            <Text size={1} position={textPosition}>
-              {['Grant', 'Forrest'].join('\n')}
-            </Text>
-            {rays.map(([start, end], idx) => (
-              <Ray start={start} end={end} key={idx} color={rayColor} />
-            ))}
-          </React.Suspense>
-        </Canvas>
-      </LightContext.Provider>
+      <ColorContextProvider>
+        <LightContext.Provider value={lightValues}>
+          <InnerScene />
+        </LightContext.Provider>
+      </ColorContextProvider>
     </NoSsr>
   );
 };
