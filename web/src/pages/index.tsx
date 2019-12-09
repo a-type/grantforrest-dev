@@ -131,7 +131,7 @@ const useStyles = makeStyles(theme => ({
     left: theme.spacing(3),
   },
   projectPreview: {
-    height: '99vh',
+    height: '90vh',
   },
 }));
 
@@ -177,12 +177,13 @@ const IndexPage = (props: any) => {
         </NoSsr>
         <Navigation projects={projectNodes} blogPosts={postNodes} className={classes.navigation} />
       </div>
-      {projectNodes.map(project => (
+      {projectNodes.map((project, idx) => (
         <ProjectPreview
           project={project}
           key={project.id}
           className={classes.projectPreview}
           imageWidth={windowWidth}
+          side={idx % 2 === 0 ? ('right' as const) : ('left' as const)}
         />
       ))}
     </Layout>

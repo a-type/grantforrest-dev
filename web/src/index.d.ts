@@ -15,3 +15,8 @@ declare module '@sanity/block-content-to-react' {
   const ex: any;
   export default ex;
 }
+
+declare module 'inteobs' {
+  const d: typeof IntersectionObserver;
+  export default d;
+}
