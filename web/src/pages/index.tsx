@@ -13,6 +13,7 @@ import { Container, makeStyles, NoSsr } from '@material-ui/core';
 import { Scene } from '../clouds/Scene';
 import Navigation from '../components/Navigation';
 import { ProjectPreview } from '../components/ProjectPreview';
+import useWindowSize from '../lib/useWindowSize';
 
 export const query = graphql`
   fragment SanityImage on SanityMainImage {
@@ -137,6 +138,7 @@ const useStyles = makeStyles(theme => ({
 const IndexPage = (props: any) => {
   const { data, errors } = props;
   const classes = useStyles(props);
+  const { width: windowWidth } = useWindowSize();
 
   if (errors) {
     return (
@@ -180,7 +182,7 @@ const IndexPage = (props: any) => {
           project={project}
           key={project.id}
           className={classes.projectPreview}
-          imageWidth={document.body.clientWidth}
+          imageWidth={windowWidth}
         />
       ))}
     </Layout>

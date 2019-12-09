@@ -7,6 +7,7 @@ import Layout from '../containers/Layout';
 import { ProjectPreviewData } from '.';
 import { Grid, makeStyles } from '@material-ui/core';
 import { ProjectPreview } from '../components/ProjectPreview';
+import useWindowSize from '../lib/useWindowSize';
 
 export const query = graphql`
   query PortfolioPageQuery {
@@ -48,6 +49,7 @@ const useStyles = makeStyles(theme => ({
 const PortfolioPage = (props: any) => {
   const { data, errors } = props;
   const classes = useStyles(props);
+  const { width: windowWidth } = useWindowSize();
 
   if (errors) {
     return (
@@ -77,7 +79,7 @@ const PortfolioPage = (props: any) => {
             <ProjectPreview
               project={project}
               className={classes.projectPreview}
-              imageWidth={Math.round(document.body.clientWidth / 2)}
+              imageWidth={Math.round(windowWidth / 2)}
             />
           </Grid>
         ))}

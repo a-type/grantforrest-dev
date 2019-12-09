@@ -3,6 +3,7 @@ import { CloudProps, Cloud } from './Cloud';
 import { Vector3 } from 'three';
 import { CloudShaderMaterial } from './CloudShaderMaterial';
 import { useColors } from './colorContext';
+import useWindowSize from '../lib/useWindowSize';
 
 const planeSize = 1000;
 const baseFieldSize = [400, 25];
@@ -15,7 +16,8 @@ export type CloudFieldProps = Omit<
 };
 
 export const CloudMap: React.FC<CloudFieldProps> = ({ numClouds = 2, ...cloudProps }) => {
-  const aspectRatio = document.body.clientWidth / document.body.clientHeight;
+  const { width: windowWidth, height: windowHeight } = useWindowSize();
+  const aspectRatio = windowWidth / windowHeight;
   const fieldWidth = baseFieldSize[0] * (aspectRatio / (16.0 / 9));
   const size: [number, number] = [fieldWidth, baseFieldSize[1]];
 

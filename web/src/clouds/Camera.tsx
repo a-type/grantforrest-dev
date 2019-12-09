@@ -33,6 +33,7 @@ export const Camera: React.FC<CameraProps> = ({ position, movementFactor = 0.002
   }));
 
   const doCameraDrift = (source: 'move' | 'drag') => ({ xy: [x, y] }: { xy: [number, number] }) => {
+    if (typeof window === 'undefined') return;
     if ((source === 'drag' && !userHasTouched) || (source === 'move' && userHasTouched)) return;
 
     const allowedDragLimit = 5;
