@@ -14,102 +14,22 @@ import { Scene } from '../clouds/Scene';
 import Navigation from '../components/Navigation';
 import { ProjectPreview } from '../components/ProjectPreview';
 import useWindowSize from '../lib/useWindowSize';
+import { BlogPostPreviewData, ProjectPreviewData } from '../fragments';
 
 export const query = graphql`
-  fragment SanityImage on SanityMainImage {
-    crop {
-      _key
-      _type
-      top
-      bottom
-      left
-      right
-    }
-    hotspot {
-      _key
-      _type
-      x
-      y
-      height
-      width
-    }
-    asset {
-      _id
-    }
-  }
-
   query IndexPageQuery {
-    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
-      title
-      description
-      keywords
-    }
-    posts: allSanityPost(
-      limit: 2
-      sort: { fields: [publishedAt], order: DESC }
-      filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
-    ) {
-      edges {
-        node {
-          id
-          publishedAt
-          mainImage {
-            ...SanityImage
-            alt
-          }
-          title
-          _rawExcerpt
-          slug {
-            current
-          }
-        }
+    posts: allContentfulBlogPost(limit: 2, sort: { fields: [createdAt], order: DESC }) {
+      nodes {
+        ...BlogPostPreview
       }
     }
-    projects: allSanityProject(
-      limit: 4
-      sort: { fields: [publishedAt], order: DESC }
-      filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
-    ) {
-      edges {
-        node {
-          id
-          publishedAt
-          title
-          _rawExcerpt
-          slug {
-            current
-          }
-          mainImage {
-            ...SanityImage
-            alt
-          }
-        }
+    projects: allContentfulProject(limit: 4, sort: { fields: [createdAt], order: DESC }) {
+      nodes {
+        ...ProjectPreview
       }
     }
   }
 `;
-
-export type BlogPostPreviewData = {
-  id: string;
-  publishedAt: string;
-  title: string;
-  _rawExcerpt: any;
-  slug: {
-    current: string;
-  };
-  mainImage: any;
-};
-
-export type ProjectPreviewData = {
-  id: string;
-  publishedAt: string;
-  title: string;
-  _rawExcerpt: any;
-  slug: {
-    current: string;
-  };
-  mainImage: any;
-};
 
 const useStyles = makeStyles(theme => ({
   heroContainer: {
@@ -148,27 +68,16 @@ const IndexPage = (props: any) => {
     );
   }
 
-  const site = (data || {}).site;
-  const postNodes: BlogPostPreviewData[] = (data || {}).posts
-    ? mapEdgesToNodes(data.posts)
-        .filter(filterOutDocsWithoutSlugs)
-        .filter(filterOutDocsPublishedInTheFuture)
-    : [];
-  const projectNodes: ProjectPreviewData[] = (data || {}).projects
-    ? mapEdgesToNodes(data.projects)
-        .filter(filterOutDocsWithoutSlugs)
-        .filter(filterOutDocsPublishedInTheFuture)
-    : [];
-
-  if (!site) {
-    throw new Error(
-      'Missing "Site settings". Open the studio at http://localhost:3333 and add some content to "Site settings" and restart the development server.',
-    );
-  }
+  const postNodes: BlogPostPreviewData[] = (data || {}).posts.nodes;
+  const projectNodes: ProjectPreviewData[] = (data || {}).projects.nodes;
 
   return (
     <Layout stickyHeader>
-      <SEO title={site.title} description={site.description} keywords={site.keywords} />
+      <SEO
+        title="Grant Forrest"
+        description="The personal website of Grant Forrest"
+        keywords={['blog', 'react', 'frontend', 'developer', 'portfolio']}
+      />
       <div className={classes.heroContainer}>
         <NoSsr>
           <div className={classes.cloudScene}>

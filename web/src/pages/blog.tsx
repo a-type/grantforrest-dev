@@ -9,23 +9,10 @@ import { Typography, Container, makeStyles } from '@material-ui/core';
 
 export const query = graphql`
   query ArchivePageQuery {
-    posts: allSanityPost(
-      sort: { fields: [publishedAt], order: DESC }
-      filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
-    ) {
+    posts: allContentfulBlogPost(sort: { fields: [createdAt], order: DESC }) {
       edges {
         node {
-          id
-          publishedAt
-          mainImage {
-            ...SanityImage
-            alt
-          }
-          title
-          _rawExcerpt
-          slug {
-            current
-          }
+          ...BlogPostPreview
         }
       }
     }
@@ -56,7 +43,7 @@ const ArchivePage = (props: any) => {
     <Layout>
       <SEO title="Archive" />
       <Container className={classes.container}>
-        <Typography variant="h1">Archive</Typography>
+        <Typography variant="h1">Blog</Typography>
         {postNodes && postNodes.length > 0 && <BlogPostPreviewGrid nodes={postNodes} />}
       </Container>
     </Layout>

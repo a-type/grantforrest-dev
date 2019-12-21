@@ -8,15 +8,15 @@ import {
   useTheme,
   useMediaQuery,
 } from '@material-ui/core';
-import { imageUrlFor } from '../lib/imageUrl';
-import { buildImageObj, getPortfolioUrl, getPortfolioElementId } from '../lib/helpers';
-import PortableText from './PortableText';
-import { ProjectPreviewData } from '../pages';
+import { getPortfolioUrl, getPortfolioElementId } from '../lib/helpers';
+import { ProjectPreviewData } from '../fragments';
 import Link from './Link';
 import clsx from 'clsx';
 import { useSpring } from '@react-spring/core';
 import { animated } from '@react-spring/web';
 import IntersectionObserver from 'inteobs';
+import RichText from './RichText';
+import Img, { FluidObject } from 'gatsby-image';
 
 export type ProjectPreviewProps = {
   project: ProjectPreviewData;
@@ -78,6 +78,11 @@ const useStyles = makeStyles<Theme, ProjectPreviewProps>(theme => ({
     transform: `translate(-50%, -50%)`,
     top: '50%',
     backgroundSize: 'cover',
+    overflow: 'hidden',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
 }));
 
@@ -87,14 +92,6 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
 
   const theme = useTheme();
   const isLarge = useMediaQuery(theme.breakpoints.up('sm'));
-
-  const imageSrc =
-    project.mainImage &&
-    imageUrlFor(buildImageObj(project.mainImage))
-      .width(props.imageWidth)
-      .height(Math.floor((9 / 16) * props.imageWidth))
-      .auto('format')
-      .url();
 
   const [isInFrame, setIsInFrame] = React.useState(false);
 
@@ -140,28 +137,35 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
     <Link
       underline="never"
       color="inherit"
-      to={getPortfolioUrl(project.publishedAt, project.slug)}
+      to={getPortfolioUrl(project.slug)}
       className={clsx(classes.root, className)}
-      id={getPortfolioElementId(project.publishedAt, project.slug)}
+      id={getPortfolioElementId(project.slug)}
       ref={rootRef as any}
     >
       <Paper className={classes.content} elevation={4}>
         <Typography variant="h2" gutterBottom>
           {project.title}
         </Typography>
-        <PortableText blocks={project._rawExcerpt} />
+        <RichText source={project.summary} />
         <Button color="inherit">View project</Button>
       </Paper>
       <animated.div
         className={classes.expandingImage}
         style={{
-          backgroundImage: `url(${imageSrc})`,
+          //backgroundImage: `url(${imageSrc})`,
           left: imageLeft,
           borderRadius: imageBorderRadius,
           width: imageWidth,
           height: imageHeight,
         }}
-      />
+      >
+        <Img
+          fluid={project.mainImage.fluid}
+          alt={project.mainImage.description}
+          className={classes.image}
+          imgStyle={{ objectFit: 'cover' }}
+        />
+      </animated.div>
     </Link>
   );
 };

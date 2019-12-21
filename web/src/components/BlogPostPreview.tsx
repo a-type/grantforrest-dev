@@ -8,24 +8,17 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import Link from './Link';
-import { buildImageObj, getBlogUrl } from '../lib/helpers';
-import { imageUrlFor } from '../lib/imageUrl';
-import PortableText from './PortableText';
+import { getBlogUrl } from '../lib/helpers';
 import { format } from 'date-fns';
+import { BlogPostPreviewData } from '../fragments';
+import RichText from './RichText';
+import GatsbyImage from 'gatsby-image';
 
-export interface BlogPostPreviewProps {
-  title: string;
-  _rawExcerpt: string;
-  mainImage: any; // todo
-  publishedAt: Date;
-  slug: any; // todo
-}
+export type BlogPostPreviewProps = BlogPostPreviewData;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {},
-  image: {
-    paddingBottom: `${(9 / 16) * 100}%`,
-  },
+  cardMedia: {},
 }));
 
 const BlogPostPreview: React.FC<BlogPostPreviewProps> = props => {
@@ -33,26 +26,15 @@ const BlogPostPreview: React.FC<BlogPostPreviewProps> = props => {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea
-        component={Link}
-        to={getBlogUrl(props.publishedAt, props.slug.current)}
-        underline="none"
-        color="inherit"
-      >
-        {props.mainImage && props.mainImage.asset && (
-          <CardMedia
-            className={classes.image}
-            image={imageUrlFor(buildImageObj(props.mainImage))
-              .width(600)
-              .height(Math.floor((9 / 16) * 600))
-              .auto('format')
-              .url()}
-            title={props.mainImage.alt}
-          />
+      <CardActionArea component={Link} to={getBlogUrl(props.slug)} underline="none" color="inherit">
+        {props.mainImage && (
+          <CardMedia className={classes.cardMedia}>
+            <GatsbyImage alt={props.mainImage.description} fluid={props.mainImage.fluid} />
+          </CardMedia>
         )}
-        <CardHeader title={props.title} subheader={format(props.publishedAt, 'MMMM Do, YYYY')} />
+        <CardHeader title={props.title} subheader={format(props.createdAt, 'MMMM Do, YYYY')} />
         <CardContent>
-          <PortableText blocks={props._rawExcerpt} />
+          <RichText source={props.excerpt} />
         </CardContent>
       </CardActionArea>
     </Card>

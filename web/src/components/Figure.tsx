@@ -1,8 +1,5 @@
 import * as React from 'react';
-import Img from 'gatsby-image';
-import { getFluidGatsbyImage } from 'gatsby-source-sanity';
-// @ts-ignore
-import clientConfig from '../../clientConfig';
+import Img, { FluidObject } from 'gatsby-image';
 import { Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -20,20 +17,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default ({ node }: { node: any }) => {
+export default ({
+  node,
+}: {
+  node: { fluid: FluidObject; description?: string; caption?: string };
+}) => {
   const classes = useStyles({ node });
-  const fluidProps = getFluidGatsbyImage(node.asset._id, { maxWidth: 675 }, clientConfig.sanity);
   return (
     <figure className={classes.figure}>
       <Img
-        fluid={fluidProps}
-        alt={node.alt}
+        fluid={node.fluid}
+        alt={node.description}
         className={classes.image}
         imgStyle={{ objectFit: 'contain' }}
       />
-      <Typography component="figcaption" variant="caption" className={classes.caption}>
-        {node.caption}
-      </Typography>
+      {node.caption && (
+        <Typography component="figcaption" variant="caption" className={classes.caption}>
+          {node.caption}
+        </Typography>
+      )}
     </figure>
   );
 };

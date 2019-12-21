@@ -13,12 +13,10 @@ module.exports = {
     'gatsby-plugin-postcss',
     'gatsby-plugin-react-helmet',
     {
-      resolve: 'gatsby-source-sanity',
+      resolve: 'gatsby-source-contentful',
       options: {
-        ...clientConfig.sanity,
-        token: process.env.SANITY_READ_TOKEN,
-        watchMode: !isProd,
-        overlayDrafts: !isProd,
+        ...clientConfig.contentful,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
     'gatsby-plugin-typescript',

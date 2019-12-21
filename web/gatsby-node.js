@@ -13,14 +13,12 @@ async function createBlogPostPages(graphql, actions, reporter) {
   const { createPage } = actions;
   const result = await graphql(`
     {
-      allSanityPost(filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }) {
+      allContentfulBlogPost {
         edges {
           node {
             id
-            publishedAt
-            slug {
-              current
-            }
+            createdAt
+            slug
           }
         }
       }
@@ -29,14 +27,13 @@ async function createBlogPostPages(graphql, actions, reporter) {
 
   if (result.errors) throw result.errors;
 
-  const postEdges = (result.data.allSanityPost || {}).edges || [];
+  const postEdges = (result.data.allContentfulBlogPost || {}).edges || [];
 
   postEdges
-    .filter(edge => !isFuture(edge.node.publishedAt))
+    .filter(edge => !isFuture(edge.node.createdAt))
     .forEach((edge, index) => {
-      const { id, slug = {}, publishedAt } = edge.node;
-      const dateSegment = format(publishedAt, 'YYYY/MM');
-      const path = `/blog/${dateSegment}/${slug.current}/`;
+      const { id, slug } = edge.node;
+      const path = `/blog/${slug}/`;
 
       reporter.info(`Creating blog post page: ${path}`);
 
@@ -52,14 +49,12 @@ async function createPortfolioPages(graphql, actions, reporter) {
   const { createPage } = actions;
   const result = await graphql(`
     {
-      allSanityProject(filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }) {
+      allContentfulProject {
         edges {
           node {
             id
-            publishedAt
-            slug {
-              current
-            }
+            createdAt
+            slug
           }
         }
       }
@@ -68,14 +63,13 @@ async function createPortfolioPages(graphql, actions, reporter) {
 
   if (result.errors) throw result.errors;
 
-  const projectEdges = (result.data.allSanityProject || {}).edges || [];
+  const projectEdges = (result.data.allContentfulProject || {}).edges || [];
 
   projectEdges
-    .filter(edge => !isFuture(edge.node.publishedAt))
+    .filter(edge => !isFuture(edge.node.createdAt))
     .forEach((edge, index) => {
-      const { id, slug = {}, publishedAt } = edge.node;
-      const dateSegment = format(publishedAt, 'YYYY/MM');
-      const path = `/portfolio/${dateSegment}/${slug.current}`;
+      const { id, slug } = edge.node;
+      const path = `/portfolio/${slug}`;
 
       reporter.info(`Creating portfolio page: ${path}`);
 

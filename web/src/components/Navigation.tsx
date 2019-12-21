@@ -1,11 +1,9 @@
 import * as React from 'react';
 import Link from './Link';
-import { Link as MuiLink, IconButton } from '@material-ui/core';
-import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/core';
-import { getPortfolioUrl, getBlogUrl, getPortfolioElementId } from '../lib/helpers';
+import { Typography, Button, makeStyles } from '@material-ui/core';
+import { getBlogUrl, getPortfolioElementId } from '../lib/helpers';
 import clsx from 'clsx';
-import { ProjectPreviewData, BlogPostPreviewData } from '../pages';
-import { format } from 'date-fns';
+import { ProjectPreviewData, BlogPostPreviewData } from '../fragments';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,11 +61,11 @@ const Navigation: React.FC<NavigationProps> = ({ projects, blogPosts, ...rest })
         Blog
       </Typography>
       <div style={{ gridArea: 'portfolio' }} className={classes.postList}>
-        {projects.map(({ slug, id, publishedAt, title }) => (
+        {projects.map(({ slug, id, title }) => (
           <Button
             className={classes.linkButton}
             key={id}
-            onClick={scrollToIdHandler(getPortfolioElementId(publishedAt, slug))}
+            onClick={scrollToIdHandler(getPortfolioElementId(slug))}
           >
             {title}
           </Button>
@@ -77,13 +75,13 @@ const Navigation: React.FC<NavigationProps> = ({ projects, blogPosts, ...rest })
         </Button>
       </div>
       <div style={{ gridArea: 'blog' }} className={classes.postList}>
-        {blogPosts.map(({ slug, id, publishedAt, title }) => (
+        {blogPosts.map(({ slug, id, title }) => (
           <Button
             className={classes.linkButton}
             component={Link}
             key={id}
             underline="none"
-            to={getBlogUrl(publishedAt, slug)}
+            to={getBlogUrl(slug)}
           >
             {title}
           </Button>

@@ -4,30 +4,17 @@ import { mapEdgesToNodes } from '../lib/helpers';
 import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
-import { ProjectPreviewData } from '.';
+import { ProjectPreviewData } from '../fragments';
 import { Grid, makeStyles } from '@material-ui/core';
 import { ProjectPreview } from '../components/ProjectPreview';
 import useWindowSize from '../lib/useWindowSize';
 
 export const query = graphql`
   query PortfolioPageQuery {
-    projects: allSanityProject(
-      sort: { fields: [publishedAt], order: DESC }
-      filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
-    ) {
+    projects: allContentfulProject(sort: { fields: [createdAt], order: DESC }) {
       edges {
         node {
-          id
-          publishedAt
-          mainImage {
-            ...SanityImage
-            alt
-          }
-          title
-          _rawExcerpt
-          slug {
-            current
-          }
+          ...ProjectPreview
         }
       }
     }

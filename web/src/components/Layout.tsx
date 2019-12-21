@@ -77,8 +77,6 @@ const Layout: React.FC<{ stickyHeader?: boolean }> = ({ children, stickyHeader =
           <div className={styles.footerWrapper}>
             <div className={styles.siteInfo}>
               &copy; {new Date().getFullYear()}, Built with{' '}
-              <Link href="https://www.sanity.io">Sanity</Link> &amp;
-              {` `}
               <Link href="https://www.gatsbyjs.org">Gatsby</Link>
             </div>
           </div>

@@ -1,29 +1,8 @@
-import { graphql, StaticQuery } from 'gatsby';
 import * as React from 'react';
 import Layout from '../components/Layout';
 
-const query = graphql`
-  query SiteTitleQuery {
-    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
-      title
-    }
-  }
-`;
-
 function LayoutContainer(props: any) {
-  return (
-    <StaticQuery
-      query={query}
-      render={data => {
-        if (!data.site) {
-          throw new Error(
-            'Missing "Site settings". Open the Studio at http://localhost:3333 and some content in "Site settings"',
-          );
-        }
-        return <Layout {...props} />;
-      }}
-    />
-  );
+  return <Layout {...props} />;
 }
 
 export default LayoutContainer;

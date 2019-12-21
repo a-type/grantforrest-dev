@@ -1,10 +1,9 @@
 import { format, distanceInWords, differenceInDays } from 'date-fns';
 import * as React from 'react';
-import { buildImageObj } from '../lib/helpers';
-import { imageUrlFor } from '../lib/imageUrl';
-import PortableText from './PortableText';
-import AuthorList from './AuthorList';
 import { makeStyles, Container, Typography } from '@material-ui/core';
+import { BlogPostFullData } from '../fragments';
+import GatsbyImage from 'gatsby-image';
+import RichText from './RichText';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -13,7 +12,8 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     background: theme.palette.grey[50],
     paddingBottom: 'calc(9 / 16 * 100%)',
-    maxHeight: '90vh',
+    maxHeight: '80vh',
+    overflow: 'hidden',
 
     '& img': {
       display: 'block',
@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
       paddingLeft: theme.spacing(2),
     },
   },
-  publishedAt: {
+  createdAt: {
     margin: '2rem 0 3rem',
     color: theme.palette.grey[500],
   },
@@ -70,63 +70,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-type BlogPostProps = {
-  _rawBody: string;
-  authors: any[]; // todo
-  categories: any[]; // todo
-  title: string;
-  mainImage: any; // todo
-  publishedAt: string;
-};
+type BlogPostProps = BlogPostFullData;
 
 function BlogPost(props: BlogPostProps) {
-  const { _rawBody, authors, categories, title, mainImage, publishedAt } = props;
+  const { body, title, mainImage, createdAt } = props;
   const styles = useStyles(props);
-
-  const hasImage = mainImage && mainImage.asset;
 
   return (
     <article className={styles.root}>
-      {hasImage && (
+      {mainImage && (
         <div className={styles.mainImage}>
-          <img
-            src={imageUrlFor(buildImageObj(mainImage))
-              .width(1200)
-              .height(Math.floor((9 / 16) * 1200))
-              .fit('crop')
-              .auto('format')
-              .url()}
-            alt={mainImage.alt}
-          />
+          <GatsbyImage fluid={mainImage.fluid} />
         </div>
       )}
-      <Container style={{ marginTop: hasImage ? 0 : 64 }}>
+      <Container style={{ marginTop: mainImage ? 0 : 64 }}>
         <div className={styles.grid}>
           <div className={styles.mainContent}>
             <Typography variant="h1" className={styles.title}>
               {title}
             </Typography>
-            {_rawBody && <PortableText blocks={_rawBody} />}
+            {body && <RichText source={body} />}
           </div>
           <aside className={styles.metaContent}>
-            {publishedAt && (
-              <div className={styles.publishedAt}>
-                {differenceInDays(new Date(publishedAt), new Date()) > 3
-                  ? distanceInWords(new Date(publishedAt), new Date())
-                  : format(new Date(publishedAt), 'MMMM Do, YYYY')}
-              </div>
-            )}
-            {authors && <AuthorList items={authors} title="Authors" />}
-            {categories && (
-              <div className={styles.categories}>
-                <Typography variant="h3" className={styles.categoriesHeadline}>
-                  Categories
-                </Typography>
-                <ul>
-                  {categories.map(category => (
-                    <li key={category._id}>{category.title}</li>
-                  ))}
-                </ul>
+            {createdAt && (
+              <div className={styles.createdAt}>
+                {differenceInDays(new Date(createdAt), new Date()) > 3
+                  ? distanceInWords(new Date(createdAt), new Date())
+                  : format(new Date(createdAt), 'MMMM Do, YYYY')}
               </div>
             )}
           </aside>
