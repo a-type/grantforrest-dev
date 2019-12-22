@@ -27,6 +27,7 @@ const useStyles = makeStyles(theme => ({
   },
   linkButton: {
     textAlign: 'left',
+    justifyContent: 'flex-start',
     minWidth: 0,
     textTransform: 'capitalize',
   },
