@@ -37,18 +37,22 @@ const useStyles = makeStyles(theme => ({
     height: '99vh',
     position: 'relative',
     marginBottom: theme.spacing(2),
+    padding: theme.spacing(4),
+    overflow: 'hidden',
   },
   cloudScene: {
     width: '100%',
     height: '100%',
+    borderRadius: theme.shape.borderRadius * 4,
+    overflow: 'hidden',
   },
   container: {
     marginTop: '50vh',
   },
   navigation: {
     position: 'absolute',
-    bottom: theme.spacing(3),
-    left: theme.spacing(3),
+    bottom: theme.spacing(5),
+    left: theme.spacing(5),
   },
   projectPreview: {
     height: '90vh',

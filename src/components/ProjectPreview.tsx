@@ -60,18 +60,9 @@ const useStyles = makeStyles<Theme, ProjectPreviewProps>(theme => ({
 
     [theme.breakpoints.up('sm')]: {
       marginBottom: 'auto',
-      marginLeft: props.side === 'left' ? 0 : 'auto',
-      marginRight: props.side === 'left' ? 'auto' : 0,
+      marginLeft: props.side === 'left' ? theme.spacing(4) : 'auto',
+      marginRight: props.side === 'left' ? 'auto' : theme.spacing(4),
     },
-    // bottom: theme.spacing(2),
-    // left: theme.spacing(2),
-    // right: theme.spacing(2),
-    // [theme.breakpoints.up('sm')]: {
-    //   top: '50%',
-    //   left: props.side === 'left' ? '33%' : '66%',
-    //   right: 'auto',
-    //   transform: 'translate(-50%, -50%)',
-    // },
   }),
   expandingImage: {
     position: 'absolute',
@@ -79,6 +70,7 @@ const useStyles = makeStyles<Theme, ProjectPreviewProps>(theme => ({
     top: '50%',
     backgroundSize: 'cover',
     overflow: 'hidden',
+    borderRadius: theme.shape.borderRadius * 4,
   },
   image: {
     width: '100%',
@@ -117,17 +109,17 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
     }
   };
 
-  const { imageLeft, imageBorderRadius, imageWidth, imageHeight } = useSpring(
+  const { imageLeft, imageWidth, imageHeight } = useSpring(
     isInFrame
       ? {
           imageLeft: '50%',
-          imageBorderRadius: '0',
-          imageWidth: rootWidth,
+          // imageBorderRadius: '0',
+          imageWidth: rootWidth - theme.spacing(8),
           imageHeight: rootHeight,
         }
       : {
           imageLeft: isLarge ? (side === 'right' ? '33%' : '66%') : '50%',
-          imageBorderRadius: '100%',
+          // imageBorderRadius: '100%',
           imageWidth: rootHeight / 2,
           imageHeight: rootHeight / 2,
         },
@@ -142,7 +134,7 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
       id={getPortfolioElementId(project.slug)}
       ref={rootRef as any}
     >
-      <Paper className={classes.content} elevation={4}>
+      <Paper className={classes.content} elevation={isInFrame ? 4 : 0}>
         <Typography variant="h2" gutterBottom>
           {project.title}
         </Typography>
@@ -154,7 +146,7 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
         style={{
           //backgroundImage: `url(${imageSrc})`,
           left: imageLeft,
-          borderRadius: imageBorderRadius,
+          // borderRadius: imageBorderRadius,
           width: imageWidth,
           height: imageHeight,
         }}
