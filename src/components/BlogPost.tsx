@@ -1,23 +1,32 @@
 import { format, distanceInWords, differenceInDays } from 'date-fns';
 import * as React from 'react';
-import { makeStyles, Container, Typography } from '@material-ui/core';
+import {
+  makeStyles,
+  Container,
+  Typography,
+  useScrollTrigger,
+  useTheme,
+  useMediaQuery,
+} from '@material-ui/core';
 import { BlogPostFullData } from '../fragments';
 import GatsbyImage from 'gatsby-image';
 import RichText from './RichText';
+import { useSpring, animated } from '@react-spring/web';
 
 const useStyles = makeStyles(theme => ({
   root: {},
-  mainImage: {
+  mainImageContainer: {
     display: 'block',
     position: 'relative',
+    width: '100%',
+    padding: theme.spacing(1),
+    paddingTop: 64 + theme.spacing(1),
     background: theme.palette.grey[50],
-    paddingBottom: 'calc(9 / 16 * 100%)',
-    maxHeight: '80vh',
+    height: '40vh',
     overflow: 'hidden',
 
     '& img': {
       display: 'block',
-      position: 'absolute',
       top: '0',
       left: '0',
       width: '100%',
@@ -25,6 +34,17 @@ const useStyles = makeStyles(theme => ({
       verticalAlign: 'top',
       objectFit: 'cover',
     },
+
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(2),
+      paddingTop: 64 + theme.spacing(2),
+    },
+  },
+  mainImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: theme.shape.borderRadius * 4,
+    overflow: 'hidden',
   },
   grid: {
     [theme.breakpoints.up('md')]: {
@@ -72,18 +92,21 @@ const useStyles = makeStyles(theme => ({
 
 type BlogPostProps = BlogPostFullData;
 
+const sixteenNine = (8.0 / 16.0) * 100;
+const twoFour = (4.0 / 2.0) * 100;
+
 function BlogPost(props: BlogPostProps) {
   const { body, title, mainImage, createdAt } = props;
   const styles = useStyles(props);
 
   return (
-    <article className={styles.root}>
+    <article className={styles.root} style={{ marginTop: mainImage ? 0 : 64 }}>
       {mainImage && (
-        <div className={styles.mainImage}>
-          <GatsbyImage fluid={mainImage.fluid} />
-        </div>
+        <animated.div className={styles.mainImageContainer}>
+          <GatsbyImage className={styles.mainImage} fluid={mainImage.fluid} />
+        </animated.div>
       )}
-      <Container style={{ marginTop: mainImage ? 0 : 64 }}>
+      <Container>
         <div className={styles.grid}>
           <div className={styles.mainContent}>
             <Typography variant="h1" className={styles.title}>

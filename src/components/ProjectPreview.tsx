@@ -37,9 +37,13 @@ const useStyles = makeStyles<Theme, ProjectPreviewProps>(theme => ({
     textDecoration: 'none',
     cursor: 'pointer',
     position: 'relative',
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
     [theme.breakpoints.up('sm')]: {
       paddingLeft: theme.spacing(4),
       paddingRight: theme.spacing(4),
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
     },
   },
   content: props => ({
@@ -66,8 +70,10 @@ const useStyles = makeStyles<Theme, ProjectPreviewProps>(theme => ({
   }),
   expandingImage: {
     position: 'absolute',
-    transform: `translate(-50%, -50%)`,
-    top: '50%',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
     backgroundSize: 'cover',
     overflow: 'hidden',
     borderRadius: theme.shape.borderRadius * 4,
@@ -82,49 +88,6 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
   const { project, className, side = 'right' } = props;
   const classes = useStyles(props);
 
-  const theme = useTheme();
-  const isLarge = useMediaQuery(theme.breakpoints.up('sm'));
-
-  const [isInFrame, setIsInFrame] = React.useState(false);
-
-  const intersectionObserverRef = React.useRef(
-    new IntersectionObserver(
-      (entries: any[]) => {
-        entries.forEach((entry: any) => {
-          setIsInFrame(entry.isIntersecting);
-        });
-      },
-      {
-        threshold: 0.7,
-      },
-    ),
-  );
-
-  const [[rootWidth, rootHeight], setRootSize] = React.useState([0, 0]);
-  const rootRef = (el: HTMLElement) => {
-    if (el) {
-      setRootSize([el.clientWidth, el.clientHeight]);
-      intersectionObserverRef.current.disconnect();
-      intersectionObserverRef.current.observe(el);
-    }
-  };
-
-  const { imageLeft, imageWidth, imageHeight } = useSpring(
-    isInFrame
-      ? {
-          imageLeft: '50%',
-          // imageBorderRadius: '0',
-          imageWidth: rootWidth - theme.spacing(8),
-          imageHeight: rootHeight,
-        }
-      : {
-          imageLeft: isLarge ? (side === 'right' ? '33%' : '66%') : '50%',
-          // imageBorderRadius: '100%',
-          imageWidth: rootHeight / 2,
-          imageHeight: rootHeight / 2,
-        },
-  );
-
   return (
     <Link
       underline="never"
@@ -132,25 +95,15 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
       to={getPortfolioUrl(project.slug)}
       className={clsx(classes.root, className)}
       id={getPortfolioElementId(project.slug)}
-      ref={rootRef as any}
     >
-      <Paper className={classes.content} elevation={isInFrame ? 4 : 0}>
+      <Paper className={classes.content} elevation={2}>
         <Typography variant="h2" gutterBottom>
           {project.title}
         </Typography>
         <RichText source={project.summary} />
         <Button color="inherit">View project</Button>
       </Paper>
-      <animated.div
-        className={classes.expandingImage}
-        style={{
-          //backgroundImage: `url(${imageSrc})`,
-          left: imageLeft,
-          // borderRadius: imageBorderRadius,
-          width: imageWidth,
-          height: imageHeight,
-        }}
-      >
+      <animated.div className={classes.expandingImage}>
         <Img
           fluid={project.mainImage.fluid}
           alt={project.mainImage.description}

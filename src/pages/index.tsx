@@ -37,8 +37,11 @@ const useStyles = makeStyles(theme => ({
     height: '99vh',
     position: 'relative',
     marginBottom: theme.spacing(2),
-    padding: theme.spacing(4),
+    padding: theme.spacing(1),
     overflow: 'hidden',
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(2),
+    },
   },
   cloudScene: {
     width: '100%',
@@ -56,6 +59,7 @@ const useStyles = makeStyles(theme => ({
   },
   projectPreview: {
     height: '90vh',
+    marginBottom: theme.spacing(2),
   },
 }));
 

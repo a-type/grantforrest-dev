@@ -61,6 +61,7 @@ const PortfolioPage = (props: any) => {
             md={6}
             lg={4}
             xl={4}
+            spacing={2}
             className={classes.gridItem}
           >
             <ProjectPreview
