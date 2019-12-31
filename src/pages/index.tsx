@@ -39,14 +39,11 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2),
     padding: theme.spacing(1),
     overflow: 'hidden',
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(2),
-    },
   },
   cloudScene: {
     width: '100%',
     height: '100%',
-    borderRadius: theme.shape.borderRadius * 4,
+    borderRadius: 24,
     overflow: 'hidden',
   },
   container: {

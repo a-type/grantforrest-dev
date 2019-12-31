@@ -51,7 +51,7 @@ const PortfolioPage = (props: any) => {
   return (
     <Layout>
       <SEO title="Portfolio" />
-      <Grid container className={classes.grid}>
+      <Grid container className={classes.grid} spacing={2}>
         {nodes.map(project => (
           <Grid
             item
@@ -61,7 +61,6 @@ const PortfolioPage = (props: any) => {
             md={6}
             lg={4}
             xl={4}
-            spacing={2}
             className={classes.gridItem}
           >
             <ProjectPreview

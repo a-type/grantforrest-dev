@@ -44,9 +44,9 @@ const InnerScene: React.FC<SceneProps> = ({}) => {
         <Sun />
         <ambientLight color={lightContext.ambientLightColor} />
         <CloudMap velocity={windVelocity} />
-        <Text size={1} position={textPosition}>
+        {/* <Text size={1} position={textPosition}>
           {['Grant', 'Forrest'].join('\n')}
-        </Text>
+        </Text> */}
         {rays.map(([start, end], idx) => (
           <Ray start={start} end={end} key={idx} />
         ))}

@@ -1,6 +1,10 @@
 import { createMuiTheme, Theme } from '@material-ui/core/styles';
 
-const defaultTheme = createMuiTheme();
+const defaultTheme = createMuiTheme({
+  shape: {
+    borderRadius: 24,
+  },
+});
 
 const { breakpoints } = defaultTheme;
 

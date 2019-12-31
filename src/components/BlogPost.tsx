@@ -34,16 +34,11 @@ const useStyles = makeStyles(theme => ({
       verticalAlign: 'top',
       objectFit: 'cover',
     },
-
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(2),
-      paddingTop: 64 + theme.spacing(2),
-    },
   },
   mainImage: {
     width: '100%',
     height: '100%',
-    borderRadius: theme.shape.borderRadius * 4,
+    borderRadius: theme.shape.borderRadius,
     overflow: 'hidden',
   },
   grid: {

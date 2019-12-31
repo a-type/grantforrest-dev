@@ -76,7 +76,7 @@ const useStyles = makeStyles<Theme, ProjectPreviewProps>(theme => ({
     right: 0,
     backgroundSize: 'cover',
     overflow: 'hidden',
-    borderRadius: theme.shape.borderRadius * 4,
+    borderRadius: theme.shape.borderRadius,
   },
   image: {
     width: '100%',
