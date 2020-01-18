@@ -13,6 +13,15 @@ const defaultTheme = createMuiTheme({
 
 const { breakpoints } = defaultTheme;
 
+const headingStyles = {
+  fontFamily: '"Roboto", sans-serif',
+  fontWeight: 200,
+  lineHeight: 1.5,
+  '&$gutterBottom': {
+    marginBottom: defaultTheme.spacing(2),
+  },
+};
+
 const theme: Theme = {
   ...defaultTheme,
   overrides: {
@@ -22,9 +31,7 @@ const theme: Theme = {
         [breakpoints.down('xs')]: {
           fontSize: '3rem',
         },
-        '&$gutterBottom': {
-          marginBottom: defaultTheme.spacing(2),
-        },
+        ...headingStyles,
       },
       h2: {
         opacity: 0.75,
@@ -33,19 +40,13 @@ const theme: Theme = {
         [breakpoints.down('xs')]: {
           fontSize: '2rem',
         },
-        '&$gutterBottom': {
-          marginBottom: defaultTheme.spacing(2),
-        },
+        ...headingStyles,
       },
       h3: {
-        '&$gutterBottom': {
-          marginBottom: defaultTheme.spacing(2),
-        },
+        ...headingStyles,
       },
       h4: {
-        '&$gutterBottom': {
-          marginBottom: defaultTheme.spacing(2),
-        },
+        ...headingStyles,
       },
       paragraph: {
         lineHeight: 1.5,

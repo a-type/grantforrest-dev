@@ -59,11 +59,11 @@ const useStyles = makeStyles(theme => ({
   },
   metaContent: {
     alignSelf: 'start',
-    paddingLeft: theme.spacing(1),
-    paddingBottom: theme.spacing(0.5),
+    paddingBottom: theme.spacing(1),
+    borderBottom: `1px solid ${theme.palette.grey[200]}`,
+    marginBottom: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
-      borderBottom: `1px solid ${theme.palette.grey[200]}`,
-      marginBottom: theme.spacing(1),
+      paddingLeft: theme.spacing(1),
     },
   },
   createdAt: {

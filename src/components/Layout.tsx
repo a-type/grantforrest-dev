@@ -68,7 +68,7 @@ const Layout: React.FC<{ stickyHeader?: boolean }> = ({ children, stickyHeader =
 
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            href="https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,700&display=swap"
           />
         </Helmet>
         <Header sticky={stickyHeader} />
