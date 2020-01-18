@@ -4,6 +4,9 @@ const defaultTheme = createMuiTheme({
   shape: {
     borderRadius: 24,
   },
+  typography: {
+    fontSize: 16,
+  },
 });
 
 const { breakpoints } = defaultTheme;
@@ -13,10 +16,13 @@ const theme: Theme = {
   overrides: {
     MuiTypography: {
       h1: {
-        fontSize: '5rem',
+        fontSize: '4rem',
         [breakpoints.down('xs')]: {
           fontSize: '3rem',
         },
+      },
+      paragraph: {
+        lineHeight: 1.5,
       },
     },
   },

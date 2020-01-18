@@ -14,7 +14,10 @@ import RichText from './RichText';
 import { useSpring, animated } from '@react-spring/web';
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
   mainImageContainer: {
     display: 'block',
     position: 'relative',
@@ -56,13 +59,14 @@ const useStyles = makeStyles(theme => ({
   },
   metaContent: {
     alignSelf: 'start',
+    paddingLeft: theme.spacing(1),
+    paddingBottom: theme.spacing(0.5),
     [theme.breakpoints.up('md')]: {
-      borderLeft: `1px solid ${theme.palette.grey[200]}`,
-      paddingLeft: theme.spacing(2),
+      borderBottom: `1px solid ${theme.palette.grey[200]}`,
+      marginBottom: theme.spacing(1),
     },
   },
   createdAt: {
-    margin: '2rem 0 3rem',
     color: theme.palette.grey[500],
   },
   categories: {
@@ -95,32 +99,33 @@ function BlogPost(props: BlogPostProps) {
   const styles = useStyles(props);
 
   return (
-    <article className={styles.root} style={{ marginTop: mainImage ? 0 : 64 }}>
+    <Container
+      component="article"
+      maxWidth="md"
+      className={styles.root}
+      style={{ marginTop: mainImage ? 0 : 64 }}
+    >
       {mainImage && (
         <animated.div className={styles.mainImageContainer}>
           <GatsbyImage className={styles.mainImage} fluid={mainImage.fluid} />
         </animated.div>
       )}
-      <Container>
-        <div className={styles.grid}>
-          <div className={styles.mainContent}>
-            <Typography variant="h1" className={styles.title}>
-              {title}
-            </Typography>
-            {body && <RichText source={body} />}
-          </div>
-          <aside className={styles.metaContent}>
-            {createdAt && (
-              <div className={styles.createdAt}>
-                {differenceInDays(new Date(createdAt), new Date()) > 3
-                  ? distanceInWords(new Date(createdAt), new Date())
-                  : format(new Date(createdAt), 'MMMM Do, YYYY')}
-              </div>
-            )}
-          </aside>
-        </div>
-      </Container>
-    </article>
+      <div className={styles.mainContent}>
+        <Typography variant="h1" className={styles.title}>
+          {title}
+        </Typography>
+        <aside className={styles.metaContent}>
+          {createdAt && (
+            <div className={styles.createdAt}>
+              {differenceInDays(new Date(createdAt), new Date()) > 3
+                ? distanceInWords(new Date(createdAt), new Date())
+                : format(new Date(createdAt), 'MMMM Do, YYYY')}
+            </div>
+          )}
+        </aside>
+        {body && <RichText source={body} />}
+      </div>
+    </Container>
   );
 }
 
