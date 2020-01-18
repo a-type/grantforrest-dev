@@ -81,7 +81,7 @@ const options = {
               title={title ? title['en-US'] : null}
               alt={description ? description['en-US'] : null}
               src={file['en-US'].url}
-              style={{ maxWidth: '100%' }}
+              style={{ maxWidth: '100%', marginBottom: 32 }}
             />
           );
         case 'application':

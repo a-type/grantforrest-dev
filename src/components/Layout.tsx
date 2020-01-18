@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Header from './Header';
 import { MuiThemeProvider, makeStyles, CssBaseline, Link } from '@material-ui/core';
-import theme from '../themes/light';
+import theme from '../themes/base';
 import Helmet from 'react-helmet';
 import { withPrefix } from 'gatsby';
 
