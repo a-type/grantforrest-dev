@@ -51,6 +51,7 @@
     "gatsby-plugin-material-ui": "^2.1.6",
     "gatsby-plugin-typescript": "^2.1.15",
     "inteobs": "^1.0.3",
+    "react-spring": "^9.0.0-beta.34",
     "react-three-fiber": "3.0.7",
     "react-use-gesture": "^6.0.14",
     "seedrandom": "^3.0.5",

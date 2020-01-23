@@ -30,6 +30,12 @@ const rays = new Array(4).fill(null).map((_, idx) => {
   return [new Vector3(-100, y, z), new Vector3(100, y, z)];
 });
 
+const resolution = () =>
+  window.document.documentElement.clientHeight * window.document.documentElement.clientWidth;
+const initialResolution = resolution();
+const defaultPixelRatio =
+  initialResolution > 500000 ? (initialResolution > 1000000 ? 0.5 : 0.75) : window.devicePixelRatio;
+
 const InnerScene: React.FC<SceneProps> = ({}) => {
   const colors = useColors();
   const lightContext = React.useContext(LightContext);
@@ -38,6 +44,7 @@ const InnerScene: React.FC<SceneProps> = ({}) => {
     <Canvas
       shadowMap={{ type: PCFSoftShadowMap }}
       style={{ backgroundColor: `#${colors.sky.getHexString()}` }}
+      pixelRatio={defaultPixelRatio}
     >
       <React.Suspense fallback={null}>
         <Camera position={cameraPosition} />

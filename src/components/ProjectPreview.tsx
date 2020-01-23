@@ -1,22 +1,11 @@
 import * as React from 'react';
-import {
-  makeStyles,
-  Typography,
-  Button,
-  Paper,
-  Theme,
-  useTheme,
-  useMediaQuery,
-} from '@material-ui/core';
+import { makeStyles, Typography, Button, Paper, Theme } from '@material-ui/core';
 import { getPortfolioUrl, getPortfolioElementId } from '../lib/helpers';
 import { ProjectPreviewData } from '../fragments';
 import Link from './Link';
 import clsx from 'clsx';
-import { useSpring } from '@react-spring/core';
-import { animated } from '@react-spring/web';
-import IntersectionObserver from 'inteobs';
 import RichText from './RichText';
-import Img, { FluidObject } from 'gatsby-image';
+import Img from 'gatsby-image';
 
 export type ProjectPreviewProps = {
   project: ProjectPreviewData;
@@ -59,13 +48,10 @@ const useStyles = makeStyles<Theme, ProjectPreviewProps>(theme => ({
     position: 'relative',
     zIndex: 1,
     marginTop: 'auto',
-    marginLeft: 0,
-    marginRight: 0,
+    margin: 'auto',
 
     [theme.breakpoints.up('sm')]: {
       marginBottom: 'auto',
-      marginLeft: props.side === 'left' ? theme.spacing(4) : 'auto',
-      marginRight: props.side === 'left' ? 'auto' : theme.spacing(4),
     },
   }),
   expandingImage: {
@@ -103,14 +89,14 @@ export const ProjectPreview: React.FC<ProjectPreviewProps> = props => {
         <RichText source={project.summary} />
         <Button color="inherit">View project</Button>
       </Paper>
-      <animated.div className={classes.expandingImage}>
+      <div className={classes.expandingImage}>
         <Img
           fluid={project.mainImage.fluid}
           alt={project.mainImage.description}
           className={classes.image}
           imgStyle={{ objectFit: 'cover' }}
         />
-      </animated.div>
+      </div>
     </Link>
   );
 };

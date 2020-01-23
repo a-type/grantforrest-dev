@@ -35,7 +35,7 @@ export const CloudMap: React.FC<CloudFieldProps> = ({ numClouds = 2, ...cloudPro
       size: randomSize(),
     };
 
-    for (let i = 0; i < numClouds; i++) {
+    for (let i = 0; i < numClouds - 1; i++) {
       const id = randomId();
       initClouds[id] = {
         id,

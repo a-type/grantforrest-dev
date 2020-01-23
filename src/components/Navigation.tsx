@@ -1,35 +1,17 @@
 import * as React from 'react';
-import Link from './Link';
-import { Typography, Button, makeStyles } from '@material-ui/core';
-import { getBlogUrl, getPortfolioElementId } from '../lib/helpers';
+import { Button, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { ProjectPreviewData, BlogPostPreviewData } from '../fragments';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
-    display: 'grid',
-    gridTemplateRows: 'auto 1fr',
-    gridTemplateColumns: 'auto 1fr',
-    gridTemplateAreas: '"portfolioLabel blogLabel" "portfolio blog"',
-    gridGap: theme.spacing(1),
-  },
-  postList: {
     display: 'flex',
     flexDirection: 'column',
-    '& > * + *': {
-      marginTop: theme.spacing(1),
-      marginRight: 'auto',
-    },
-  },
-  postsLabel: {
-    fontSize: theme.typography.pxToRem(12),
-    marginLeft: theme.spacing(1),
   },
   linkButton: {
-    textAlign: 'left',
-    justifyContent: 'flex-start',
     minWidth: 0,
     textTransform: 'capitalize',
+    fontSize: '10vmin',
   },
 }));
 
@@ -55,49 +37,12 @@ const Navigation: React.FC<NavigationProps> = ({ projects, blogPosts, ...rest })
 
   return (
     <div {...rest} className={clsx(classes.root, rest.className)}>
-      <Typography style={{ gridArea: 'portfolioLabel' }} className={classes.postsLabel}>
-        Portfolio
-      </Typography>
-      <Typography style={{ gridArea: 'blogLabel' }} className={classes.postsLabel}>
-        Blog
-      </Typography>
-      <div style={{ gridArea: 'portfolio' }} className={classes.postList}>
-        {projects.map(({ slug, id, title }) => (
-          <Button
-            className={classes.linkButton}
-            key={id}
-            onClick={scrollToIdHandler(getPortfolioElementId(slug))}
-          >
-            {title}
-          </Button>
-        ))}
-        <Button className={classes.linkButton} component={Link} underline="none" to="/portfolio">
-          All
-        </Button>
-      </div>
-      <div style={{ gridArea: 'blog' }} className={classes.postList}>
-        {blogPosts.map(({ slug, id, title }) => (
-          <Button
-            className={classes.linkButton}
-            component={Link}
-            key={id}
-            underline="none"
-            to={getBlogUrl(slug)}
-          >
-            {title}
-          </Button>
-        ))}
-        <Button
-          className={classes.linkButton}
-          component={Link}
-          to="/blog"
-          color="inherit"
-          underline="none"
-          style={{ gridArea: 'blog' }}
-        >
-          All
-        </Button>
-      </div>
+      <Button color="primary" className={classes.linkButton} onClick={scrollToIdHandler('about')}>
+        About
+      </Button>
+      <Button color="primary" className={classes.linkButton} onClick={scrollToIdHandler('work')}>
+        Work
+      </Button>
     </div>
   );
 };
