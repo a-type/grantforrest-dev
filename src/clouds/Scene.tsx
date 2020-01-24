@@ -31,10 +31,10 @@ const rays = new Array(4).fill(null).map((_, idx) => {
 });
 
 const resolution = () =>
-  window.document.documentElement.clientHeight * window.document.documentElement.clientWidth;
+  window ? window.document.documentElement.clientHeight * window.document.documentElement.clientWidth : 0;
 const initialResolution = resolution();
 const defaultPixelRatio =
-  initialResolution > 500000 ? (initialResolution > 1000000 ? 0.5 : 0.75) : window.devicePixelRatio;
+  initialResolution > 500000 ? (initialResolution > 1000000 ? 0.5 : 0.75) : window ? window.devicePixelRatio : 0;
 
 const InnerScene: React.FC<SceneProps> = ({}) => {
   const colors = useColors();
