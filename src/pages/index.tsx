@@ -47,7 +47,6 @@ const useStyles = makeStyles(theme => ({
   heroContainer: {
     width: '100%',
     height: '100vh',
-    padding: theme.spacing(1),
     overflow: 'hidden',
     position: 'relative',
   },
@@ -56,6 +55,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     borderRadius: 24,
     overflow: 'hidden',
+    margin: theme.spacing(1),
   },
   container: {
     marginTop: '50vh',

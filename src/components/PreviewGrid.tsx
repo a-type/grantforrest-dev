@@ -23,7 +23,7 @@ export interface PreviewGridProps {
   previewables: {
     title: string;
     excerpt: any | null;
-    coverImage: any;
+    coverImage?: any;
     url: string;
     size: PreviewSize;
     createdAt: string;
