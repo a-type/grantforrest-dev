@@ -11,9 +11,11 @@ export default (props: any) => (
     width="438.549px"
     height="438.549px"
     viewBox="0 0 438.549 438.549"
-    style={{ enableBackground: 'new 0 0 438.549 438.549', fill: 'currentColor' } as any}
     xmlSpace="preserve"
     {...props}
+    style={
+      { ...props.style, enableBackground: 'new 0 0 438.549 438.549', fill: 'currentColor' } as any
+    }
   >
     <g>
       <path

@@ -6,12 +6,13 @@ import Layout from '../containers/Layout';
 import { Container, makeStyles, NoSsr, Typography, Button, Paper } from '@material-ui/core';
 import { Scene } from '../clouds/Scene';
 import Navigation from '../components/Navigation';
-import { BlogPostPreviewData, ProjectPreviewData } from '../fragments';
+import { BlogPostPreviewData, ProjectPreviewData, GithubReposData } from '../fragments';
 import Img from 'gatsby-image';
 import Link from '../components/Link';
 import PreviewGrid from '../components/PreviewGrid';
 import { getPortfolioUrl } from '../lib/helpers';
-import { projectToPreviewable } from '../lib/previewables';
+import { projectToPreviewable, repoToPreviewable } from '../lib/previewables';
+import { compareDesc } from 'date-fns';
 
 export const query = graphql`
   query IndexPageQuery {
@@ -35,6 +36,9 @@ export const query = graphql`
           }
         }
       }
+    }
+    github {
+      ...GithubRepos
     }
   }
 `;
@@ -133,9 +137,14 @@ const IndexPage = (props: any) => {
 
   const postNodes: BlogPostPreviewData[] = (data || {}).posts.nodes;
   const projectNodes: ProjectPreviewData[] = (data || {}).projects.nodes;
+  const github: GithubReposData = (data || {}).github;
+  const githubRepos = github.viewer.pinnedRepositories.nodes;
   const author: any = (data || {}).authors.nodes[0];
 
-  const previewables = projectNodes.map(projectToPreviewable);
+  const previewables = [
+    ...projectNodes.map(projectToPreviewable),
+    ...githubRepos.map(repoToPreviewable),
+  ].sort((a, b) => compareDesc(a.createdAt, b.createdAt));
 
   return (
     <Layout>

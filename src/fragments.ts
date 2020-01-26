@@ -128,3 +128,55 @@ export type ProjectFullData = {
     json: any;
   };
 };
+
+export const GithubReposFragment = graphql`
+  fragment GithubRepos on GitHub {
+    viewer {
+      pinnedRepositories(first: 5, orderBy: { direction: ASC, field: CREATED_AT }) {
+        nodes {
+          id
+          createdAt
+          description
+          forkCount
+          homepageUrl
+          name
+          primaryLanguage {
+            name
+            color
+          }
+          pushedAt
+          url
+          stargazers {
+            totalCount
+          }
+        }
+      }
+    }
+  }
+`;
+
+export type GithubReposData = {
+  viewer: {
+    pinnedRepositories: {
+      nodes: GithubRepoPreview[];
+    };
+  };
+};
+
+export type GithubRepoPreview = {
+  id: string;
+  createdAt: string;
+  description: string;
+  forkCount: number;
+  homepageUrl: string;
+  name: string;
+  primaryLanguage: {
+    name: string;
+    color: string;
+  };
+  pushedAt: string;
+  url: string;
+  stargazers: {
+    totalCount: number;
+  };
+};

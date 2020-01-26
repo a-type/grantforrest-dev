@@ -8,6 +8,8 @@ import {
   CardMedia,
   CardHeader,
   CardContent,
+  Typography,
+  Link as MuiLink,
 } from '@material-ui/core';
 import GatsbyImage from 'gatsby-image';
 import { format } from 'date-fns';
@@ -15,6 +17,7 @@ import RichText from './RichText';
 import Link from './Link';
 
 type PreviewSize = 'small' | 'medium' | 'large';
+type PreviewType = 'project' | 'repo' | 'post';
 
 export interface PreviewGridProps {
   previewables: {
@@ -24,12 +27,14 @@ export interface PreviewGridProps {
     url: string;
     size: PreviewSize;
     createdAt: string;
+    type: PreviewType;
+    extraContent?: React.ReactNode;
   }[];
 }
 
 const useStyles = makeStyles<Theme, PreviewGridProps>(theme => ({
   previewCard: {
-    boxShadow: `-6px -6px 16px 0 #ffffffc0, 6px 6px 16px 0 #d1cdc780`,
+    boxShadow: `-6px -6px 16px 0 #ffffff90, 6px 6px 16px 0 #d1cdc780`,
     overflow: 'visible',
   },
   previewCardMedia: {
@@ -42,6 +47,7 @@ const useStyles = makeStyles<Theme, PreviewGridProps>(theme => ({
   },
   previewCardActionArea: {
     borderRadius: theme.shape.borderRadius,
+    transition: theme.transitions.create('box-shadow'),
     '&:focus': {
       boxShadow: `0 0 0 8px ${theme.palette.secondary.main}`,
     },
@@ -71,8 +77,8 @@ const toGridSizes = (size: PreviewSize) => {
         xs: 6 as const,
         sm: 4 as const,
         md: 4 as const,
-        lg: 3 as const,
-        xl: 3 as const,
+        lg: 4 as const,
+        xl: 4 as const,
       };
   }
 };
@@ -88,8 +94,15 @@ const PreviewGrid: React.FC<PreviewGridProps> = props => {
           <Card className={classes.previewCard}>
             <CardActionArea
               className={classes.previewCardActionArea}
-              component={Link}
+              component={previewable.url.startsWith('http') ? MuiLink : Link}
               to={previewable.url}
+              href={previewable.url}
+              {...(previewable.url.startsWith('http')
+                ? {
+                    target: '_blank',
+                    rel: 'noopener',
+                  }
+                : {})}
               underline="none"
               color="inherit"
               classes={{ focusHighlight: classes.previewCardActionFocusHighlight }}
@@ -107,7 +120,12 @@ const PreviewGrid: React.FC<PreviewGridProps> = props => {
                 subheader={format(new Date(previewable.createdAt), 'MMMM Do, YYYY')}
               />
               <CardContent>
-                <RichText source={previewable.excerpt} />
+                {previewable.extraContent}
+                {typeof previewable.excerpt === 'string' ? (
+                  <Typography>{previewable.excerpt}</Typography>
+                ) : (
+                  <RichText source={previewable.excerpt} />
+                )}
               </CardContent>
             </CardActionArea>
           </Card>
