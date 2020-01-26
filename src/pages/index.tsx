@@ -51,8 +51,8 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
   },
   cloudScene: {
-    width: '100%',
-    height: '100%',
+    width: `calc(100% - ${theme.spacing(2)}px)`,
+    height: `calc(100% - ${theme.spacing(2)}px)`,
     borderRadius: 24,
     overflow: 'hidden',
     margin: theme.spacing(1),
