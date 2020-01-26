@@ -111,9 +111,16 @@ const useStyles = makeStyles<Theme, PreviewGridProps>(theme => ({
   },
   previewCardContent: {
     paddingTop: 0,
+    paddingBottom: theme.spacing(3),
+  },
+  previewCardLabels: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   label: {
     marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -161,7 +168,12 @@ const PreviewGrid: React.FC<PreviewGridProps> = props => {
                 subheader={format(new Date(previewable.createdAt), 'MMMM Do, YYYY')}
               />
               <CardContent className={classes.previewCardContent}>
-                <Box display="flex" flexDirection="row" mb={1}>
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  mb={1}
+                  className={classes.previewCardLabels}
+                >
                   {previewable.labels.map(label => (
                     <Chip className={classes.label} label={label} />
                   ))}
