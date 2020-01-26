@@ -6,6 +6,8 @@ import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
 import { Typography, Container, makeStyles } from '@material-ui/core';
+import PreviewGrid from '../components/PreviewGrid';
+import { postToPreviewable } from '../lib/previewables';
 
 export const query = graphql`
   query ArchivePageQuery {
@@ -21,7 +23,7 @@ export const query = graphql`
 
 const useStyles = makeStyles(theme => ({
   container: {
-    marginTop: 64,
+    marginTop: theme.spacing(12),
   },
 }));
 
@@ -38,13 +40,13 @@ const ArchivePage = (props: any) => {
   }
 
   const postNodes = data && data.posts && mapEdgesToNodes(data.posts);
+  const previewables = postNodes.map(postToPreviewable);
 
   return (
     <Layout>
       <SEO title="Archive" />
       <Container className={classes.container}>
-        <Typography variant="h1">Blog</Typography>
-        {postNodes && postNodes.length > 0 && <BlogPostPreviewGrid nodes={postNodes} />}
+        <PreviewGrid previewables={previewables} />
       </Container>
     </Layout>
   );

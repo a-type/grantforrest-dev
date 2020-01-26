@@ -3,14 +3,15 @@ import { graphql } from 'gatsby';
 import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
-import { Container, makeStyles, NoSsr, Typography, Button } from '@material-ui/core';
+import { Container, makeStyles, NoSsr, Typography, Button, Paper } from '@material-ui/core';
 import { Scene } from '../clouds/Scene';
 import Navigation from '../components/Navigation';
-import { ProjectPreview } from '../components/ProjectPreview';
-import useWindowSize from '../lib/useWindowSize';
 import { BlogPostPreviewData, ProjectPreviewData } from '../fragments';
 import Img from 'gatsby-image';
 import Link from '../components/Link';
+import PreviewGrid from '../components/PreviewGrid';
+import { getPortfolioUrl } from '../lib/helpers';
+import { projectToPreviewable } from '../lib/previewables';
 
 export const query = graphql`
   query IndexPageQuery {
@@ -41,12 +42,10 @@ export const query = graphql`
 const useStyles = makeStyles(theme => ({
   heroContainer: {
     width: '100%',
-    height: '99vh',
-    marginBottom: theme.spacing(2),
+    height: '100vh',
     padding: theme.spacing(1),
     overflow: 'hidden',
-    position: 'fixed',
-    zIndex: -1,
+    position: 'relative',
   },
   cloudScene: {
     width: '100%',
@@ -58,7 +57,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: '50vh',
   },
   navigation: {
-    height: '100vh',
+    position: 'absolute',
+    top: 0,
+    height: '100%',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -69,25 +70,48 @@ const useStyles = makeStyles(theme => ({
     height: '90vh',
     marginBottom: '20vh',
   },
-  about: {
-    height: '100vh',
+  mainContent: {
+    position: 'relative',
+    zIndex: 1,
+    margin: theme.spacing(1),
+    top: -theme.spacing(7),
+    paddingTop: theme.spacing(2),
+  },
+  mainContainer: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  about: {
+    display: 'flex',
+    position: 'relative',
+    margin: 'auto',
+    maxWidth: '900px',
+    zIndex: 2,
+    flexDirection: 'column',
     justifyContent: 'center',
-    padding: theme.spacing(2),
+    padding: theme.spacing(4),
+    paddingTop: '15vmin',
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: 24,
+    marginBottom: theme.spacing(4),
   },
   avatar: {
-    width: '33vmin',
-    height: '33vmin',
+    position: 'absolute',
+    zIndex: 3,
+    top: '-15vmin',
+    left: 'calc(50% - 15vmin)',
     borderRadius: '100%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginBottom: theme.spacing(4),
+  },
+  avatarImage: {
+    width: '30vmin',
+    height: '30vmin',
+    borderRadius: '100%',
+    border: `8px solid ${theme.palette.background.paper}`,
   },
   work: {
     display: 'flex',
     flexDirection: 'column',
-    paddingTop: theme.spacing(2),
+    borderRadius: 24,
   },
   navButton: {
     margin: 'auto',
@@ -98,7 +122,6 @@ const useStyles = makeStyles(theme => ({
 const IndexPage = (props: any) => {
   const { data, errors } = props;
   const classes = useStyles(props);
-  const { width: windowWidth } = useWindowSize();
 
   if (errors) {
     return (
@@ -111,6 +134,8 @@ const IndexPage = (props: any) => {
   const postNodes: BlogPostPreviewData[] = (data || {}).posts.nodes;
   const projectNodes: ProjectPreviewData[] = (data || {}).projects.nodes;
   const author: any = (data || {}).authors.nodes[0];
+
+  const previewables = projectNodes.map(projectToPreviewable);
 
   return (
     <Layout>
@@ -125,49 +150,49 @@ const IndexPage = (props: any) => {
             <Scene />
           </div>
         </NoSsr>
+        <Navigation projects={projectNodes} blogPosts={postNodes} className={classes.navigation} />
       </div>
-      <Navigation projects={projectNodes} blogPosts={postNodes} className={classes.navigation} />
-      <Container>
-        <div id="about" className={classes.about}>
-          <Img
-            fluid={author.avatar.fluid}
-            alt={author.avatar.description}
-            className={classes.avatar}
-          />
-          <Typography variant="h2" gutterBottom>
-            Grant Forrest
-          </Typography>
-          <Typography paragraph>
-            I can write code just about anywhere, but I prefer the browser. Something about seeing
-            something beautiful slowly unfold on screen motivates me to continue learning and
-            building new things.
-          </Typography>
-          <Typography paragraph>
-            I appreciate the beauty in code itself, as well. I try to think things through,
-            continuing to innovate and invent in the name of maintainability, elegance, and
-            simplicity.
-          </Typography>
-        </div>
-        <div id="work" className={classes.work}>
-          {projectNodes.map((project, idx) => (
-            <ProjectPreview
-              project={project}
-              key={project.id}
-              className={classes.projectPreview}
-              imageWidth={windowWidth}
-            />
-          ))}
-          <Button
-            className={classes.navButton}
-            color="secondary"
-            component={Link}
-            to="/portfolio"
-            underline="none"
-          >
-            All work
-          </Button>
-        </div>
-      </Container>
+      <div className={classes.mainContent}>
+        <Container className={classes.mainContainer}>
+          <Paper id="about" className={classes.about} elevation={0}>
+            <div id="avatar" className={classes.avatar}>
+              <Img
+                fluid={author.avatar.fluid}
+                alt={author.avatar.description}
+                className={classes.avatarImage}
+              />
+            </div>
+            <Typography variant="h2" gutterBottom>
+              Grant Forrest
+            </Typography>
+            <Typography paragraph>
+              I can write code just about anywhere, but I prefer the browser. Something about seeing
+              something beautiful slowly unfold on screen motivates me to continue learning and
+              building new things.
+            </Typography>
+            <Typography paragraph>
+              I appreciate the beauty in code itself, as well. I try to think things through,
+              continuing to innovate and invent in the name of maintainability, elegance, and
+              simplicity.
+            </Typography>
+          </Paper>
+          <div id="work" className={classes.work}>
+            <Typography variant="h2" gutterBottom>
+              Work
+            </Typography>
+            <PreviewGrid previewables={previewables} />
+            <Button
+              className={classes.navButton}
+              color="secondary"
+              component={Link}
+              to="/portfolio"
+              underline="none"
+            >
+              All work
+            </Button>
+          </div>
+        </Container>
+      </div>
     </Layout>
   );
 };

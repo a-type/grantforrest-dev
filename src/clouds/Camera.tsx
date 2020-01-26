@@ -57,41 +57,41 @@ export const Camera: React.FC<CameraProps> = ({ position }) => {
   const bindMove = useMove(doCameraDrift('move'), { domTarget: window });
   const bindDrag = useDrag(doCameraDrift('drag'), { domTarget: window });
 
-  const bindScroll = useScroll(
-    state => {
-      const clientHeight = window.document.documentElement.clientHeight;
-      const scrollPosition = window.scrollY;
-      const totalHeight = window.document.documentElement.scrollHeight;
+  // const bindScroll = useScroll(
+  //   state => {
+  //     const clientHeight = window.document.documentElement.clientHeight;
+  //     const scrollPosition = window.scrollY;
+  //     const totalHeight = window.document.documentElement.scrollHeight;
 
-      const firstMarker = clientHeight / 3;
-      const secondMarker = clientHeight * 1.4;
+  //     const firstMarker = clientHeight / 3;
+  //     const secondMarker = clientHeight * 1.4;
 
-      // first 100% screen height is the flip
-      if (scrollPosition < firstMarker) {
-        setCameraPosition({
-          currentRotation: [(Math.PI / 2) * (scrollPosition / firstMarker), 0, 0],
-          currentPosition: position,
-        });
-      } else if (scrollPosition < secondMarker) {
-        setCameraPosition({
-          currentRotation: [Math.PI / 2, 0, -Math.PI / 2],
-          currentPosition: [position[0], 20, 0],
-        });
-      } else {
-        setCameraPosition({
-          currentRotation: [Math.PI * 1.5, 0, -Math.PI / 2],
-          currentPosition: [((scrollPosition - secondMarker) / totalHeight) * 50 - 25, 20, 0],
-        });
-      }
-    },
-    { domTarget: window },
-  );
+  //     // first 100% screen height is the flip
+  //     if (scrollPosition < firstMarker) {
+  //       setCameraPosition({
+  //         currentRotation: [(Math.PI / 2) * (scrollPosition / firstMarker), 0, 0],
+  //         currentPosition: position,
+  //       });
+  //     } else if (scrollPosition < secondMarker) {
+  //       setCameraPosition({
+  //         currentRotation: [Math.PI / 2, 0, -Math.PI / 2],
+  //         currentPosition: [position[0], 20, 0],
+  //       });
+  //     } else {
+  //       setCameraPosition({
+  //         currentRotation: [Math.PI * 1.5, 0, -Math.PI / 2],
+  //         currentPosition: [((scrollPosition - secondMarker) / totalHeight) * 50 - 25, 20, 0],
+  //       });
+  //     }
+  //   },
+  //   { domTarget: window },
+  // );
 
   React.useEffect(() => {
-    // bindMove();
-    // bindDrag();
-    bindScroll();
-  }, [bindDrag, bindMove, bindScroll]);
+    bindMove();
+    bindDrag();
+    // bindScroll();
+  }, [bindDrag, bindMove]);
 
   return (
     <>

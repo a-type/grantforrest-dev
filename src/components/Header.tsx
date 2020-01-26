@@ -5,8 +5,11 @@ import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/co
 import GithubIcon from './GithubIcon';
 
 const useStyles = makeStyles(theme => ({
-  title: {
+  titleArea: {
     flexGrow: 1,
+  },
+  title: {
+    textTransform: 'none',
   },
   appBar: {
     boxShadow: 'none',
@@ -26,20 +29,32 @@ const Header: React.FC<{ sticky?: boolean }> = ({ sticky = false }) => {
   return (
     <AppBar position={sticky ? 'fixed' : 'absolute'} color="inherit" className={classes.appBar}>
       <Toolbar>
-        <Link to="/" className={classes.title} color="inherit">
-          <Typography variant="h6">Grant Forrest</Typography>
-        </Link>
+        <div className={classes.titleArea}>
+          <Button
+            component={Link}
+            to="/"
+            className={classes.title}
+            color="inherit"
+            underline="none"
+          >
+            <Typography variant="h6">Grant Forrest</Typography>
+          </Button>
+        </div>
         <Button component={Link} to="/portfolio" color="inherit" underline="never">
           Portfolio
         </Button>
         <Button component={Link} to="/blog" color="inherit" underline="never">
           Blog
         </Button>
-        <MuiLink href="https://github.com/a-type" color="inherit" target="_blank" rel="noopener">
-          <IconButton color="inherit">
-            <GithubIcon className={classes.githubIcon} />
-          </IconButton>
-        </MuiLink>
+        <IconButton
+          color="inherit"
+          component={MuiLink}
+          href="https://github.com/a-type"
+          target="_blank"
+          rel="noopener"
+        >
+          <GithubIcon className={classes.githubIcon} />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

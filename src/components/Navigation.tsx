@@ -31,13 +31,13 @@ const Navigation: React.FC<NavigationProps> = ({ projects, blogPosts, ...rest })
     }
     el.scrollIntoView({
       behavior: 'smooth',
-      block: 'nearest',
+      block: 'start',
     });
   };
 
   return (
     <div {...rest} className={clsx(classes.root, rest.className)}>
-      <Button color="primary" className={classes.linkButton} onClick={scrollToIdHandler('about')}>
+      <Button color="primary" className={classes.linkButton} onClick={scrollToIdHandler('avatar')}>
         About
       </Button>
       <Button color="primary" className={classes.linkButton} onClick={scrollToIdHandler('work')}>
