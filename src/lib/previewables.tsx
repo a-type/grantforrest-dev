@@ -13,6 +13,7 @@ export const projectToPreviewable = (project: ProjectPreviewData) => ({
   coverImage: project.mainImage,
   size: 'large' as const,
   type: 'project' as const,
+  labels: ['project'],
 });
 
 export const postToPreviewable = (post: BlogPostPreviewData) => ({
@@ -23,6 +24,7 @@ export const postToPreviewable = (post: BlogPostPreviewData) => ({
   coverImage: post.mainImage,
   size: 'medium' as const,
   type: 'post' as const,
+  labels: ['blog'],
 });
 
 export const repoToPreviewable = (repo: GithubRepoPreview) => ({
@@ -32,6 +34,7 @@ export const repoToPreviewable = (repo: GithubRepoPreview) => ({
   url: repo.url,
   size: 'medium' as const,
   type: 'repo' as const,
+  labels: ['github', ...repo.repositoryTopics.nodes.map(n => n.topic.name)],
   extraContent: (
     <Box display="flex" flexDirection="row" mb={2} alignItems="center">
       <GithubIcon style={{ width: 24, height: 24, marginRight: 8 }} />

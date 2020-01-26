@@ -149,6 +149,13 @@ export const GithubReposFragment = graphql`
           stargazers {
             totalCount
           }
+          repositoryTopics(first: 3) {
+            nodes {
+              topic {
+                name
+              }
+            }
+          }
         }
       }
     }
@@ -178,5 +185,12 @@ export type GithubRepoPreview = {
   url: string;
   stargazers: {
     totalCount: number;
+  };
+  repositoryTopics: {
+    nodes: {
+      topic: {
+        name: string;
+      };
+    }[];
   };
 };

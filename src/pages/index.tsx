@@ -192,7 +192,7 @@ const IndexPage = (props: any) => {
             <PreviewGrid previewables={previewables} />
             <Button
               className={classes.navButton}
-              color="secondary"
+              color="primary"
               component={Link}
               to="/portfolio"
               underline="none"
