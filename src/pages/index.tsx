@@ -94,7 +94,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     padding: theme.spacing(4),
-    paddingTop: '15vmin',
+    paddingTop: '20vmin',
     backgroundColor: theme.palette.background.paper,
     borderRadius: 24,
     marginBottom: theme.spacing(4),
@@ -171,7 +171,7 @@ const IndexPage = (props: any) => {
                 className={classes.avatarImage}
               />
             </div>
-            <Typography variant="h2" gutterBottom>
+            <Typography variant="h1" gutterBottom style={{ textAlign: 'center' }}>
               Grant Forrest
             </Typography>
             <Typography paragraph>

@@ -28,6 +28,7 @@ const theme: Theme = {
     MuiTypography: {
       h1: {
         fontSize: '4rem',
+        color: defaultTheme.palette.primary.main,
         [breakpoints.down('xs')]: {
           fontSize: '3rem',
         },
