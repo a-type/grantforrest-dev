@@ -139,6 +139,7 @@ export const GithubReposFragment = graphql`
           description
           forkCount
           homepageUrl
+          openGraphImageUrl
           name
           primaryLanguage {
             name
@@ -176,6 +177,7 @@ export type GithubRepoPreview = {
   description: string;
   forkCount: number;
   homepageUrl: string;
+  openGraphImageUrl: string;
   name: string;
   primaryLanguage: {
     name: string;

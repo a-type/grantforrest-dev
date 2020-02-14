@@ -20,6 +20,7 @@ import RichText from './RichText';
 import Link from './Link';
 import { useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
+import { FluidObject } from 'gatsby-image';
 
 type PreviewSize = 'small' | 'medium' | 'large';
 type PreviewType = 'project' | 'repo' | 'post';
@@ -27,10 +28,15 @@ type PreviewType = 'project' | 'repo' | 'post';
 export type Previewable = {
   title: string;
   excerpt: any | null;
-  coverImage?: any;
+  coverImage?: {
+    description?: string;
+    fluid?: FluidObject;
+    url?: string;
+  };
   url: string;
   size: PreviewSize;
   createdAt: string;
+  sortedTime: string;
   type: PreviewType;
   extraContent?: React.ReactNode;
   labels: string[];
@@ -45,6 +51,7 @@ const useStyles = makeStyles<Theme, PreviewGridProps>(theme => ({
     gridGap: theme.spacing(3),
     gridTemplateColumns: `repeat(12, 1fr)`,
     gridAutoFlow: 'dense',
+    width: '100%',
   },
   gridItem: {
     alignSelf: 'center',
@@ -157,10 +164,31 @@ const PreviewGrid: React.FC<PreviewGridProps> = props => {
             >
               {previewable.coverImage && (
                 <CardMedia className={classes.previewCardMedia}>
-                  <GatsbyImage
-                    alt={previewable.coverImage.description}
-                    fluid={previewable.coverImage.fluid}
-                  />
+                  {previewable.coverImage.fluid ? (
+                    <GatsbyImage
+                      alt={previewable.coverImage.description}
+                      fluid={previewable.coverImage.fluid}
+                    />
+                  ) : (
+                    <div style={{ position: 'relative', overflow: 'hidden' }}>
+                      <div style={{ width: '100%', paddingBottom: '75%' }} />
+                      <img
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          position: 'absolute',
+                          top: 0,
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          objectFit: 'cover',
+                          objectPosition: 'center center',
+                        }}
+                        src={previewable.coverImage.url}
+                        alt={previewable.coverImage.description}
+                      />
+                    </div>
+                  )}
                 </CardMedia>
               )}
               <CardHeader

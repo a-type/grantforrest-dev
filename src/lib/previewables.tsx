@@ -7,6 +7,7 @@ import GithubIcon from '../components/GithubIcon';
 
 export const projectToPreviewable = (project: ProjectPreviewData) => ({
   title: project.title,
+  sortedTime: project.createdAt,
   createdAt: project.createdAt,
   excerpt: project.summary,
   url: getPortfolioUrl(project.slug),
@@ -18,6 +19,7 @@ export const projectToPreviewable = (project: ProjectPreviewData) => ({
 
 export const postToPreviewable = (post: BlogPostPreviewData) => ({
   title: post.title,
+  sortedTime: post.createdAt,
   createdAt: post.createdAt,
   excerpt: post.excerpt,
   url: getBlogUrl(post.slug),
@@ -29,10 +31,21 @@ export const postToPreviewable = (post: BlogPostPreviewData) => ({
 
 export const repoToPreviewable = (repo: GithubRepoPreview) => ({
   title: repo.name,
+  sortedTime: repo.pushedAt,
   createdAt: repo.createdAt,
   excerpt: repo.description,
-  url: repo.url,
-  size: 'medium' as const,
+  url: repo.homepageUrl || repo.url,
+  coverImage:
+    repo.openGraphImageUrl && !repo.openGraphImageUrl.includes('avatar')
+      ? {
+          description: `OpenGraph image for ${repo.name} repository`,
+          url: repo.openGraphImageUrl,
+        }
+      : undefined,
+  size:
+    repo.openGraphImageUrl && !repo.openGraphImageUrl.includes('avatar')
+      ? ('large' as const)
+      : ('medium' as const),
   type: 'repo' as const,
   labels: ['github', ...repo.repositoryTopics.nodes.map(n => n.topic.name)],
   extraContent: (

@@ -144,7 +144,7 @@ const IndexPage = (props: any) => {
   const previewables = [
     ...projectNodes.map(projectToPreviewable),
     ...githubRepos.map(repoToPreviewable),
-  ].sort((a, b) => compareDesc(a.createdAt, b.createdAt));
+  ].sort((a, b) => compareDesc(a.sortedTime, b.sortedTime));
 
   return (
     <Layout>
@@ -175,14 +175,13 @@ const IndexPage = (props: any) => {
               Grant Forrest
             </Typography>
             <Typography paragraph>
-              I can write code just about anywhere, but I prefer the browser. Something about seeing
-              something beautiful slowly unfold on screen motivates me to continue learning and
-              building new things.
+              I write elegant code to power innovative user experiences. My focus is React,
+              complemented by TypeScript, GraphQL, and graph databases.
             </Typography>
             <Typography paragraph>
-              I appreciate the beauty in code itself, as well. I try to think things through,
-              continuing to innovate and invent in the name of maintainability, elegance, and
-              simplicity.
+              When I'm not writing code, I'm usually writing about my thoughts on theology,
+              philosophy, faith, and morality. If you're interested in that, you can read more in my
+              blog.
             </Typography>
           </Paper>
           <div id="work" className={classes.work}>
