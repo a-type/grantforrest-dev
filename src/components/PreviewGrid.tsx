@@ -85,7 +85,7 @@ const useStyles = makeStyles<Theme, PreviewGridProps>(theme => ({
     },
   },
   previewCard: {
-    boxShadow: `-6px -6px 16px 0 #ffffff90, 6px 6px 16px 0 #d1cdc780`,
+    boxShadow: `-6px -6px 16px 0 #ffffff80, 6px 6px 16px 0 #d1cdc780`,
   },
   previewCardMedia: {
     border: `4px solid ${theme.palette.background.paper}`,
