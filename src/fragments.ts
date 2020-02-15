@@ -48,6 +48,7 @@ export const ProjectPreviewFragment = graphql`
     summary {
       json
     }
+    githubUrl
   }
 `;
 
@@ -63,6 +64,7 @@ export type ProjectPreviewData = {
   summary: {
     json: any;
   };
+  githubUrl: string;
 };
 
 export const BlogPostFullFragment = graphql`
@@ -103,15 +105,17 @@ export const ProjectFullFragment = graphql`
     title
     createdAt
     slug
-    # mainImage {
-    #   description
-    #   fluid(maxWidth: 2000) {
-    #     ...GatsbyContentfulFluid_withWebp
-    #   }
-    # }
+    mainImage {
+      description
+      fluid(maxWidth: 2000) {
+        ...GatsbyContentfulFluid_withWebp
+      }
+    }
     body {
       json
     }
+    githubUrl
+    # homepageUrl
   }
 `;
 
@@ -127,6 +131,8 @@ export type ProjectFullData = {
   body: {
     json: any;
   };
+  githubUrl: string;
+  homepageUrl: string;
 };
 
 export const GithubReposFragment = graphql`

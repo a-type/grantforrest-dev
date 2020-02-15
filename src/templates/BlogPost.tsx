@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
 import GraphQLErrorList from '../components/GraphQLErrorList';
-import BlogPost from '../components/BlogPost';
+import BlogPost from '../components/Post';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
 import { toPlainText } from '../lib/helpers';

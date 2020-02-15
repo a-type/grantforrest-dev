@@ -13,6 +13,7 @@ import {
   Chip,
   Box,
   useTheme,
+  CardActions,
 } from '@material-ui/core';
 import GatsbyImage from 'gatsby-image';
 import { format } from 'date-fns';
@@ -20,27 +21,8 @@ import RichText from './RichText';
 import Link from './Link';
 import { useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
-import { FluidObject } from 'gatsby-image';
+import { Previewable } from '../types';
 
-type PreviewSize = 'small' | 'medium' | 'large';
-type PreviewType = 'project' | 'repo' | 'post';
-
-export type Previewable = {
-  title: string;
-  excerpt: any | null;
-  coverImage?: {
-    description?: string;
-    fluid?: FluidObject;
-    url?: string;
-  };
-  url: string;
-  size: PreviewSize;
-  createdAt: string;
-  sortedTime: string;
-  type: PreviewType;
-  extraContent?: React.ReactNode;
-  labels: string[];
-};
 export interface PreviewGridProps {
   previewables: Previewable[];
 }
@@ -85,7 +67,9 @@ const useStyles = makeStyles<Theme, PreviewGridProps>(theme => ({
     },
   },
   previewCard: {
-    boxShadow: `-6px -6px 16px 0 #ffffff80, 6px 6px 16px 0 #d1cdc780`,
+    // boxShadow: `-6px -6px 16px 0 #ffffff80, 6px 6px 16px 0 #d1cdc780`,
+    border: `4px solid ${theme.palette.grey[300]}`,
+    boxShadow: 'none',
   },
   previewCardMedia: {
     border: `4px solid ${theme.palette.background.paper}`,
@@ -171,7 +155,7 @@ const PreviewGrid: React.FC<PreviewGridProps> = props => {
                     />
                   ) : (
                     <div style={{ position: 'relative', overflow: 'hidden' }}>
-                      <div style={{ width: '100%', paddingBottom: '75%' }} />
+                      <div style={{ width: '100%', paddingBottom: '60%' }} />
                       <img
                         style={{
                           width: '100%',
@@ -214,6 +198,9 @@ const PreviewGrid: React.FC<PreviewGridProps> = props => {
                 )}
               </CardContent>
             </CardActionArea>
+            {previewable.alternateActions && (
+              <CardActions>{previewable.alternateActions}</CardActions>
+            )}
           </Card>
         </div>
       ))}

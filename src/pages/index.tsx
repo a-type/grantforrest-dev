@@ -3,7 +3,7 @@ import { graphql } from 'gatsby';
 import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
-import { Container, makeStyles, NoSsr, Typography, Button, Paper } from '@material-ui/core';
+import { Container, makeStyles, NoSsr, Typography, IconButton } from '@material-ui/core';
 import { Scene } from '../clouds/Scene';
 import Navigation from '../components/Navigation';
 import { BlogPostPreviewData, ProjectPreviewData, GithubReposData } from '../fragments';
@@ -13,6 +13,8 @@ import PreviewGrid from '../components/PreviewGrid';
 import { getPortfolioUrl } from '../lib/helpers';
 import { projectToPreviewable, repoToPreviewable } from '../lib/previewables';
 import { compareDesc } from 'date-fns';
+import { GitHub } from '@material-ui/icons';
+import About from '../components/About';
 
 export const query = graphql`
   query IndexPageQuery {
@@ -85,33 +87,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  about: {
-    display: 'flex',
-    position: 'relative',
-    margin: 'auto',
-    maxWidth: '900px',
-    zIndex: 2,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    padding: theme.spacing(4),
-    paddingTop: '20vmin',
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: 24,
-    marginBottom: theme.spacing(4),
-  },
-  avatar: {
-    position: 'absolute',
-    zIndex: 3,
-    top: '-15vmin',
-    left: 'calc(50% - 15vmin)',
-    borderRadius: '100%',
-  },
-  avatarImage: {
-    width: '30vmin',
-    height: '30vmin',
-    borderRadius: '100%',
-    border: `8px solid ${theme.palette.background.paper}`,
-  },
+
   work: {
     display: 'flex',
     flexDirection: 'column',
@@ -141,9 +117,17 @@ const IndexPage = (props: any) => {
   const githubRepos = github.viewer.pinnedRepositories.nodes;
   const author: any = (data || {}).authors.nodes[0];
 
+  const filterOutProjectRepos = githubRepos.filter(
+    repo => !projectNodes.some(node => node.githubUrl === repo.url),
+  );
+
   const previewables = [
-    ...projectNodes.map(projectToPreviewable),
-    ...githubRepos.map(repoToPreviewable),
+    ...projectNodes.map(project => {
+      // link with github repo if available
+      const githubRepo = githubRepos.find(repo => repo.url === project.githubUrl);
+      return projectToPreviewable(project, githubRepo);
+    }),
+    ...filterOutProjectRepos.map(repoToPreviewable),
   ].sort((a, b) => compareDesc(a.sortedTime, b.sortedTime));
 
   return (
@@ -163,41 +147,21 @@ const IndexPage = (props: any) => {
       </div>
       <div className={classes.mainContent}>
         <Container className={classes.mainContainer}>
-          <Paper id="about" className={classes.about} elevation={0}>
-            <div id="avatar" className={classes.avatar}>
-              <Img
-                fluid={author.avatar.fluid}
-                alt={author.avatar.description}
-                className={classes.avatarImage}
-              />
-            </div>
-            <Typography variant="h1" gutterBottom style={{ textAlign: 'center' }}>
-              Grant Forrest
-            </Typography>
-            <Typography paragraph>
-              I write elegant code to power innovative user experiences. My focus is React,
-              complemented by TypeScript, GraphQL, and graph databases.
-            </Typography>
-            <Typography paragraph>
-              When I'm not writing code, I'm usually writing about my thoughts on theology,
-              philosophy, faith, and morality. If you're interested in that, you can read more in my
-              blog.
-            </Typography>
-          </Paper>
+          <About author={author} />
           <div id="work" className={classes.work}>
             <Typography variant="h2" gutterBottom>
               Work
             </Typography>
             <PreviewGrid previewables={previewables} />
-            <Button
+            <IconButton
               className={classes.navButton}
               color="primary"
               component={Link}
-              to="/portfolio"
+              to="https://github.com/a-type"
               underline="none"
             >
-              All work
-            </Button>
+              <GitHub />
+            </IconButton>
           </div>
         </Container>
       </div>
