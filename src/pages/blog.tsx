@@ -44,7 +44,7 @@ const ArchivePage = (props: any) => {
 
   return (
     <Layout>
-      <SEO title="Archive" />
+      <SEO title="Blog" />
       <Container className={classes.container}>
         <PreviewGrid previewables={previewables} />
       </Container>

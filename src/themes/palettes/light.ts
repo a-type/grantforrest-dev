@@ -4,8 +4,8 @@ const light: ThemeOptions['palette'] = {
   type: 'light',
   action: {},
   background: {
-    default: '#e2e2ea',
-    paper: '#eeeeef',
+    default: '#f1f1f4',
+    paper: '#fcfcff',
   },
   primary: {
     main: '#3232a0',

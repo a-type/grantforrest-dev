@@ -40,9 +40,6 @@ const Header: React.FC<{ sticky?: boolean }> = ({ sticky = false }) => {
             <Typography variant="h6">Grant Forrest</Typography>
           </Button>
         </div>
-        <Button component={Link} to="/portfolio" color="inherit" underline="never">
-          Portfolio
-        </Button>
         <Button component={Link} to="/blog" color="inherit" underline="never">
           Blog
         </Button>

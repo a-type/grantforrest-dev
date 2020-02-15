@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
 import GraphQLErrorList from '../components/GraphQLErrorList';
-import BlogPost from '../components/Post';
+import ProjectView from '../components/Project';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
 import { toPlainText } from '../lib/helpers';
@@ -35,7 +35,7 @@ const ProjectTemplate = (props: any) => {
         </Container>
       )}
 
-      {project && <BlogPost {...project} />}
+      {project && <ProjectView {...project} />}
     </Layout>
   );
 };

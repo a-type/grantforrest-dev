@@ -13,7 +13,8 @@ import { BlogPostFullData, ProjectFullData } from '../fragments';
 import GatsbyImage from 'gatsby-image';
 import RichText from './RichText';
 import { useSpring, animated } from '@react-spring/web';
-import { Link } from 'gatsby';
+import Link from './Link';
+import { GitHub } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,7 +27,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     padding: theme.spacing(1),
     paddingTop: 64 + theme.spacing(1),
-    background: theme.palette.grey[50],
     height: '40vh',
     overflow: 'hidden',
 
@@ -62,14 +62,14 @@ const useStyles = makeStyles(theme => ({
   metaContent: {
     alignSelf: 'start',
     paddingBottom: theme.spacing(1),
-    borderBottom: `1px solid ${theme.palette.grey[200]}`,
     marginBottom: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
       paddingLeft: theme.spacing(1),
     },
   },
   createdAt: {
-    color: theme.palette.grey[500],
+    color: theme.palette.grey[900],
+    marginBottom: theme.spacing(1),
   },
   categories: {
     borderTop: `1px solid ${theme.palette.grey[200]}`,
@@ -126,7 +126,8 @@ function Project(props: ProjectProps) {
           )}
           {githubUrl && (
             <Link to={githubUrl} target="_blank" rel="noopener">
-              View on Github
+              <GitHub fontSize="inherit" style={{ marginBottom: -2 }} />
+              &nbsp;&nbsp;View on Github
             </Link>
           )}
           {homepageUrl && (

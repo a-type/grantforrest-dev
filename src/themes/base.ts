@@ -16,7 +16,7 @@ const { breakpoints } = defaultTheme;
 const headingStyles = {
   fontFamily: '"Roboto", sans-serif',
   fontWeight: 200,
-  lineHeight: 1.5,
+  lineHeight: 1.2,
   '&$gutterBottom': {
     marginBottom: defaultTheme.spacing(2),
   },
@@ -51,6 +51,7 @@ const theme: Theme = {
       },
       paragraph: {
         lineHeight: 1.5,
+        marginBottom: defaultTheme.spacing(4),
       },
       gutterBottom: {
         marginBottom: defaultTheme.spacing(5),

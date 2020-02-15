@@ -24,7 +24,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     padding: theme.spacing(1),
     paddingTop: 64 + theme.spacing(1),
-    background: theme.palette.grey[50],
     height: '40vh',
     overflow: 'hidden',
 
@@ -60,14 +59,13 @@ const useStyles = makeStyles(theme => ({
   metaContent: {
     alignSelf: 'start',
     paddingBottom: theme.spacing(1),
-    borderBottom: `1px solid ${theme.palette.grey[200]}`,
     marginBottom: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
       paddingLeft: theme.spacing(1),
     },
   },
   createdAt: {
-    color: theme.palette.grey[500],
+    color: theme.palette.grey[900],
   },
   categories: {
     borderTop: `1px solid ${theme.palette.grey[200]}`,
