@@ -149,7 +149,7 @@ const IndexPage = (props: any) => {
         keywords={['blog', 'react', 'frontend', 'developer', 'portfolio']}
       />
       <VideoBackground
-        sources={['/video/silence-md.m4v', '/video/silence.mp4']}
+        sources={['/video/silence-md.m4v']}
         posterSource="/video/silence.jpg"
         type="video/mp4"
       />
