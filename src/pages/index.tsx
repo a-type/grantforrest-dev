@@ -3,18 +3,15 @@ import { graphql } from 'gatsby';
 import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
-import { Container, makeStyles, NoSsr, Typography, IconButton } from '@material-ui/core';
-import { Scene } from '../clouds/Scene';
-import Navigation from '../components/Navigation';
+import { Container, makeStyles, Typography, IconButton, Box } from '@material-ui/core';
 import { BlogPostPreviewData, ProjectPreviewData, GithubReposData } from '../fragments';
-import Img from 'gatsby-image';
 import Link from '../components/Link';
 import PreviewGrid from '../components/PreviewGrid';
-import { getPortfolioUrl } from '../lib/helpers';
 import { projectToPreviewable, repoToPreviewable } from '../lib/previewables';
 import { compareDesc } from 'date-fns';
 import { GitHub } from '@material-ui/icons';
-import About from '../components/About';
+import VideoBackground from '../components/VideoBackground';
+import clsx from 'clsx';
 
 export const query = graphql`
   query IndexPageQuery {
@@ -46,23 +43,24 @@ export const query = graphql`
 `;
 
 const useStyles = makeStyles(theme => ({
-  heroContainer: {
-    width: '100%',
-    height: '100vh',
-    overflow: 'hidden',
+  overlay: {
     position: 'relative',
+    zIndex: 1,
+    marginTop: '10vmin',
   },
-  cloudScene: {
-    width: `calc(100% - ${theme.spacing(2)}px)`,
-    height: `calc(100% - ${theme.spacing(2)}px)`,
-    borderRadius: 24,
-    overflow: 'hidden',
-    margin: theme.spacing(1),
+
+  layout: {
+    display: 'grid',
+    gridTemplateAreas: '"title" "about" "content"',
+    gridTemplateRows: '40vh auto auto auto',
+    gridGap: theme.spacing(3),
+    [theme.breakpoints.up('md')]: {
+      gridTemplateRows: '80vh auto auto',
+    },
   },
-  container: {
-    marginTop: '50vh',
-  },
+
   navigation: {
+    gridArea: 'nav',
     position: 'absolute',
     top: 0,
     height: '100%',
@@ -72,20 +70,17 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   projectPreview: {
     height: '90vh',
     marginBottom: '20vh',
   },
+
   mainContent: {
-    position: 'relative',
-    zIndex: 1,
-    margin: theme.spacing(1),
-    top: -theme.spacing(7),
-    paddingTop: theme.spacing(2),
-  },
-  mainContainer: {
+    gridArea: 'content',
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
   },
 
   work: {
@@ -93,9 +88,26 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     borderRadius: 24,
   },
+
   navButton: {
     margin: 'auto',
     marginTop: theme.spacing(3),
+  },
+
+  title: {
+    fontSize: '20vmin',
+    gridArea: 'title',
+    display: 'flex',
+    alignItems: 'flex-end',
+    [theme.breakpoints.up('sm')]: {
+      alignItems: 'flex-start',
+    },
+  },
+
+  about: {
+    gridArea: 'about',
+    maxWidth: 600,
+    justifySelf: 'center',
   },
 }));
 
@@ -105,7 +117,7 @@ const IndexPage = (props: any) => {
 
   if (errors) {
     return (
-      <Layout stickyHeader>
+      <Layout noTitle>
         <GraphQLErrorList errors={errors} />
       </Layout>
     );
@@ -114,8 +126,7 @@ const IndexPage = (props: any) => {
   const postNodes: BlogPostPreviewData[] = (data || {}).posts.nodes;
   const projectNodes: ProjectPreviewData[] = (data || {}).projects.nodes;
   const github: GithubReposData = (data || {}).github;
-  const githubRepos = github.viewer.pinnedRepositories.nodes;
-  const author: any = (data || {}).authors.nodes[0];
+  const githubRepos = github.viewer.pinnedItems.nodes;
 
   const filterOutProjectRepos = githubRepos.filter(
     repo => !projectNodes.some(node => node.githubUrl === repo.url),
@@ -131,40 +142,69 @@ const IndexPage = (props: any) => {
   ].sort((a, b) => compareDesc(a.sortedTime, b.sortedTime));
 
   return (
-    <Layout>
+    <Layout noTitle>
       <SEO
         title="Grant Forrest"
         description="The personal website of Grant Forrest"
         keywords={['blog', 'react', 'frontend', 'developer', 'portfolio']}
       />
-      <div className={classes.heroContainer}>
-        <NoSsr>
-          <div className={classes.cloudScene}>
-            <Scene />
-          </div>
-        </NoSsr>
-        <Navigation projects={projectNodes} blogPosts={postNodes} className={classes.navigation} />
-      </div>
-      <div className={classes.mainContent}>
-        <Container className={classes.mainContainer}>
-          <About author={author} />
-          <div id="work" className={classes.work}>
-            <Typography variant="h2" gutterBottom>
-              Work
-            </Typography>
-            <PreviewGrid previewables={previewables} />
+      <VideoBackground
+        sources={['/video/silence-md.m4v', '/video/silence.mp4']}
+        posterSource="/video/silence.jpg"
+        type="video/mp4"
+      />
+      <Container className={clsx(classes.overlay, classes.layout)}>
+        <div className={classes.title}>
+          <Typography variant="h1" gutterBottom className={classes.title}>
+            Grant
+            <br />
+            Forrest
+          </Typography>
+        </div>
+        <div className={classes.about} id="about">
+          {/* TODO: move this to Contentful. */}
+          <Typography paragraph>
+            I write elegant code to power innovative user experiences. My focus is React,
+            complemented by TypeScript, GraphQL, and graph databases.
+          </Typography>
+          <Typography paragraph>
+            When I'm not writing code, I'm usually writing about my thoughts on theology,
+            philosophy, faith, and morality. If you're interested in that, you can read more in my
+            blog.
+          </Typography>
+          <Box
+            mt={2}
+            mb={8}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            width="100%"
+          >
             <IconButton
-              className={classes.navButton}
               color="primary"
               component={Link}
               to="https://github.com/a-type"
               underline="none"
+              rel="me"
             >
               <GitHub />
             </IconButton>
-          </div>
-        </Container>
-      </div>
+          </Box>
+        </div>
+        <Box className={classes.mainContent} id="work">
+          <PreviewGrid previewables={previewables} />
+          <IconButton
+            className={classes.navButton}
+            color="primary"
+            component={Link}
+            to="https://github.com/a-type"
+            underline="none"
+            rel="me"
+          >
+            <GitHub />
+          </IconButton>
+        </Box>
+      </Container>
     </Layout>
   );
 };

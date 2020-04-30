@@ -68,7 +68,7 @@ const useStyles = makeStyles<Theme, PreviewGridProps>(theme => ({
   },
   previewCard: {
     // boxShadow: `-6px -6px 16px 0 #ffffff80, 6px 6px 16px 0 #d1cdc780`,
-    border: `4px solid ${theme.palette.grey[200]}`,
+    // border: `4px solid ${theme.palette.grey[200]}`,
     boxShadow: 'none',
   },
   previewCardMedia: {
@@ -99,10 +99,19 @@ const useStyles = makeStyles<Theme, PreviewGridProps>(theme => ({
       top: 0,
       left: 0,
     },
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(2),
+    },
   },
   previewCardContent: {
     paddingTop: 0,
     paddingBottom: theme.spacing(3),
+  },
+  previewCardActions: {
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+    },
   },
   previewCardLabels: {
     display: 'flex',
@@ -199,7 +208,9 @@ const PreviewGrid: React.FC<PreviewGridProps> = props => {
               </CardContent>
             </CardActionArea>
             {previewable.alternateActions && (
-              <CardActions>{previewable.alternateActions}</CardActions>
+              <CardActions className={classes.previewCardActions}>
+                {previewable.alternateActions}
+              </CardActions>
             )}
           </Card>
         </div>

@@ -52,6 +52,10 @@ const useStyles = makeStyles(theme => ({
   },
   mainContent: {
     marginTop: theme.spacing(4),
+
+    '& a': {
+      color: theme.palette.primary.main,
+    },
   },
   title: {
     marginBottom: theme.spacing(4),
@@ -65,10 +69,10 @@ const useStyles = makeStyles(theme => ({
     },
   },
   createdAt: {
-    color: theme.palette.grey[900],
+    color: theme.palette.text.primary,
   },
   categories: {
-    borderTop: `1px solid ${theme.palette.grey[200]}`,
+    borderTop: `1px solid ${theme.palette.divider}`,
     paddingTop: theme.spacing(2),
 
     '& ul': {

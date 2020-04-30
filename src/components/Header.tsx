@@ -3,6 +3,7 @@ import Link from './Link';
 import { Link as MuiLink, IconButton } from '@material-ui/core';
 import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/core';
 import GithubIcon from './GithubIcon';
+import DarkModeToggle from './DarkModeToggle';
 
 const useStyles = makeStyles(theme => ({
   titleArea: {
@@ -23,13 +24,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Header: React.FC<{ sticky?: boolean }> = ({ sticky = false }) => {
+const Header: React.FC<{ sticky?: boolean; noTitle?: boolean }> = ({ sticky, noTitle }) => {
   const classes = useStyles({});
 
   return (
     <AppBar position={sticky ? 'fixed' : 'absolute'} color="inherit" className={classes.appBar}>
       <Toolbar>
-        <div className={classes.titleArea}>
+        <div className={classes.titleArea} style={{ visibility: !!noTitle ? 'hidden' : 'visible' }}>
           <Button
             component={Link}
             to="/"
@@ -43,6 +44,7 @@ const Header: React.FC<{ sticky?: boolean }> = ({ sticky = false }) => {
         <Button component={Link} to="/blog" color="inherit" underline="never">
           Blog
         </Button>
+        <DarkModeToggle />
         <IconButton
           color="inherit"
           component={MuiLink}
