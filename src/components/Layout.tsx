@@ -1,9 +1,12 @@
 import * as React from 'react';
 import Header from './Header';
-import { MuiThemeProvider, makeStyles, CssBaseline, Link } from '@material-ui/core';
-import theme from '../themes/base';
+import { makeStyles, CssBaseline, Link } from '@material-ui/core';
 import Helmet from 'react-helmet';
 import { withPrefix } from 'gatsby';
+import { lightTheme, darkTheme } from '../themes/theme';
+import { useDarkMode, DarkModeProvider } from '../contexts/DarkModeContext';
+import { ThemeProvider } from '@material-ui/core/styles';
+import Footer from './Footer';
 
 const useStyles = makeStyles(theme => ({
   app: {
@@ -21,68 +24,58 @@ const useStyles = makeStyles(theme => ({
       minHeight: 'calc(100% - 91px - 155px)',
     },
   },
-  footer: {},
-  footerWrapper: {
-    boxSizing: 'border-box',
-    maxWidth: '960px',
-    padding: '4.5em 1.5em 1.5em',
-    margin: '0 auto',
-
-    [theme.breakpoints.up('sm')]: {
-      padding: '6em 2em 2em',
-    },
-  },
-  siteInfo: {
-    textAlign: 'center',
-    fontSize: '12px',
-  },
 }));
 
-const Layout: React.FC<{ stickyHeader?: boolean }> = ({ children, stickyHeader = false }) => {
+function InnerLayout({ children }: { children?: React.ReactNode }) {
+  const { dark } = useDarkMode();
+
+  return <ThemeProvider theme={dark ? darkTheme : lightTheme}>{children}</ThemeProvider>;
+}
+
+const Layout: React.FC<{ stickyHeader?: boolean; noTitle?: boolean }> = ({
+  children,
+  stickyHeader = false,
+  noTitle = false,
+}) => {
   const styles = useStyles({});
 
   return (
-    <div className={styles.app}>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <Helmet>
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href={`${withPrefix('/')}img/apple-touch-icon.png`}
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            href={`${withPrefix('/')}img/favicon-32x32.png`}
-            sizes="32x32"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            href={`${withPrefix('/')}img/favicon-16x16.png`}
-            sizes="16x16"
-          />
+    <DarkModeProvider>
+      <InnerLayout>
+        <div className={styles.app}>
+          <CssBaseline />
+          <Helmet>
+            <link
+              rel="apple-touch-icon"
+              sizes="180x180"
+              href={`${withPrefix('/')}img/apple-touch-icon.png`}
+            />
+            <link
+              rel="icon"
+              type="image/png"
+              href={`${withPrefix('/')}img/favicon-32x32.png`}
+              sizes="32x32"
+            />
+            <link
+              rel="icon"
+              type="image/png"
+              href={`${withPrefix('/')}img/favicon-16x16.png`}
+              sizes="16x16"
+            />
 
-          <meta name="theme-color" content="#fff" />
+            <meta name="theme-color" content="#fff" />
 
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:200,400,400i,700&display=swap"
-          />
-        </Helmet>
-        <Header sticky={stickyHeader} />
-        <div className={styles.content}>{children}</div>
-        <footer className={styles.footer}>
-          <div className={styles.footerWrapper}>
-            <div className={styles.siteInfo}>
-              &copy; {new Date().getFullYear()}, Built with{' '}
-              <Link href="https://www.gatsbyjs.org">Gatsby</Link>
-            </div>
-          </div>
-        </footer>
-      </MuiThemeProvider>
-    </div>
+            <link
+              href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap"
+              rel="stylesheet"
+            />
+          </Helmet>
+          <Header sticky={stickyHeader} noTitle={noTitle} />
+          <div className={styles.content}>{children}</div>
+          <Footer />
+        </div>
+      </InnerLayout>
+    </DarkModeProvider>
   );
 };
 

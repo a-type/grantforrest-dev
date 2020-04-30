@@ -138,28 +138,30 @@ export type ProjectFullData = {
 export const GithubReposFragment = graphql`
   fragment GithubRepos on GitHub {
     viewer {
-      pinnedRepositories(first: 5, orderBy: { direction: ASC, field: CREATED_AT }) {
+      pinnedItems(first: 5, types: REPOSITORY) {
         nodes {
-          id
-          createdAt
-          description
-          forkCount
-          homepageUrl
-          openGraphImageUrl
-          name
-          primaryLanguage {
+          ... on GitHub_Repository {
+            id
+            createdAt
+            description
+            forkCount
+            homepageUrl
+            openGraphImageUrl
             name
-            color
-          }
-          pushedAt
-          url
-          stargazers {
-            totalCount
-          }
-          repositoryTopics(first: 3) {
-            nodes {
-              topic {
-                name
+            primaryLanguage {
+              name
+              color
+            }
+            pushedAt
+            url
+            stargazers {
+              totalCount
+            }
+            repositoryTopics(first: 3) {
+              nodes {
+                topic {
+                  name
+                }
               }
             }
           }
@@ -171,7 +173,7 @@ export const GithubReposFragment = graphql`
 
 export type GithubReposData = {
   viewer: {
-    pinnedRepositories: {
+    pinnedItems: {
       nodes: GithubRepoPreview[];
     };
   };
