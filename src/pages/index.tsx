@@ -3,7 +3,7 @@ import { graphql } from 'gatsby';
 import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../containers/Layout';
-import { Container, makeStyles, Typography, IconButton, Box } from '@material-ui/core';
+import { Container, makeStyles, Typography, IconButton, Box, NoSsr } from '@material-ui/core';
 import { BlogPostPreviewData, ProjectPreviewData, GithubReposData } from '../fragments';
 import Link from '../components/Link';
 import PreviewGrid from '../components/PreviewGrid';
@@ -148,11 +148,13 @@ const IndexPage = (props: any) => {
         description="The personal website of Grant Forrest"
         keywords={['blog', 'react', 'frontend', 'developer', 'portfolio']}
       />
-      <VideoBackground
-        sources={['/video/silence-md.m4v']}
-        posterSource="/video/silence.jpg"
-        type="video/mp4"
-      />
+      <NoSsr>
+        <VideoBackground
+          sources={['/video/silence-md.m4v']}
+          posterSource="/video/silence.jpg"
+          type="video/mp4"
+        />
+      </NoSsr>
       <Container className={clsx(classes.overlay, classes.layout)}>
         <div className={classes.title}>
           <Typography variant="h1" gutterBottom className={classes.title}>
