@@ -17,9 +17,11 @@ const systemPreference =
   !!window.matchMedia &&
   window.matchMedia('(prefers-color-scheme: dark)').matches;
 
+const initialIsSystem = typeof window === 'undefined' ? false : !localStorage.getItem(storageKey);
+
 export const DarkModeProvider: React.FC<{ force?: boolean }> = ({ force, ...props }) => {
   const [isDark, setIsDark] = React.useState(systemPreference);
-  const [isSystem, setIsSystem] = React.useState(!localStorage.getItem(storageKey));
+  const [isSystem, setIsSystem] = React.useState(initialIsSystem);
 
   React.useEffect(() => {
     const darkPreference = localStorage.getItem(storageKey);
