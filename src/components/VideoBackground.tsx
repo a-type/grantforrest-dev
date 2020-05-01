@@ -23,17 +23,18 @@ const useStyles = makeStyles<Theme, VideoBackgroundProps>(theme => ({
     top: 0,
     left: '50%',
     width: '100%',
-    height: '90vh',
+    maxWidth: '150vmin',
+    height: '100vmin',
     transform: 'translateX(-50%)',
     objectFit: 'cover',
     WebkitMaskImage: 'url(/img/feather-mask.svg)',
   },
   filterLark: {
     // smaller sizes are darker to contrast better
-    filter: `contrast(0.8) brightness(0.8)`,
-    [theme.breakpoints.up('md')]: {
-      filter: `brightness(1.2) contrast(0.8)`,
-    },
+    filter: `contrast(0.6) contrast(1.2) brightness(0.6) saturate(1.1)`,
+    // [theme.breakpoints.up('md')]: {
+    //   filter: `contrast(0.6) contrast(1.2) brightness(0.6)`,
+    // },
   },
   filterLarkInverted: {
     // smaller sizes are darker to contrast better

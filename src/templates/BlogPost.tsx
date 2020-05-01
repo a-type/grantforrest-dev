@@ -3,7 +3,7 @@ import { graphql } from 'gatsby';
 import GraphQLErrorList from '../components/GraphQLErrorList';
 import BlogPost from '../components/Post';
 import SEO from '../components/Seo';
-import Layout from '../containers/Layout';
+import Layout from '../components/Layout';
 import { toPlainText } from '../lib/helpers';
 import { Container } from '@material-ui/core';
 

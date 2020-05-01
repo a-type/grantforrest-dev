@@ -30,11 +30,10 @@ const wrapColors = <T extends { [key: string]: string }>(
   ) as any;
 
 const chooseTheme = () => {
-  // disabled to make color matching easier
-  // const now = new Date();
-  // if (now.getHours() > 18) {
-  //   return sunset;
-  // }
+  const now = new Date();
+  if (now.getHours() > 18) {
+    return sunset;
+  }
   return day;
 };
 

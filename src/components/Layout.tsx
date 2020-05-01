@@ -32,15 +32,15 @@ function InnerLayout({ children }: { children?: React.ReactNode }) {
   return <ThemeProvider theme={dark ? darkTheme : lightTheme}>{children}</ThemeProvider>;
 }
 
-const Layout: React.FC<{ stickyHeader?: boolean; noTitle?: boolean }> = ({
-  children,
-  stickyHeader = false,
-  noTitle = false,
-}) => {
+const Layout: React.FC<{
+  stickyHeader?: boolean;
+  noTitle?: boolean;
+  forceDarkMode?: 'dark' | 'light';
+}> = ({ children, stickyHeader = false, noTitle = false, forceDarkMode }) => {
   const styles = useStyles({});
 
   return (
-    <DarkModeProvider>
+    <DarkModeProvider force={forceDarkMode && forceDarkMode === 'dark'}>
       <InnerLayout>
         <div className={styles.app}>
           <CssBaseline />
@@ -66,11 +66,11 @@ const Layout: React.FC<{ stickyHeader?: boolean; noTitle?: boolean }> = ({
             <meta name="theme-color" content="#fff" />
 
             <link
-              href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap"
+              href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=Montserrat:wght@300&display=swap"
               rel="stylesheet"
             />
           </Helmet>
-          <Header sticky={stickyHeader} noTitle={noTitle} />
+          <Header sticky={stickyHeader} noTitle={noTitle} noDarkModeToggle={!!forceDarkMode} />
           <div className={styles.content}>{children}</div>
           <Footer />
         </div>

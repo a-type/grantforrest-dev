@@ -2,8 +2,8 @@
   xmlnsXlink="http://www.w3.org/1999/xlink">
   <defs>
     <filter id="filter">
-      <feGaussianBlur stdDeviation="25" />
+      <feGaussianBlur stdDeviation="15" />
     </filter>
   </defs>
-  <rect x="2%" y="2%" width="96%" height="96%" fill="white" filter="url(#filter)" />
+  <rect x="10%" y="10%" width="80%" height="80%" fill="white" filter="url(#filter)" />
 </svg>

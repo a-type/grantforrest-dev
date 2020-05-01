@@ -10,7 +10,9 @@ import { NoSsr } from '@material-ui/core';
 import { Ray } from './Ray';
 import { ColorContextProvider, useColors } from './colorContext';
 
-export type SceneProps = {};
+export type SceneProps = {
+  style?: any;
+};
 
 const lightValues = {
   pointLightPosition: new Vector3(100, 100, 0),
@@ -33,19 +35,27 @@ const rays = new Array(4).fill(null).map((_, idx) => {
 const isSsr = typeof window === 'undefined';
 
 const resolution = () =>
-  !isSsr ? window.document.documentElement.clientHeight * window.document.documentElement.clientWidth : 0;
+  !isSsr
+    ? window.document.documentElement.clientHeight * window.document.documentElement.clientWidth
+    : 0;
 const initialResolution = resolution();
 const defaultPixelRatio =
-  initialResolution > 500000 ? (initialResolution > 1000000 ? 0.5 : 0.75) : !isSsr ? window.devicePixelRatio : 0;
+  initialResolution > 500000
+    ? initialResolution > 1000000
+      ? 0.5
+      : 0.75
+    : !isSsr
+    ? window.devicePixelRatio
+    : 0;
 
-const InnerScene: React.FC<SceneProps> = ({}) => {
+const InnerScene: React.FC<SceneProps> = ({ style }) => {
   const colors = useColors();
   const lightContext = React.useContext(LightContext);
 
   return (
     <Canvas
       shadowMap={{ type: PCFSoftShadowMap }}
-      style={{ backgroundColor: `#${colors.sky.getHexString()}` }}
+      style={{ backgroundColor: `#${colors.sky.getHexString()}`, ...style }}
       pixelRatio={defaultPixelRatio}
     >
       <React.Suspense fallback={null}>
@@ -64,12 +74,12 @@ const InnerScene: React.FC<SceneProps> = ({}) => {
   );
 };
 
-export const Scene: React.FC<SceneProps> = ({}) => {
+export const Scene: React.FC<SceneProps> = props => {
   return (
     <NoSsr>
       <ColorContextProvider>
         <LightContext.Provider value={lightValues}>
-          <InnerScene />
+          <InnerScene {...props} />
         </LightContext.Provider>
       </ColorContextProvider>
     </NoSsr>

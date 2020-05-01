@@ -36,8 +36,12 @@ const baseLightPalette: ThemeOptions['palette'] = {
   },
 };
 
-const { palette: lightPalette } = createMuiTheme({ palette: baseLightPalette });
+const { palette: lightPalette, breakpoints } = createMuiTheme({ palette: baseLightPalette });
 const { palette: darkPalette } = createMuiTheme({ palette: baseDarkPalette });
+
+const headingSettings = {
+  fontFamily: '"EB Garamond", serif',
+};
 
 const themeFactory = (palette: ThemeOptions['palette'], shadows: ThemeOptions['shadows']) =>
   createMuiTheme({
@@ -45,8 +49,19 @@ const themeFactory = (palette: ThemeOptions['palette'], shadows: ThemeOptions['s
     shape: {},
     shadows,
     typography: {
-      fontFamily: '"EB Garamond", serif',
-      fontSize: 18,
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: 16,
+      h1: headingSettings,
+      h2: headingSettings,
+      h3: headingSettings,
+      h4: headingSettings,
+      h5: headingSettings,
+      body1: {
+        fontFamily: 'Montserrat, sans-serif',
+      },
+      body2: {
+        fontFamily: 'Montserrat, sans-serif',
+      },
     },
     overrides: {
       MuiAppBar: {
@@ -57,6 +72,28 @@ const themeFactory = (palette: ThemeOptions['palette'], shadows: ThemeOptions['s
       MuiButton: {
         root: {
           textTransform: 'capitalize',
+        },
+      },
+      MuiTypography: {
+        h1: {
+          [breakpoints.down('sm')]: {
+            fontSize: '5vmax',
+          },
+        },
+        h2: {
+          [breakpoints.down('sm')]: {
+            fontSize: '4vmax',
+          },
+        },
+        h3: {
+          [breakpoints.down('sm')]: {
+            fontSize: '3.75vmax',
+          },
+        },
+        h4: {
+          [breakpoints.down('sm')]: {
+            fontSize: '3.3vmax',
+          },
         },
       },
     },

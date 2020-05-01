@@ -1,15 +1,43 @@
 import * as React from 'react';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Box, Tooltip, Menu, MenuItem, Grow } from '@material-ui/core';
 import { useDarkMode } from '../contexts/DarkModeContext';
-import { Brightness2, Brightness7 } from '@material-ui/icons';
+import { Brightness2, Brightness7, ArrowDropDown } from '@material-ui/icons';
 
 export interface DarkModeToggleProps {}
 
 const DarkModeToggle: React.FC<DarkModeToggleProps> = props => {
-  const { dark, set } = useDarkMode();
+  const { dark, set, isSystem } = useDarkMode();
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const handleMenuClick = React.useCallback((ev: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(ev.currentTarget);
+  }, []);
+  const handleMenuClose = React.useCallback(() => {
+    setAnchorEl(null);
+  }, []);
+  const resetToSystem = React.useCallback(() => {
+    set(undefined);
+    setAnchorEl(null);
+  }, []);
 
   return (
-    <IconButton onClick={() => set(!dark)}>{dark ? <Brightness7 /> : <Brightness2 />}</IconButton>
+    <Box display="flex" flexDirection="row" alignItems="center">
+      <Tooltip title={`${dark ? 'Light' : 'Dark'} Mode`}>
+        <IconButton onClick={() => set(!dark)}>
+          {dark ? <Brightness7 /> : <Brightness2 />}
+        </IconButton>
+      </Tooltip>
+      <Grow in={!isSystem}>
+        <div>
+          <IconButton onClick={handleMenuClick} size="small">
+            <ArrowDropDown fontSize="small" />
+          </IconButton>
+          <Menu id="dark-mode-menu" anchorEl={anchorEl} open={!!anchorEl} onClose={handleMenuClose}>
+            <MenuItem onClick={resetToSystem}>Use system theme</MenuItem>
+          </Menu>
+        </div>
+      </Grow>
+    </Box>
   );
 };
 

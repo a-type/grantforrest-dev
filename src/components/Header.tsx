@@ -24,7 +24,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Header: React.FC<{ sticky?: boolean; noTitle?: boolean }> = ({ sticky, noTitle }) => {
+const Header: React.FC<{ sticky?: boolean; noTitle?: boolean; noDarkModeToggle?: boolean }> = ({
+  sticky,
+  noTitle,
+  noDarkModeToggle,
+}) => {
   const classes = useStyles({});
 
   return (
@@ -44,7 +48,7 @@ const Header: React.FC<{ sticky?: boolean; noTitle?: boolean }> = ({ sticky, noT
         <Button component={Link} to="/blog" color="inherit" underline="never">
           Blog
         </Button>
-        <DarkModeToggle />
+        {!noDarkModeToggle && <DarkModeToggle />}
         <IconButton
           color="inherit"
           component={MuiLink}

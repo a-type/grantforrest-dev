@@ -4,7 +4,7 @@ import { mapEdgesToNodes } from '../lib/helpers';
 import BlogPostPreviewGrid from '../components/BlogPostPreviewGrid';
 import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
-import Layout from '../containers/Layout';
+import Layout from '../components/Layout';
 import { Typography, Container, makeStyles } from '@material-ui/core';
 import PreviewGrid from '../components/PreviewGrid';
 import { postToPreviewable } from '../lib/previewables';

@@ -2,9 +2,9 @@ import * as React from 'react';
 import { graphql } from 'gatsby';
 import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
-import Layout from '../containers/Layout';
+import Layout from '../components/Layout';
 import { Container, makeStyles, Typography, IconButton, Box, NoSsr } from '@material-ui/core';
-import { BlogPostPreviewData, ProjectPreviewData, GithubReposData } from '../fragments';
+import { ProjectPreviewData, GithubReposData } from '../fragments';
 import Link from '../components/Link';
 import PreviewGrid from '../components/PreviewGrid';
 import { projectToPreviewable, repoToPreviewable } from '../lib/previewables';
@@ -12,14 +12,10 @@ import { compareDesc } from 'date-fns';
 import { GitHub } from '@material-ui/icons';
 import VideoBackground from '../components/VideoBackground';
 import clsx from 'clsx';
+import RichText from '../components/RichText';
 
 export const query = graphql`
   query IndexPageQuery {
-    posts: allContentfulBlogPost(limit: 2, sort: { fields: [createdAt], order: DESC }) {
-      nodes {
-        ...BlogPostPreview
-      }
-    }
     projects: allContentfulProject(limit: 4, sort: { fields: [createdAt], order: DESC }) {
       nodes {
         ...ProjectPreview
@@ -28,6 +24,10 @@ export const query = graphql`
     authors: allContentfulAuthor(limit: 1) {
       nodes {
         id
+        name
+        summary {
+          json
+        }
         avatar {
           description
           fluid(maxWidth: 600) {
@@ -123,8 +123,9 @@ const IndexPage = (props: any) => {
     );
   }
 
-  const postNodes: BlogPostPreviewData[] = (data || {}).posts.nodes;
   const projectNodes: ProjectPreviewData[] = (data || {}).projects.nodes;
+  const authors: { id: string; name: string; summary: { json: any }; avatar: any }[] = (data || {})
+    .authors.nodes;
   const github: GithubReposData = (data || {}).github;
   const githubRepos = github.viewer.pinnedItems.nodes;
 
@@ -150,7 +151,7 @@ const IndexPage = (props: any) => {
       />
       <NoSsr>
         <VideoBackground
-          sources={['/video/silence-md.m4v']}
+          sources={['/video/silence-sm.m4v']}
           posterSource="/video/silence.jpg"
           type="video/mp4"
         />
@@ -165,15 +166,7 @@ const IndexPage = (props: any) => {
         </div>
         <div className={classes.about} id="about">
           {/* TODO: move this to Contentful. */}
-          <Typography paragraph>
-            I write elegant code to power innovative user experiences. My focus is React,
-            complemented by TypeScript, GraphQL, and graph databases.
-          </Typography>
-          <Typography paragraph>
-            When I'm not writing code, I'm usually writing about my thoughts on theology,
-            philosophy, faith, and morality. If you're interested in that, you can read more in my
-            blog.
-          </Typography>
+          <RichText source={authors[0].summary} />
           <Box
             mt={2}
             mb={8}
