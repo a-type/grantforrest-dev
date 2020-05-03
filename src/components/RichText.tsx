@@ -5,7 +5,7 @@ import { Typography, Divider, makeStyles } from '@material-ui/core';
 import Link from './Link';
 import clsx from 'clsx';
 
-const useQuoteStyles = makeStyles((theme) => ({
+const useQuoteStyles = makeStyles(theme => ({
   root: {
     opacity: 0.8,
     margin: 0,
@@ -17,6 +17,10 @@ const useQuoteStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(3),
     borderRadius: theme.shape.borderRadius,
     fontFamily: '"EB Garamond", serif',
+    '& p, & span, & a': {
+      fontFamily: 'inherit',
+      fontSize: '1.3rem',
+    },
   },
 }));
 
@@ -25,7 +29,7 @@ const Quote = ({ children }: { children: any }) => {
   return <blockquote className={clsx(classes.root)}>{children}</blockquote>;
 };
 
-const usePStyles = makeStyles((theme) => ({
+const usePStyles = makeStyles(theme => ({
   root: {
     '& a': {
       color: theme.palette.primary.main,
@@ -45,7 +49,7 @@ const P = ({ children }: { children: any }) => {
         {children
           .split('\n')
           .filter(Boolean)
-          .map((text) => (
+          .map(text => (
             <Typography paragraph className={classes.root}>
               {text}
             </Typography>
