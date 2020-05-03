@@ -1,17 +1,11 @@
 import { format, distanceInWords, differenceInDays } from 'date-fns';
 import * as React from 'react';
-import {
-  makeStyles,
-  Container,
-  Typography,
-  useScrollTrigger,
-  useTheme,
-  useMediaQuery,
-} from '@material-ui/core';
-import { BlogPostFullData } from '../fragments';
+import { Container, Box, Typography, makeStyles } from '@material-ui/core';
+import { BlogPostFullData, BlogPostPreviewData } from '../fragments';
 import GatsbyImage from 'gatsby-image';
 import RichText from './RichText';
-import { useSpring, animated } from '@react-spring/web';
+import { animated } from '@react-spring/web';
+import BlogPostPreview from '../components/BlogPostPreview';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -89,12 +83,29 @@ const useStyles = makeStyles(theme => ({
     margin: '0.5rem 0 0',
     fontSize: theme.typography.pxToRem(18),
   },
+  adjacentPosts: {
+    marginTop: theme.spacing(6),
+    display: 'grid',
+    gridTemplateAreas: '"next" "prev"',
+    gridGap: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      gridGap: theme.spacing(4),
+      gridTemplateColumns: '1fr 1fr',
+      gridTemplateAreas: '"prev next"',
+    },
+  },
+  next: {
+    gridArea: 'next',
+  },
+  prev: {
+    gridArea: 'prev',
+  },
 }));
 
-type BlogPostProps = BlogPostFullData;
-
-const sixteenNine = (8.0 / 16.0) * 100;
-const twoFour = (4.0 / 2.0) * 100;
+type BlogPostProps = BlogPostFullData & {
+  next?: BlogPostPreviewData;
+  prev?: BlogPostPreviewData;
+};
 
 function BlogPost(props: BlogPostProps) {
   const { body, title, mainImage, createdAt } = props;
@@ -127,6 +138,24 @@ function BlogPost(props: BlogPostProps) {
         </aside>
         {body && <RichText source={body} />}
       </div>
+      <Box className={styles.adjacentPosts}>
+        {props.prev && (
+          <Box className={styles.prev}>
+            <Typography variant="h5" gutterBottom>
+              Previous post
+            </Typography>
+            <BlogPostPreview {...props.prev} />
+          </Box>
+        )}
+        {props.next && (
+          <Box className={styles.next}>
+            <Typography variant="h5" gutterBottom>
+              Next post
+            </Typography>
+            <BlogPostPreview {...props.next} />
+          </Box>
+        )}
+      </Box>
     </Container>
   );
 }

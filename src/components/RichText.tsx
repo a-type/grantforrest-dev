@@ -3,11 +3,9 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import * as React from 'react';
 import { Typography, Divider, makeStyles } from '@material-ui/core';
 import Link from './Link';
-import colors from '../themes/colors';
-import { useDarkMode } from '../contexts/DarkModeContext';
 import clsx from 'clsx';
 
-const useQuoteStyles = makeStyles(theme => ({
+const useQuoteStyles = makeStyles((theme) => ({
   root: {
     opacity: 0.8,
     margin: 0,
@@ -17,21 +15,17 @@ const useQuoteStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
     paddingRight: theme.spacing(3),
-    backgroundColor: colors.white,
     borderRadius: theme.shape.borderRadius,
-  },
-  dark: {
-    backgroundColor: colors.trueBlack,
+    fontFamily: '"EB Garamond", serif',
   },
 }));
 
 const Quote = ({ children }: { children: any }) => {
-  const { dark } = useDarkMode();
   const classes = useQuoteStyles({});
-  return <blockquote className={clsx(classes.root, dark && classes.dark)}>{children}</blockquote>;
+  return <blockquote className={clsx(classes.root)}>{children}</blockquote>;
 };
 
-const usePStyles = makeStyles(theme => ({
+const usePStyles = makeStyles((theme) => ({
   root: {
     '& a': {
       color: theme.palette.primary.main,
@@ -51,7 +45,7 @@ const P = ({ children }: { children: any }) => {
         {children
           .split('\n')
           .filter(Boolean)
-          .map(text => (
+          .map((text) => (
             <Typography paragraph className={classes.root}>
               {text}
             </Typography>

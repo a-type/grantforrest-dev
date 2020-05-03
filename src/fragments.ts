@@ -24,7 +24,7 @@ export type BlogPostPreviewData = {
   createdAt: string;
   title: string;
   slug: string;
-  mainImage: {
+  mainImage?: {
     description?: string;
     fluid: FluidObject;
   };

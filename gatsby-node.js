@@ -13,12 +13,16 @@ async function createBlogPostPages(graphql, actions, reporter) {
   const { createPage } = actions;
   const result = await graphql(`
     {
-      allContentfulBlogPost {
+      allContentfulBlogPost(sort: { fields: [createdAt], order: ASC }) {
         edges {
           node {
             id
             createdAt
             slug
+            title
+            excerpt {
+              json
+            }
           }
         }
       }
@@ -35,12 +39,17 @@ async function createBlogPostPages(graphql, actions, reporter) {
       const { id, slug } = edge.node;
       const path = `/blog/${slug}/`;
 
+      const prevPostEdge = postEdges[index - 1];
+      const nextPostEdge = postEdges[index + 1];
+      const prevPostNode = prevPostEdge ? prevPostEdge.node : null;
+      const nextPostNode = nextPostEdge ? nextPostEdge.node : null;
+
       reporter.info(`Creating blog post page: ${path}`);
 
       createPage({
         path,
         component: require.resolve('./src/templates/BlogPost.tsx'),
-        context: { id },
+        context: { id, next: nextPostNode, prev: prevPostNode },
       });
     });
 }
