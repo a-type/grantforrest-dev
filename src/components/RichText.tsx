@@ -7,7 +7,6 @@ import clsx from 'clsx';
 
 const useQuoteStyles = makeStyles(theme => ({
   root: {
-    opacity: 0.8,
     margin: 0,
     marginBottom: theme.spacing(2),
     marginTop: theme.spacing(2),
