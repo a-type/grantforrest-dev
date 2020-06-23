@@ -1,6 +1,11 @@
 import * as React from 'react';
-import { ProjectPreviewData, BlogPostPreviewData, GithubRepoPreview } from '../fragments';
-import { getPortfolioUrl, getBlogUrl } from './helpers';
+import {
+  ProjectPreviewData,
+  BlogPostPreviewData,
+  GithubRepoPreview,
+  DevlogFullData,
+} from '../fragments';
+import { getPortfolioUrl, getBlogUrl, getDevlogUrl } from './helpers';
 import { Box, Typography, Button } from '@material-ui/core';
 import { Star } from '@material-ui/icons';
 import GithubIcon from '../components/GithubIcon';
@@ -14,7 +19,7 @@ const getRepoImage = (repo: GithubRepoPreview) =>
 
 const getRepoLabels = (repo: GithubRepoPreview) => [
   'github',
-  ...repo.repositoryTopics.nodes.map(n => n.topic.name),
+  ...repo.repositoryTopics.nodes.map((n) => n.topic.name),
 ];
 
 const getRepoContent = (repo: GithubRepoPreview) => (
@@ -76,9 +81,7 @@ export const projectToPreviewable = (
           </Button>
         )}
       </>
-    ) : (
-      undefined
-    ),
+    ) : undefined,
 });
 
 export const postToPreviewable = (post: BlogPostPreviewData): Previewable => ({
@@ -91,6 +94,17 @@ export const postToPreviewable = (post: BlogPostPreviewData): Previewable => ({
   size: 'medium' as const,
   type: 'post' as const,
   labels: ['blog'],
+});
+
+export const devlogToPreviewable = (devlog: DevlogFullData): Previewable => ({
+  title: devlog.title,
+  sortedTime: devlog.createdAt,
+  createdAt: devlog.createdAt,
+  url: getDevlogUrl(devlog.project.slug, devlog.slug),
+  coverImage: devlog.mainImage,
+  size: 'medium' as const,
+  type: 'devlog' as const,
+  labels: ['devlog'],
 });
 
 export const repoToPreviewable = (repo: GithubRepoPreview): Previewable => ({
@@ -119,7 +133,5 @@ export const repoToPreviewable = (repo: GithubRepoPreview): Previewable => ({
     >
       View on Github
     </Button>
-  ) : (
-    undefined
-  ),
+  ) : undefined,
 });

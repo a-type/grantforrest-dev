@@ -1,13 +1,14 @@
 import { format, distanceInWords, differenceInDays } from 'date-fns';
 import * as React from 'react';
 import { Container, Box, Typography, makeStyles } from '@material-ui/core';
-import { BlogPostFullData, BlogPostPreviewData } from '../fragments';
+import { BlogPostFullData, BlogPostPreviewData, DevlogFullData } from '../fragments';
 import GatsbyImage from 'gatsby-image';
 import RichText from './RichText';
 import { animated } from '@react-spring/web';
 import BlogPostPreview from '../components/BlogPostPreview';
 import { PreviewCard } from './PreviewCard';
-import { postToPreviewable } from '../lib/previewables';
+import { devlogToPreviewable } from '../lib/previewables';
+import Link from './Link';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,13 +105,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type BlogPostProps = BlogPostFullData & {
-  next?: BlogPostPreviewData;
-  prev?: BlogPostPreviewData;
+type DevlogPostProps = DevlogFullData & {
+  next?: DevlogFullData;
+  prev?: DevlogFullData;
+  project: {
+    slug: string;
+    title: string;
+  };
 };
 
-function BlogPost(props: BlogPostProps) {
-  const { body, title, mainImage, createdAt } = props;
+function DevlogPost(props: DevlogPostProps) {
+  const { body, title, mainImage, createdAt, project } = props;
   const styles = useStyles(props);
 
   return (
@@ -146,7 +151,7 @@ function BlogPost(props: BlogPostProps) {
             <Typography variant="h5" gutterBottom>
               Previous post
             </Typography>
-            <PreviewCard previewable={postToPreviewable(props.prev)} />
+            <PreviewCard previewable={devlogToPreviewable(props.prev)} />
           </Box>
         )}
         {props.next && (
@@ -154,12 +159,15 @@ function BlogPost(props: BlogPostProps) {
             <Typography variant="h5" gutterBottom>
               Next post
             </Typography>
-            <PreviewCard previewable={postToPreviewable(props.next)} />
+            <PreviewCard previewable={devlogToPreviewable(props.next)} />
           </Box>
         )}
+      </Box>
+      <Box mt={3}>
+        <Link to={`/portfolio/${project.slug}`}>Back to project home</Link>
       </Box>
     </Container>
   );
 }
 
-export default BlogPost;
+export default DevlogPost;

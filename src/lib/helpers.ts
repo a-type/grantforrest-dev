@@ -25,6 +25,10 @@ export function getPortfolioUrl(slug: string) {
   return `/portfolio/${slug}`;
 }
 
+export function getDevlogUrl(projectSlug: string, slug: string) {
+  return `/portfolio/${projectSlug}/devlogs/${slug}`;
+}
+
 export function getPortfolioElementId(slug: string) {
   return `project-${slug}`;
 }

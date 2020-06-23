@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
 import { mapEdgesToNodes } from '../lib/helpers';
-import BlogPostPreviewGrid from '../components/BlogPostPreviewGrid';
 import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../components/Layout';
-import { Typography, Container, makeStyles } from '@material-ui/core';
+import { Container, makeStyles } from '@material-ui/core';
 import PreviewGrid from '../components/PreviewGrid';
 import { postToPreviewable } from '../lib/previewables';
 
@@ -21,7 +20,7 @@ export const query = graphql`
   }
 `;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(12),
   },

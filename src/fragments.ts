@@ -99,6 +99,46 @@ export type BlogPostFullData = {
   };
 };
 
+export const DevlogFullFragment = graphql`
+  fragment DevlogFull on ContentfulDevlog {
+    id
+    title
+    createdAt
+    slug
+    mainImage {
+      description
+      fluid(maxWidth: 2000) {
+        ...GatsbyContentfulFluid_withWebp
+      }
+    }
+    body {
+      json
+    }
+    project {
+      id
+      slug
+    }
+  }
+`;
+
+export type DevlogFullData = {
+  id: string;
+  title: string;
+  createdAt: string;
+  slug: string;
+  mainImage: {
+    description?: string;
+    fluid: FluidObject;
+  };
+  body: {
+    json: any;
+  };
+  project: {
+    id: string;
+    slug: string;
+  };
+};
+
 export const ProjectFullFragment = graphql`
   fragment ProjectFull on ContentfulProject {
     id

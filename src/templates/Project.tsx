@@ -5,12 +5,16 @@ import ProjectView from '../components/Project';
 import SEO from '../components/Seo';
 import Layout from '../components/Layout';
 import { toPlainText } from '../lib/helpers';
-import { Container } from '@material-ui/core';
+import { Container, Box } from '@material-ui/core';
+import Link from '../components/Link';
 
 export const query = graphql`
   query ProjectTemplateQuery($id: String!) {
     project: contentfulProject(id: { eq: $id }) {
       ...ProjectFull
+      devlog {
+        slug
+      }
     }
   }
 `;
@@ -18,6 +22,7 @@ export const query = graphql`
 const ProjectTemplate = (props: any) => {
   const { data, errors } = props;
   const project = data && data.project;
+
   return (
     <Layout>
       {errors && <SEO title="GraphQL Error" />}
@@ -36,6 +41,13 @@ const ProjectTemplate = (props: any) => {
       )}
 
       {project && <ProjectView {...project} />}
+      {project && project.devlog && (
+        <Container maxWidth="md">
+          <Box pt={3}>
+            <Link to={`/portfolio/${project.slug}/devlogs`}>Devlog</Link>
+          </Box>
+        </Container>
+      )}
     </Layout>
   );
 };

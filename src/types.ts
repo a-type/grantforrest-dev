@@ -1,11 +1,11 @@
 import { FluidObject } from 'gatsby-image';
 
 export type PreviewSize = 'small' | 'medium' | 'large';
-export type PreviewType = 'project' | 'repo' | 'post';
+export type PreviewType = 'project' | 'repo' | 'post' | 'devlog';
 
 export type Previewable = {
   title: string;
-  excerpt: any | null;
+  excerpt?: any | null;
   coverImage?: {
     description?: string;
     fluid?: FluidObject;
