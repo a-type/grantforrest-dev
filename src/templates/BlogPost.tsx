@@ -44,8 +44,8 @@ const BlogPostTemplate = (props: any) => {
 
       {post && (
         <Container component="article" maxWidth="md">
-          {post.mainImage && <PostMainImage image={post.mainImage} />}
           <PostLayout>
+            {post.mainImage && <PostMainImage image={post.mainImage} />}
             <PostTitle>{post.title}</PostTitle>
             <PostMeta createdAt={post.createdAt} />
             <PostBody body={post.body} />

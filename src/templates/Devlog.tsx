@@ -43,8 +43,8 @@ const DevlogTemplate = (props: any) => {
 
       {devlog && (
         <Container component="article" maxWidth="md">
-          {devlog.mainImage && <PostMainImage image={devlog.mainImage} />}
           <PostLayout>
+            {devlog.mainImage && <PostMainImage image={devlog.mainImage} />}
             <PostTitle>{devlog.title}</PostTitle>
             <PostMeta createdAt={devlog.createdAt} />
             <PostBody body={devlog.body} />

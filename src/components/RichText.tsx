@@ -5,7 +5,7 @@ import { Typography, Divider, makeStyles } from '@material-ui/core';
 import Link from './Link';
 import clsx from 'clsx';
 
-const useQuoteStyles = makeStyles(theme => ({
+const useQuoteStyles = makeStyles((theme) => ({
   root: {
     margin: 0,
     marginBottom: theme.spacing(2),
@@ -28,7 +28,7 @@ const Quote = ({ children }: { children: any }) => {
   return <blockquote className={clsx(classes.root)}>{children}</blockquote>;
 };
 
-const usePStyles = makeStyles(theme => ({
+const usePStyles = makeStyles((theme) => ({
   root: {
     '& a': {
       color: theme.palette.primary.main,
@@ -48,7 +48,7 @@ const P = ({ children }: { children: any }) => {
         {children
           .split('\n')
           .filter(Boolean)
-          .map(text => (
+          .map((text) => (
             <Typography paragraph className={classes.root}>
               {text}
             </Typography>
@@ -126,7 +126,12 @@ const options = {
               title={title ? title['en-US'] : null}
               alt={description ? description['en-US'] : null}
               src={file['en-US'].url}
-              style={{ maxWidth: '100%', marginBottom: 32 }}
+              style={{
+                maxWidth: '100%',
+                marginBottom: 32,
+                marginLeft: 'auto',
+                marginRight: 'auto',
+              }}
             />
           );
         case 'application':
@@ -150,8 +155,16 @@ const options = {
   },
 };
 
-const RichText: React.FC<{ source: { json: any } }> = ({ source }) => (
-  <>{documentToReactComponents(source.json, options)}</>
-);
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+}));
+
+const RichText: React.FC<{ source: { json: any } }> = ({ source }) => {
+  const classes = useStyles({});
+  return <div className={classes.root}>{documentToReactComponents(source.json, options)}</div>;
+};
 
 export default RichText;
