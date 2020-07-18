@@ -85,14 +85,16 @@ const useStyles = makeStyles((theme) => ({
 export function PreviewCard({ previewable }: PreviewCardProps) {
   const classes = useStyles({});
 
+  if (!previewable) return null;
+
   return (
     <Card className={classes.previewCard}>
       <CardActionArea
         className={classes.previewCardActionArea}
-        component={previewable.url.startsWith('http') ? MuiLink : Link}
+        component={previewable.url && previewable.url.startsWith('http') ? MuiLink : Link}
         to={previewable.url}
         href={previewable.url}
-        {...(previewable.url.startsWith('http')
+        {...(previewable.url && previewable.url.startsWith('http')
           ? {
               target: '_blank',
               rel: 'noopener',

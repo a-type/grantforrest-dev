@@ -20,3 +20,28 @@ export type Previewable = {
   extraContent?: React.ReactNode;
   labels: string[];
 };
+
+export type RichTextData = {
+  json: any;
+};
+
+export type FluidImageMedia = {
+  fluid: FluidObject;
+  description?: string;
+};
+
+export type Post = {
+  body: RichTextData;
+  title: string;
+  mainImage?: FluidImageMedia;
+  createdAt: string;
+};
+
+export type PostPreview = {
+  id: string;
+  createdAt: string;
+  title: string;
+  slug: string;
+  mainImage?: FluidImageMedia;
+  excerpt?: RichTextData;
+};

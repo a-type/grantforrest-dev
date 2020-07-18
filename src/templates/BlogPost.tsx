@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
 import GraphQLErrorList from '../components/GraphQLErrorList';
-import BlogPost from '../components/Post';
 import SEO from '../components/Seo';
 import Layout from '../components/Layout';
 import { toPlainText } from '../lib/helpers';
 import { Container } from '@material-ui/core';
+import { PostMainImage } from '../components/PostMainImage';
+import { PostLayout } from '../components/PostLayout';
+import { PostTitle } from '../components/PostTitle';
+import { PostMeta } from '../components/PostMeta';
+import { PostBody } from '../components/PostBody';
+import { AdjacentPosts } from '../components/AdjacentPosts';
+import { postToPreviewable } from '../lib/previewables';
 
 export const query = graphql`
   query BlogPostTemplateQuery($id: String!) {
@@ -36,7 +42,20 @@ const BlogPostTemplate = (props: any) => {
         </Container>
       )}
 
-      {post && <BlogPost {...post} next={pageContext.next} prev={pageContext.prev} />}
+      {post && (
+        <Container component="article" maxWidth="md">
+          {post.mainImage && <PostMainImage image={post.mainImage} />}
+          <PostLayout>
+            <PostTitle>{post.title}</PostTitle>
+            <PostMeta createdAt={post.createdAt} />
+            <PostBody body={post.body} />
+          </PostLayout>
+          <AdjacentPosts
+            next={pageContext.next && postToPreviewable(pageContext.next)}
+            prev={pageContext.prev && postToPreviewable(pageContext.prev)}
+          />
+        </Container>
+      )}
     </Layout>
   );
 };

@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { graphql } from 'gatsby';
 import GraphQLErrorList from '../components/GraphQLErrorList';
-import DevlogView from '../components/Devlog';
 import SEO from '../components/Seo';
 import Layout from '../components/Layout';
 import { toPlainText } from '../lib/helpers';
 import { Container } from '@material-ui/core';
+import { devlogToPreviewable } from '../lib/previewables';
+import { PostLayout } from '../components/PostLayout';
+import { PostMainImage } from '../components/PostMainImage';
+import { PostTitle } from '../components/PostTitle';
+import { PostMeta } from '../components/PostMeta';
+import { PostBody } from '../components/PostBody';
+import { AdjacentPosts } from '../components/AdjacentPosts';
 
 export const query = graphql`
   query DevlogTemplateQuery($id: String!) {
@@ -35,7 +41,20 @@ const DevlogTemplate = (props: any) => {
         </Container>
       )}
 
-      {devlog && <DevlogView {...devlog} next={pageContext.next} prev={pageContext.prev} />}
+      {devlog && (
+        <Container component="article" maxWidth="md">
+          {devlog.mainImage && <PostMainImage image={devlog.mainImage} />}
+          <PostLayout>
+            <PostTitle>{devlog.title}</PostTitle>
+            <PostMeta createdAt={devlog.createdAt} />
+            <PostBody body={devlog.body} />
+          </PostLayout>
+          <AdjacentPosts
+            next={pageContext.next && devlogToPreviewable(pageContext.next)}
+            prev={pageContext.prev && devlogToPreviewable(pageContext.prev)}
+          />
+        </Container>
+      )}
     </Layout>
   );
 };
