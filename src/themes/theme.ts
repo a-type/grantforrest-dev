@@ -7,6 +7,7 @@ const baseDarkPalette: ThemeOptions['palette'] = {
   type: 'dark',
   text: {
     primary: colors.white,
+    secondary: colors.bright,
   },
   primary: {
     main: colors.bright,
@@ -23,6 +24,7 @@ const baseLightPalette: ThemeOptions['palette'] = {
   type: 'light',
   text: {
     primary: colors.black,
+    secondary: colors.dark,
   },
   primary: {
     main: colors.black,
@@ -72,6 +74,9 @@ const themeFactory = (palette: ThemeOptions['palette'], shadows: ThemeOptions['s
       MuiButton: {
         root: {
           textTransform: 'capitalize',
+        },
+        textSecondary: {
+          color: palette.text.secondary,
         },
       },
       MuiTypography: {
