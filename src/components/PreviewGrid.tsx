@@ -37,7 +37,7 @@ const useStyles = makeStyles<Theme, PreviewGridProps>((theme) => ({
       gridColumn: 'span 6',
     },
     [theme.breakpoints.up('lg')]: {
-      gridColumn: 'span 4',
+      gridColumn: 'span 6',
     },
   },
   gridItemLarge: {

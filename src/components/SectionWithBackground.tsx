@@ -13,7 +13,7 @@ export type SectionWithBackgroundProps = {
 
 const useStyles = makeStyles<Theme, SectionWithBackgroundProps>((theme) => ({
   root: {
-    minHeight: '80vh',
+    minHeight: '50vh',
     marginBottom: theme.spacing(15),
   },
 }));
