@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
 import clsx from 'clsx';
-import { useDarkMode } from '../contexts/DarkModeContext';
+import { useDarkMode } from '../../contexts/DarkModeContext';
 
 export interface VideoBackgroundProps {
   sources: string[];
@@ -9,7 +9,7 @@ export interface VideoBackgroundProps {
   type: string;
 }
 
-const useStyles = makeStyles<Theme, VideoBackgroundProps>(theme => ({
+const useStyles = makeStyles<Theme, VideoBackgroundProps>((theme) => ({
   root: {
     position: 'absolute',
     top: 0,
@@ -45,14 +45,14 @@ const useStyles = makeStyles<Theme, VideoBackgroundProps>(theme => ({
   },
 }));
 
-const VideoBackground: React.FC<VideoBackgroundProps> = props => {
+const VideoBackground = React.forwardRef<HTMLDivElement, VideoBackgroundProps>((props, ref) => {
   const { sources, posterSource, type } = props;
   const classes = useStyles(props);
 
   const { dark } = useDarkMode();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} ref={ref}>
       <video
         className={clsx(classes.video, dark ? classes.filterLark : classes.filterLarkInverted)}
         id="wp"
@@ -62,12 +62,12 @@ const VideoBackground: React.FC<VideoBackgroundProps> = props => {
         playsInline
         poster={posterSource}
       >
-        {sources.map(source => (
+        {sources.map((source) => (
           <source key={source} src={source} type={type} />
         ))}
       </video>
     </div>
   );
-};
+});
 
 export default VideoBackground;

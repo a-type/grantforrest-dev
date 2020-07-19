@@ -10,9 +10,13 @@ import PreviewGrid from '../components/PreviewGrid';
 import { projectToPreviewable, repoToPreviewable } from '../lib/previewables';
 import { compareDesc } from 'date-fns';
 import { GitHub } from '@material-ui/icons';
-import VideoBackground from '../components/VideoBackground';
+import VideoBackground from '../components/backgrounds/VideoBackground';
 import clsx from 'clsx';
 import RichText from '../components/RichText';
+import { FirstVisibleProvider } from '../contexts/FirstVisibleContext';
+import { SectionWithBackground } from '../components/SectionWithBackground';
+import { GithubBackground } from '../components/backgrounds/GithubBackground';
+import { LowContrastImageBackground } from '../components/backgrounds/LowContrastImageBackground';
 
 export const query = graphql`
   query IndexPageQuery {
@@ -42,7 +46,7 @@ export const query = graphql`
   }
 `;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   overlay: {
     position: 'relative',
     zIndex: 1,
@@ -50,13 +54,15 @@ const useStyles = makeStyles(theme => ({
   },
 
   layout: {
-    display: 'grid',
-    gridTemplateAreas: '"title" "about" "content"',
-    gridTemplateRows: '40vh auto auto auto',
-    gridGap: theme.spacing(3),
-    [theme.breakpoints.up('md')]: {
-      gridTemplateRows: '80vh auto auto',
-    },
+    // display: 'grid',
+    // gridTemplateAreas: '"about" "content"',
+    // gridTemplateRows: '40vh auto auto auto',
+    // gridGap: theme.spacing(3),
+    // [theme.breakpoints.up('md')]: {
+    //   gridTemplateRows: '80vh auto auto',
+    // },
+    display: 'flex',
+    flexDirection: 'column',
   },
 
   navigation: {
@@ -106,8 +112,8 @@ const useStyles = makeStyles(theme => ({
 
   about: {
     gridArea: 'about',
-    maxWidth: 600,
-    justifySelf: 'center',
+    display: 'flex',
+    flexDirection: 'column',
   },
 }));
 
@@ -130,52 +136,98 @@ const IndexPage = (props: any) => {
   const githubRepos = github.viewer.pinnedItems.nodes;
 
   const filterOutProjectRepos = githubRepos.filter(
-    repo => !projectNodes.some(node => node.githubUrl === repo.url),
+    (repo) => !projectNodes.some((node) => node.githubUrl === repo.url),
   );
 
-  const previewables = [
-    ...projectNodes.map(project => {
+  const githubPreviewables = filterOutProjectRepos
+    .map(repoToPreviewable)
+    .sort((a, b) => compareDesc(a.sortedTime, b.sortedTime));
+
+  const projectPreviewables = projectNodes
+    .map((project) => {
       // link with github repo if available
-      const githubRepo = githubRepos.find(repo => repo.url === project.githubUrl);
+      const githubRepo = githubRepos.find((repo) => repo.url === project.githubUrl);
       return projectToPreviewable(project, githubRepo);
-    }),
-    ...filterOutProjectRepos.map(repoToPreviewable),
-  ].sort((a, b) => compareDesc(a.sortedTime, b.sortedTime));
+    })
+    .sort((a, b) => compareDesc(a.sortedTime, b.sortedTime));
+
+  const firstProjectWithImage = projectPreviewables.find((previewable) => !!previewable.coverImage);
+  const firstProjectImage = firstProjectWithImage ? firstProjectWithImage.coverImage : null;
 
   return (
-    <Layout noTitle>
-      <SEO
-        title="Grant Forrest"
-        description="The personal website of Grant Forrest"
-        keywords={['blog', 'react', 'frontend', 'developer', 'portfolio']}
-      />
-      <NoSsr>
-        <VideoBackground
-          sources={['/video/silence-sm.m4v']}
-          posterSource="/video/silence.jpg"
-          type="video/mp4"
+    <FirstVisibleProvider groupName="homepage">
+      <Layout noTitle>
+        <SEO
+          title="Grant Forrest"
+          description="The personal website of Grant Forrest"
+          keywords={['blog', 'react', 'frontend', 'developer', 'portfolio']}
         />
-      </NoSsr>
-      <Container className={clsx(classes.overlay, classes.layout)}>
-        <div className={classes.title}>
-          <Typography variant="h1" gutterBottom className={classes.title}>
-            Grant
-            <br />
-            Forrest
-          </Typography>
-        </div>
-        <div className={classes.about} id="about">
-          {/* TODO: move this to Contentful. */}
-          <RichText source={authors[0].summary} />
-          <Box
-            mt={2}
-            mb={8}
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            width="100%"
+        <Container className={clsx(classes.overlay, classes.layout)}>
+          <SectionWithBackground
+            className={classes.about}
+            id="about"
+            groupName="homepage"
+            sectionKey="intro"
+            background={
+              <VideoBackground
+                sources={['/video/silence-sm.m4v']}
+                posterSource="/video/silence.jpg"
+                type="video/mp4"
+              />
+            }
           >
+            <div className={classes.title}>
+              <Typography variant="h1" gutterBottom className={classes.title}>
+                Grant
+                <br />
+                Forrest
+              </Typography>
+            </div>
+            <Box maxWidth={600} alignSelf="center">
+              <RichText source={authors[0].summary} />
+            </Box>
+            <Box
+              mt={2}
+              mb={8}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              width="100%"
+            >
+              <IconButton
+                color="primary"
+                component={Link}
+                to="https://github.com/a-type"
+                underline="none"
+                rel="me"
+              >
+                <GitHub />
+              </IconButton>
+            </Box>
+          </SectionWithBackground>
+          <Box className={classes.mainContent} id="work">
+            <SectionWithBackground
+              groupName="homepage"
+              sectionKey="projects"
+              background={<LowContrastImageBackground image={firstProjectImage} />}
+            >
+              <Typography variant="h2" gutterBottom>
+                Projects
+              </Typography>
+              <PreviewGrid previewables={projectPreviewables} />
+            </SectionWithBackground>
+            <SectionWithBackground
+              groupName="homepage"
+              sectionKey="github"
+              background={<GithubBackground />}
+            >
+              <Typography variant="h2" gutterBottom>
+                Open Source
+              </Typography>
+              <PreviewGrid previewables={githubPreviewables} />
+            </SectionWithBackground>
             <IconButton
+              className={classes.navButton}
               color="primary"
               component={Link}
               to="https://github.com/a-type"
@@ -185,22 +237,9 @@ const IndexPage = (props: any) => {
               <GitHub />
             </IconButton>
           </Box>
-        </div>
-        <Box className={classes.mainContent} id="work">
-          <PreviewGrid previewables={previewables} />
-          <IconButton
-            className={classes.navButton}
-            color="primary"
-            component={Link}
-            to="https://github.com/a-type"
-            underline="none"
-            rel="me"
-          >
-            <GitHub />
-          </IconButton>
-        </Box>
-      </Container>
-    </Layout>
+        </Container>
+      </Layout>
+    </FirstVisibleProvider>
   );
 };
 
