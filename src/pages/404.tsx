@@ -15,7 +15,7 @@ const NotFoundPage = () => (
         </Typography>
         <Typography paragraph>This page was moved, deleted, or never existed.</Typography>
         <Typography paragraph>
-          Perhaps you want to go back to my <Link href="/">homepage?</Link>
+          Perhaps you want to go back to my <Link to="/">homepage?</Link>
         </Typography>
       </Box>
     </Container>
