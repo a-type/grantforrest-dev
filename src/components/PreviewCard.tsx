@@ -91,7 +91,9 @@ export function PreviewCard({ previewable }: PreviewCardProps) {
     <Card className={classes.previewCard}>
       <CardActionArea
         className={classes.previewCardActionArea}
-        component={previewable.url && previewable.url.startsWith('http') ? MuiLink : Link}
+        component={
+          previewable.url && previewable.url.startsWith('http') ? (MuiLink as any) : (Link as any)
+        }
         to={previewable.url}
         href={previewable.url}
         {...(previewable.url && previewable.url.startsWith('http')
@@ -140,7 +142,7 @@ export function PreviewCard({ previewable }: PreviewCardProps) {
         <CardContent className={classes.previewCardContent}>
           <Box display="flex" flexDirection="row" mb={1} className={classes.previewCardLabels}>
             {previewable.labels.map((label) => (
-              <Chip className={classes.label} label={label} />
+              <Chip className={classes.label} label={label} key={label} />
             ))}
           </Box>
           {previewable.extraContent}

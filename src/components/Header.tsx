@@ -5,7 +5,7 @@ import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/co
 import GithubIcon from './GithubIcon';
 import DarkModeToggle from './DarkModeToggle';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   titleArea: {
     flexGrow: 1,
   },
@@ -45,7 +45,7 @@ const Header: React.FC<{ sticky?: boolean; noTitle?: boolean; noDarkModeToggle?:
             <Typography variant="h6">Grant Forrest</Typography>
           </Button>
         </div>
-        <Button component={Link} to="/blog" color="inherit" underline="never">
+        <Button component={Link} to="/blog" color="inherit" underline="none">
           Blog
         </Button>
         {!noDarkModeToggle && <DarkModeToggle />}

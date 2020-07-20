@@ -155,7 +155,7 @@ const IndexPage = (props: any) => {
   const firstProjectImage = firstProjectWithImage ? firstProjectWithImage.coverImage : null;
 
   return (
-    <AmbientProvider>
+    <AmbientProvider debounceTimeout={80}>
       <Layout noTitle>
         <SEO
           title="Grant Forrest"

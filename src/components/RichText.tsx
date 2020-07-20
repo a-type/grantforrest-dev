@@ -49,7 +49,7 @@ const P = ({ children }: { children: any }) => {
           .split('\n')
           .filter(Boolean)
           .map((text) => (
-            <Typography paragraph className={classes.root}>
+            <Typography paragraph className={classes.root} key={text}>
               {text}
             </Typography>
           ))}

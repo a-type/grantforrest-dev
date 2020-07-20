@@ -24,7 +24,7 @@ export function SectionWithBackground(props: SectionWithBackgroundProps) {
 
   return (
     <section {...bindProps} {...rest} className={clsx(classes.root, className)}>
-      <NoSsr>{renderBackground(background || <DefaultSectionBackground />)}</NoSsr>
+      {renderBackground(background || <DefaultSectionBackground />)}
       {children}
     </section>
   );
