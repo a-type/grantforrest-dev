@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
-import GatsbyImage from 'gatsby-image';
-import { FluidImageMedia } from '../../types';
+import GatsbyImage, { FluidObject } from 'gatsby-image';
 
 export type LowContrastImageBackgroundProps = {
-  image: FluidImageMedia | null;
+  image: {
+    fluid?: FluidObject;
+    url?: string;
+    description?: string;
+  } | null;
 };
 
 const useStyles = makeStyles<Theme, LowContrastImageBackgroundProps>((theme) => ({
@@ -37,7 +40,7 @@ export function LowContrastImageBackground(props: LowContrastImageBackgroundProp
 
   return (
     <div className={classes.root}>
-      {image && <GatsbyImage className={classes.image} fluid={image.fluid} />}
+      {image && image.fluid && <GatsbyImage className={classes.image} fluid={image.fluid} />}
     </div>
   );
 }

@@ -13,7 +13,7 @@ import { GitHub } from '@material-ui/icons';
 import VideoBackground from '../components/backgrounds/VideoBackground';
 import clsx from 'clsx';
 import RichText from '../components/RichText';
-import { FirstVisibleProvider } from '../contexts/FirstVisibleContext';
+import { AmbientProvider } from 'react-ambient';
 import { SectionWithBackground } from '../components/SectionWithBackground';
 import { GithubBackground } from '../components/backgrounds/GithubBackground';
 import { LowContrastImageBackground } from '../components/backgrounds/LowContrastImageBackground';
@@ -155,7 +155,7 @@ const IndexPage = (props: any) => {
   const firstProjectImage = firstProjectWithImage ? firstProjectWithImage.coverImage : null;
 
   return (
-    <FirstVisibleProvider groupName="homepage">
+    <AmbientProvider>
       <Layout noTitle>
         <SEO
           title="Grant Forrest"
@@ -166,8 +166,6 @@ const IndexPage = (props: any) => {
           <SectionWithBackground
             className={classes.about}
             id="about"
-            groupName="homepage"
-            sectionKey="intro"
             background={
               <VideoBackground
                 sources={['/video/silence-sm.m4v']}
@@ -207,8 +205,6 @@ const IndexPage = (props: any) => {
           </SectionWithBackground>
           <Box className={classes.mainContent} id="work">
             <SectionWithBackground
-              groupName="homepage"
-              sectionKey="projects"
               background={<LowContrastImageBackground image={firstProjectImage} />}
             >
               <Typography variant="h2" gutterBottom>
@@ -216,11 +212,7 @@ const IndexPage = (props: any) => {
               </Typography>
               <PreviewGrid previewables={projectPreviewables} />
             </SectionWithBackground>
-            <SectionWithBackground
-              groupName="homepage"
-              sectionKey="github"
-              background={<GithubBackground />}
-            >
+            <SectionWithBackground background={<GithubBackground />}>
               <Typography variant="h2" gutterBottom>
                 Open Source
               </Typography>
@@ -239,7 +231,7 @@ const IndexPage = (props: any) => {
           </Box>
         </Container>
       </Layout>
-    </FirstVisibleProvider>
+    </AmbientProvider>
   );
 };
 
