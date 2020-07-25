@@ -17,10 +17,12 @@ import { AmbientProvider } from 'react-ambient';
 import { SectionWithBackground } from '../components/SectionWithBackground';
 import { GithubBackground } from '../components/backgrounds/GithubBackground';
 import { LowContrastImageBackground } from '../components/backgrounds/LowContrastImageBackground';
+import { ProjectSection } from '../components/ProjectSection';
+import { BackgroundSyncText } from '../components/BackgroundSyncText';
 
 export const query = graphql`
   query IndexPageQuery {
-    projects: allContentfulProject(limit: 4, sort: { fields: [createdAt], order: DESC }) {
+    projects: allContentfulProject(limit: 10, sort: { fields: [createdAt], order: DESC }) {
       nodes {
         ...ProjectPreview
       }
@@ -54,13 +56,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   layout: {
-    // display: 'grid',
-    // gridTemplateAreas: '"about" "content"',
-    // gridTemplateRows: '40vh auto auto auto',
-    // gridGap: theme.spacing(3),
-    // [theme.breakpoints.up('md')]: {
-    //   gridTemplateRows: '80vh auto auto',
-    // },
     display: 'flex',
     flexDirection: 'column',
   },
@@ -86,7 +81,6 @@ const useStyles = makeStyles((theme) => ({
     gridArea: 'content',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
   },
 
   work: {
@@ -143,7 +137,10 @@ const IndexPage = (props: any) => {
     .map(repoToPreviewable)
     .sort((a, b) => compareDesc(a.sortedTime, b.sortedTime));
 
+  console.log(projectNodes);
+
   const projectPreviewables = projectNodes
+    .filter((proj) => !!proj.showOnHomepage)
     .map((project) => {
       // link with github repo if available
       const githubRepo = githubRepos.find((repo) => repo.url === project.githubUrl);
@@ -151,11 +148,8 @@ const IndexPage = (props: any) => {
     })
     .sort((a, b) => compareDesc(a.sortedTime, b.sortedTime));
 
-  const firstProjectWithImage = projectPreviewables.find((previewable) => !!previewable.coverImage);
-  const firstProjectImage = firstProjectWithImage ? firstProjectWithImage.coverImage : null;
-
   return (
-    <AmbientProvider debounceTimeout={80}>
+    <AmbientProvider debounceTimeout={50}>
       <Layout noTitle>
         <SEO
           title="Grant Forrest"
@@ -204,14 +198,14 @@ const IndexPage = (props: any) => {
             </Box>
           </SectionWithBackground>
           <Box className={classes.mainContent} id="work">
-            <SectionWithBackground
-              background={<LowContrastImageBackground image={firstProjectImage} />}
-            >
-              <Typography variant="h2" gutterBottom>
-                Projects
-              </Typography>
-              <PreviewGrid previewables={projectPreviewables} />
-            </SectionWithBackground>
+            <BackgroundSyncText variant="h2" gutterBottom>
+              Projects
+            </BackgroundSyncText>
+            <Box mt={4}>
+              {projectPreviewables.map((proj) => (
+                <ProjectSection project={proj} key={proj.url} />
+              ))}
+            </Box>
             <SectionWithBackground background={<GithubBackground />}>
               <Typography variant="h2" gutterBottom>
                 Open Source

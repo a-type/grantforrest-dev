@@ -92,12 +92,12 @@ const themeFactory = (palette: ThemeOptions['palette'], shadows: ThemeOptions['s
         },
         h3: {
           [breakpoints.down('sm')]: {
-            fontSize: '3.75vmax',
+            fontSize: '3vmax',
           },
         },
         h4: {
           [breakpoints.down('sm')]: {
-            fontSize: '3.3vmax',
+            fontSize: '2vmax',
           },
         },
       },

@@ -56,13 +56,15 @@ export const projectToPreviewable = (
   size: 'large' as const,
   type: 'project' as const,
   labels: ['project'],
+  mainColor: project.mainColor,
+  textColor: project.textColor,
   alternateActions:
     repo || project.githubUrl ? (
       <>
         {repo && repo.homepageUrl && (
           <Button
             variant="text"
-            color="secondary"
+            color="inherit"
             component={Link}
             to={repo.homepageUrl}
             underline="none"
@@ -76,6 +78,7 @@ export const projectToPreviewable = (
             component={Link}
             to={project.githubUrl || repo.url}
             underline="none"
+            color="inherit"
           >
             View on Github
           </Button>

@@ -19,6 +19,8 @@ export type Previewable = {
   type: PreviewType;
   extraContent?: React.ReactNode;
   labels: string[];
+  mainColor?: string;
+  textColor?: string;
 };
 
 export type RichTextData = {

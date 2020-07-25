@@ -39,6 +39,8 @@ export const ProjectPreviewFragment = graphql`
     title
     createdAt
     slug
+    mainColor
+    textColor
     mainImage {
       description
       fluid(maxWidth: 2000) {
@@ -49,6 +51,7 @@ export const ProjectPreviewFragment = graphql`
       json
     }
     githubUrl
+    showOnHomepage
   }
 `;
 
@@ -65,6 +68,9 @@ export type ProjectPreviewData = {
     json: any;
   };
   githubUrl: string;
+  mainColor: string | null;
+  textColor: string | null;
+  showOnHomepage: boolean;
 };
 
 export const BlogPostFullFragment = graphql`
