@@ -4,7 +4,7 @@ import GraphQLErrorList from '../components/GraphQLErrorList';
 import SEO from '../components/Seo';
 import Layout from '../components/Layout';
 import { toPlainText } from '../lib/helpers';
-import { Container } from '@material-ui/core';
+import { Container, Box } from '@material-ui/core';
 import { devlogToPreviewable } from '../lib/previewables';
 import { PostLayout } from '../components/PostLayout';
 import { PostMainImage } from '../components/PostMainImage';
@@ -12,6 +12,7 @@ import { PostTitle } from '../components/PostTitle';
 import { PostMeta } from '../components/PostMeta';
 import { PostBody } from '../components/PostBody';
 import { AdjacentPosts } from '../components/AdjacentPosts';
+import Link from '../components/Link';
 
 export const query = graphql`
   query DevlogTemplateQuery($id: String!) {
@@ -53,6 +54,9 @@ const DevlogTemplate = (props: any) => {
             next={pageContext.next && devlogToPreviewable(pageContext.next)}
             prev={pageContext.prev && devlogToPreviewable(pageContext.prev)}
           />
+          <Box mt={3}>
+            <Link to={`/portfolio/${devlog.project.slug}#devlogs`}>Back to project</Link>
+          </Box>
         </Container>
       )}
     </Layout>

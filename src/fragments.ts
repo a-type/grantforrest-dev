@@ -161,7 +161,9 @@ export const ProjectFullFragment = graphql`
       json
     }
     githubUrl
-    # homepageUrl
+    homepageUrl
+    mainColor
+    textColor
   }
 `;
 
@@ -179,6 +181,8 @@ export type ProjectFullData = {
   };
   githubUrl: string;
   homepageUrl: string;
+  mainColor: string;
+  textColor: string;
 };
 
 export const GithubReposFragment = graphql`

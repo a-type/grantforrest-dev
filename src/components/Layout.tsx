@@ -8,7 +8,7 @@ import { useDarkMode, DarkModeProvider } from '../contexts/DarkModeContext';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Footer from './Footer';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   app: {
     display: 'flex',
     flexDirection: 'column',
@@ -36,13 +36,14 @@ const Layout: React.FC<{
   stickyHeader?: boolean;
   noTitle?: boolean;
   forceDarkMode?: 'dark' | 'light';
-}> = ({ children, stickyHeader = false, noTitle = false, forceDarkMode }) => {
+  style?: React.CSSProperties;
+}> = ({ children, stickyHeader = false, noTitle = false, forceDarkMode, style }) => {
   const styles = useStyles({});
 
   return (
     <DarkModeProvider force={forceDarkMode && forceDarkMode === 'dark'}>
       <InnerLayout>
-        <div className={styles.app}>
+        <div className={styles.app} style={style}>
           <CssBaseline />
           <Helmet>
             <link

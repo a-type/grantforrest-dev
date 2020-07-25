@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#ffffff',
   },
   previewCardActionArea: {
+    minHeight: 300,
     borderRadius: theme.shape.borderRadius,
     position: 'relative',
     '&::after': {
