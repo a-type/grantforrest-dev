@@ -60,7 +60,7 @@
     "react-three-fiber": "3.0.7",
     "react-use-gesture": "^6.0.14",
     "seedrandom": "^3.0.5",
-    "three": "^0.110.0",
+    "three": "^0.125.0",
     "tumult": "^3.0.14",
     "typescript": "^3.7.2"
   }
