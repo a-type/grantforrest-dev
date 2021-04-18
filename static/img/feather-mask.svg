@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" 
-  xmlnsXlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <filter id="filter">
-      <feGaussianBlur stdDeviation="15" />
-    </filter>
-  </defs>
-  <rect x="10%" y="10%" width="80%" height="80%" fill="white" filter="url(#filter)" />
-</svg>
