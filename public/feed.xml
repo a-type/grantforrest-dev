@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[Pedro Duarte]]></title>
+        <description><![CDATA[Recent articles from the Pedro's blog.]]></description>
+        <link>https://ped.ro</link>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>Mon, 10 May 2021 21:59:20 GMT</lastBuildDate>
+        <atom:link href="https://ped.ro/feed.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Test post]]></title>
+            <link>https://ped.ro/blog/test-post</link>
+            <guid isPermaLink="true">https://ped.ro/blog/test-post</guid>
+            <pubDate>Mon, 10 May 2021 00:00:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>
