@@ -11,6 +11,8 @@ import { box } from '@styles/box';
 import { container } from '@styles/container';
 import { link } from '@styles/link';
 import { CONTENT_PATH } from '@constants/paths';
+import { GridBox } from '@components/GridBox';
+import { GridText } from '@components/GridText';
 
 export default function PostPage({ frontmatter, code }: Post) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
@@ -22,51 +24,28 @@ export default function PostPage({ frontmatter, code }: Post) {
 	`;
 
   return (
-    <div
-      className={box({
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      })}
-    >
+    <div className={container({})}>
       <TitleAndMetaTags description={frontmatter.title} />
 
-      <div
-        className={container({
-          css: {
-            mx: '$4',
-            p: '$4',
-            bc: '$white',
-            '@bp1': {
-              mx: '$5',
-              py: '$5',
-            },
-            '@bp2': {
-              mx: '$6',
-            },
-          },
-        })}
-      >
-        <div className={box({ mb: '$5', '@bp1': { mb: '$6' } })}>
-          <NextLink href="/" passHref>
-            <a className={link({})}>
-              <span
-                className={text({
-                  size: '2',
-                  css: { textTransform: 'uppercase' },
-                })}
-              >
-                Home
-              </span>
-            </a>
-          </NextLink>
-        </div>
+      <GridText outlined className={box({ mb: '$2', p: '$1' })}>
+        <NextLink href="/" passHref>
+          <a className={link({})}>
+            <span
+              className={text({
+                size: '2',
+                css: { textTransform: 'uppercase' },
+              })}
+            >
+              Home
+            </span>
+          </a>
+        </NextLink>
+      </GridText>
 
+      <GridText>
         <h1
           className={text({
-            size: '9',
-            role: 'title',
-            css: { display: 'flex', alignItems: 'center' },
+            size: '6',
           })}
         >
           {frontmatter.title}{' '}
@@ -76,37 +55,37 @@ export default function PostPage({ frontmatter, code }: Post) {
             </span>
           )}
         </h1>
+      </GridText>
 
+      <GridText>
         <time
           className={text({
-            size: '2',
+            size: '1',
             css: { mt: '$1', mx: 'auto', fontFamily: '$mono', color: '$gray' },
           })}
         >
           {format(parseISO(frontmatter.publishedAt), 'MMMM dd, yyyy')}
           {/* —{' '}{frontmatter.readingTime.text} */}
         </time>
+      </GridText>
 
-        <div className={box({ my: '$5' })}>
-          <Component components={components as any} />
-        </div>
+      <GridBox outlined padded className={box({ my: '$5' })}>
+        <Component components={components as any} />
+      </GridBox>
 
-        <hr />
-
-        <div className={box({ mb: '$5' })}>
-          <p className={text({ size: '2' })}>
-            Share this post on{' '}
-            <a
-              className={link()}
-              href={twitterShare}
-              target="_blank"
-              title="Share this post on Twitter"
-            >
-              Twitter
-            </a>
-          </p>
-        </div>
-      </div>
+      <GridBox className={box({ mb: '$5' })}>
+        <p className={text({ size: '1' })}>
+          Share this post on{' '}
+          <a
+            className={link()}
+            href={twitterShare}
+            target="_blank"
+            title="Share this post on Twitter"
+          >
+            Twitter
+          </a>
+        </p>
+      </GridBox>
     </div>
   );
 }

@@ -6,10 +6,11 @@ import { text } from '@styles/text';
 import { box } from '@styles/box';
 import { link } from '@styles/link';
 import { CONTENT_PATH } from '@constants/paths';
+import { GridBox } from './GridBox';
 
 export const BlogCard = ({ frontmatter, ...props }: Post) => {
   return (
-    <div className={box({ mt: '$4' })} {...props}>
+    <GridBox outlined padded className={box({})} {...props}>
       <NextLink href={`${CONTENT_PATH}/${frontmatter.slug}`} passHref>
         <a
           className={link({
@@ -23,6 +24,7 @@ export const BlogCard = ({ frontmatter, ...props }: Post) => {
           <span
             className={text({
               size: 4,
+              gutter: 2,
               css: { display: 'flex', alignItems: 'center' },
             })}
           >
@@ -56,6 +58,6 @@ export const BlogCard = ({ frontmatter, ...props }: Post) => {
           )}
         </a>
       </NextLink>
-    </div>
+    </GridBox>
   );
 };

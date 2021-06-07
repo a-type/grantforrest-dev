@@ -15,15 +15,15 @@ export const components = {
   ),
   h1: (props) => (
     <h1
-      className={text({ role: 'title', size: 7, css: { mb: '$5' } })}
+      className={text({ size: 5, gutter: 3, css: { mb: '$5' } })}
       {...props}
     />
   ),
   h2: (props) => (
     <h2
       className={text({
-        role: 'title',
-        size: 5,
+        size: 4,
+        gutter: 2,
         css: { mb: '$4', mt: '$5', mx: 'auto' },
       })}
       {...props}
@@ -32,8 +32,8 @@ export const components = {
   h3: (props) => (
     <h3
       className={text({
-        role: 'title',
-        size: 4,
+        size: 3,
+        gutter: 2,
         css: { mb: '$3', mt: '$5', mx: 'auto', fontWeight: 'bold' },
       })}
       {...props}
@@ -42,19 +42,14 @@ export const components = {
   h4: (props) => (
     <h4
       className={text({
-        role: 'title',
         size: 3,
+        gutter: 1,
         css: { mb: '$3', mt: '$4', mx: 'auto', textTransform: 'uppercase' },
       })}
       {...props}
     />
   ),
-  p: (props) => (
-    <p
-      className={text({ size: 3, role: 'body', css: { mb: '$4' } })}
-      {...props}
-    />
-  ),
+  p: (props) => <p className={text({ size: 2, gutter: 1 })} {...props} />,
   a: ({ href = '', ...props }) => {
     if (href.startsWith('http')) {
       return (

@@ -4,7 +4,7 @@
         <description><![CDATA[Recent articles from the Pedro's blog.]]></description>
         <link>https://ped.ro</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Mon, 10 May 2021 21:59:20 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 07 Jun 2021 22:50:21 GMT</lastBuildDate>
         <atom:link href="https://ped.ro/feed.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[Test post]]></title>
