@@ -10,7 +10,14 @@ import { GridBox } from './GridBox';
 
 export const BlogCard = ({ frontmatter, ...props }: Post) => {
   return (
-    <GridBox outlined padded className={box({})} {...props}>
+    <GridBox
+      outlined
+      padded
+      className={box({
+        mb: '$2',
+      })}
+      {...props}
+    >
       <NextLink href={`${CONTENT_PATH}/${frontmatter.slug}`} passHref>
         <a
           className={link({
@@ -19,25 +26,24 @@ export const BlogCard = ({ frontmatter, ...props }: Post) => {
               lineHeight: '$3',
             },
           })}
-          aria-label={`Read ${frontmatter.title}`}
         >
           <span
             className={text({
-              size: 4,
-              gutter: 2,
+              size: 3,
+              gutter: 1,
               css: { display: 'flex', alignItems: 'center' },
             })}
           >
             {frontmatter.title}{' '}
             {frontmatter.draft && (
-              <span className={box({ css: { ml: '$2' } })}>Draft</span>
+              <span className={box({ css: { ml: '$1' } })}>Draft</span>
             )}
           </span>
 
           {frontmatter.publishedAt && (
             <time
               className={text({
-                size: 2,
+                size: 1,
                 css: {
                   fontFamily: '$mono',
                   color: '$gray',

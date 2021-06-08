@@ -119,12 +119,13 @@ export const components = {
   blockquote: (props) => (
     <blockquote
       className={box({
-        my: '$4',
-        pl: '$2',
+        my: '$3',
+        mx: '$1',
+        pl: '$1',
         borderLeft: '2px solid $gray',
         color: '$gray',
         '@bp1': {
-          pl: '$4',
+          pl: '$2',
         },
       })}
       {...props}

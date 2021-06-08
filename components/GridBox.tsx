@@ -1,7 +1,5 @@
-import { box } from '@styles/box';
-import { HTMLAttributes, useMemo } from 'react';
-import clsx from 'clsx';
 import useMeasure from 'react-use-measure';
+import { HTMLAttributes, useMemo } from 'react';
 import { styled, theme } from 'stitches.config';
 
 export interface GridBoxProps extends HTMLAttributes<HTMLDivElement> {
@@ -48,11 +46,17 @@ export function GridBox({
       outlined={outlined}
       {...rest}
     >
-      <div ref={ref}>{children}</div>
-      <div
+      <GridBoxContent ref={ref}>{children}</GridBoxContent>
+      <GridBoxOffsetX
         aria-hidden
         style={{
-          width: size.width + offsetX,
+          width: offsetX,
+          backgroundColor: DEBUG ? 'red' : undefined,
+        }}
+      />
+      <GridBoxOffsetY
+        aria-hidden
+        style={{
           height: offsetY,
           backgroundColor: DEBUG ? 'red' : undefined,
         }}
@@ -62,9 +66,10 @@ export function GridBox({
 }
 
 const GridBoxContainer = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
+  display: 'grid',
+  gridTemplateAreas: '"content offsetX" "offsetY offsetY"',
+  gridTemplateColumns: 'repeat(2, auto)',
+  gridTemplateRows: 'repeat(2, auto)',
   p: '0',
   bc: '$white',
   outlineWidth: '1px',
@@ -82,4 +87,20 @@ const GridBoxContainer = styled('div', {
       },
     },
   },
+});
+
+const GridBoxContent = styled('div', {
+  gridArea: 'content',
+  maxWidth: '70vw',
+  '@bp3': {
+    maxWidth: '$container',
+  },
+});
+
+const GridBoxOffsetX = styled('div', {
+  gridArea: 'offsetX',
+});
+
+const GridBoxOffsetY = styled('div', {
+  gridArea: 'offsetY',
 });

@@ -11,20 +11,8 @@ export default function Home({ posts }: { posts: Frontmatter[] }) {
   return (
     <div className={container({})}>
       <GridText className={box({ mb: '$3' })}>
-        <h1 className={text({ size: 4 })}>Grant Forrest</h1>
+        <h1 className={text({ size: 5 })}>Grant Forrest</h1>
       </GridText>
-      {[
-        '1' as const,
-        '2' as const,
-        '3' as const,
-        '4' as const,
-        '5' as const,
-        '6' as const,
-      ].map((size) => (
-        <GridText className={box({ mb: '$2' })} outlined>
-          <span className={text({ size })}>Size ${size}</span>
-        </GridText>
-      ))}
       <div
         className={box({
           display: 'flex',

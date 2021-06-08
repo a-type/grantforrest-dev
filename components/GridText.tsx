@@ -10,7 +10,9 @@ export function GridText({ className, ...props }: GridTextProps) {
   return (
     <GridBox
       className={clsx(
-        box({ flexDirection: 'column-reverse' }).toString(),
+        box({
+          gridTemplateAreas: '"offsetY offsetY" "content offsetX"',
+        }).toString(),
         className?.toString(),
       )}
       {...props}

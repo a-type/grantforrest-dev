@@ -3,7 +3,6 @@ import { css } from 'stitches.config';
 export const text = css({
   boxSizing: 'border-box',
   fontFamily: '$body',
-  lineHeight: 'inherit',
   margin: 0,
   display: 'block',
   transform: 'translateY(calc(-1 * var(--baseline-offset)))',

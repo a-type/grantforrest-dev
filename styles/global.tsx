@@ -10,7 +10,11 @@ export const globalStyles = global({
     backgroundSize: '$sizes$grid $sizes$grid',
     backgroundPositionX: 'calc($sizes$grid / 2)',
     backgroundPositionY: 'calc($sizes$grid / 2)',
-    backgroundImage: `radial-gradient(circle, rgba(0, 0, 0, 0.5) 0.5px, rgba(0, 0, 0, 0) 1px)`
+    backgroundImage: `radial-gradient(circle, rgba(0, 0, 0, 0.5) 0.5px, rgba(0, 0, 0, 0) 1px)`,
+  },
+
+  '*': {
+    boxSizing: 'border-box',
   },
 
   ul: {
