@@ -27,7 +27,8 @@
       "@hooks/*": ["hooks/*"],
       "@providers/*": ["providers/*"],
       "@layouts/*": ["layouts/*"],
-      "@constants/*": ["constants/*"]
+      "@constants/*": ["constants/*"],
+      "@util/*": ["util/*"]
     }
   },
   "include": [

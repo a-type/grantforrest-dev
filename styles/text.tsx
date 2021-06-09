@@ -37,7 +37,7 @@ export const text = css({
       6: {
         fontSize: '$6',
         lineHeight: '$6',
-        '--baseline-offset': '-0.2em',
+        '--baseline-offset': '-0.17em',
       },
     },
     gutter: {

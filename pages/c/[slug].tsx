@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NextLink from 'next/link';
 import { getMDXComponent } from 'mdx-bundler/client';
 import { getAllFrontmatter, getMdxBySlug } from '@lib/mdx';
@@ -13,6 +13,7 @@ import { link } from '@styles/link';
 import { CONTENT_PATH } from '@constants/paths';
 import { GridBox } from '@components/GridBox';
 import { GridText } from '@components/GridText';
+import { useArt } from '@components/ArtCanvas';
 
 export default function PostPage({ frontmatter, code }: Post) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
@@ -23,11 +24,17 @@ export default function PostPage({ frontmatter, code }: Post) {
 	&url=https://grantforrest.dev/${CONTENT_PATH}/${frontmatter.slug}
 	`;
 
+  const { load } = useArt();
+  useEffect(() => {
+    if (!frontmatter.image) return;
+    load(frontmatter.image);
+  }, [frontmatter.image, load]);
+
   return (
     <div className={container({})}>
       <TitleAndMetaTags description={frontmatter.title} />
 
-      <GridText outlined className={box({ mb: '$2', p: '$1' })}>
+      <GridText className={box({ mb: '$2', p: '$1' })}>
         <NextLink href="/" passHref>
           <a className={link({})}>
             <span
@@ -61,7 +68,7 @@ export default function PostPage({ frontmatter, code }: Post) {
         <time
           className={text({
             size: '1',
-            css: { mt: '$1', mx: 'auto', fontFamily: '$mono', color: '$gray' },
+            css: { my: '$1', mx: 'auto', fontFamily: '$mono', color: '$gray' },
           })}
         >
           {format(parseISO(frontmatter.publishedAt), 'MMMM dd, yyyy')}
@@ -69,7 +76,7 @@ export default function PostPage({ frontmatter, code }: Post) {
         </time>
       </GridText>
 
-      <GridBox outlined padded className={box({ my: '$5' })}>
+      <GridBox padded className={box({ my: '$5' })}>
         <Component components={components as any} />
       </GridBox>
 

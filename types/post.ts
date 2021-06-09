@@ -5,6 +5,7 @@ export interface Frontmatter {
   readingTime?: { text: string; minutes: number; time: number; words: number };
   slug?: any;
   layout?: 'article' | 'full';
+  image?: string;
 }
 
 export interface Post {

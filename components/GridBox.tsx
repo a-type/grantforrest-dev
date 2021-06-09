@@ -3,7 +3,6 @@ import { HTMLAttributes, useMemo } from 'react';
 import { styled, theme } from 'stitches.config';
 
 export interface GridBoxProps extends HTMLAttributes<HTMLDivElement> {
-  outlined?: boolean;
   padded?: boolean;
 }
 
@@ -12,7 +11,6 @@ const DEBUG = false;
 export function GridBox({
   children,
   className,
-  outlined,
   padded,
   ...rest
 }: GridBoxProps) {
@@ -40,12 +38,7 @@ export function GridBox({
   })();
 
   return (
-    <GridBoxContainer
-      className={className}
-      padded={padded}
-      outlined={outlined}
-      {...rest}
-    >
+    <GridBoxContainer className={className} padded={padded} {...rest}>
       <GridBoxContent ref={ref}>{children}</GridBoxContent>
       <GridBoxOffsetX
         aria-hidden
@@ -70,7 +63,7 @@ const GridBoxContainer = styled('div', {
   gridTemplateAreas: '"content offsetX" "offsetY offsetY"',
   gridTemplateColumns: 'repeat(2, auto)',
   gridTemplateRows: 'repeat(2, auto)',
-  p: '0',
+  p: '$1',
   bc: '$white',
   outlineWidth: '1px',
   outlineColor: 'transparent',
@@ -79,11 +72,6 @@ const GridBoxContainer = styled('div', {
     padded: {
       true: {
         p: '$2',
-      },
-    },
-    outlined: {
-      true: {
-        outlineColor: '$gray',
       },
     },
   },

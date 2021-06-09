@@ -1,13 +1,19 @@
+import { useArt } from '@components/ArtCanvas';
 import { BlogCard } from '@components/BlogCard';
 import { GridText } from '@components/GridText';
 import { getAllFrontmatter } from '@lib/mdx';
 import { box } from '@styles/box';
 import { container } from '@styles/container';
 import { text } from '@styles/text';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Frontmatter } from 'types/post';
 
 export default function Home({ posts }: { posts: Frontmatter[] }) {
+  const { load } = useArt();
+  useEffect(() => {
+    load('/images/cloud.jpg');
+  }, [load]);
+
   return (
     <div className={container({})}>
       <GridText className={box({ mb: '$3' })}>

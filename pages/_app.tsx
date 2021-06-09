@@ -2,6 +2,7 @@ import { globalStyles } from '@styles/global';
 import { IdProvider } from '@radix-ui/react-id';
 import Head from 'next/head';
 import { box } from '@styles/box';
+import { ArtCanvas } from '@components/ArtCanvas';
 function App({ Component, pageProps }) {
   globalStyles();
 
@@ -10,23 +11,32 @@ function App({ Component, pageProps }) {
       <Head>
         <title>Grant Forrest</title>
       </Head>
-      <div
+      <ArtCanvas
         className={box({
-          display: 'flex',
-          minHeight: '100vh',
-          flexDirection: 'column',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: -1,
         })}
       >
         <div
           className={box({
-            flex: 1,
             display: 'flex',
+            minHeight: '100vh',
             flexDirection: 'column',
           })}
         >
-          <Component {...pageProps} />
+          <div
+            className={box({
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+            })}
+          >
+            <Component {...pageProps} />
+          </div>
         </div>
-      </div>
+      </ArtCanvas>
     </IdProvider>
   );
 }

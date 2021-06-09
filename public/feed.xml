@@ -4,13 +4,31 @@
         <description><![CDATA[Recent articles from the Pedro's blog.]]></description>
         <link>https://ped.ro</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Mon, 07 Jun 2021 22:50:21 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 09 Jun 2021 20:26:30 GMT</lastBuildDate>
         <atom:link href="https://ped.ro/feed.xml" rel="self" type="application/rss+xml"/>
         <item>
-            <title><![CDATA[Test post]]></title>
-            <link>https://ped.ro/blog/test-post</link>
-            <guid isPermaLink="true">https://ped.ro/blog/test-post</guid>
-            <pubDate>Mon, 10 May 2021 00:00:00 GMT</pubDate>
+            <title><![CDATA[The Name of God]]></title>
+            <link>https://ped.ro/blog/the-name-of-god</link>
+            <guid isPermaLink="true">https://ped.ro/blog/the-name-of-god</guid>
+            <pubDate>Thu, 16 Apr 2020 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[God is Love]]></title>
+            <link>https://ped.ro/blog/god-is-love</link>
+            <guid isPermaLink="true">https://ped.ro/blog/god-is-love</guid>
+            <pubDate>Tue, 31 Dec 2019 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[The Will of the Father]]></title>
+            <link>https://ped.ro/blog/the-will-of-the-father</link>
+            <guid isPermaLink="true">https://ped.ro/blog/the-will-of-the-father</guid>
+            <pubDate>Tue, 14 Jan 2020 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[ACT and the Letter to the Romans]]></title>
+            <link>https://ped.ro/blog/act-and-the-letter-to-the-romans</link>
+            <guid isPermaLink="true">https://ped.ro/blog/act-and-the-letter-to-the-romans</guid>
+            <pubDate>Sun, 16 Aug 2020 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>

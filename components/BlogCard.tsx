@@ -11,7 +11,6 @@ import { GridBox } from './GridBox';
 export const BlogCard = ({ frontmatter, ...props }: Post) => {
   return (
     <GridBox
-      outlined
       padded
       className={box({
         mb: '$2',
