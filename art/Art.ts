@@ -18,6 +18,7 @@ export class Art {
       const y = Math.floor(c / width);
       this.cells[c++] = new Cell(color, x, y, 20);
     }
+    this.cells.length = c;
   };
 
   draw = (canvas: HTMLCanvasElement) => {
