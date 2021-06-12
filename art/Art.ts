@@ -1,8 +1,9 @@
+import { quantize } from '@util/math';
 import { getCells } from './getCells';
 
 export class Art {
   private cells: Cell[] = [];
-  private opacity = 1;
+  private opacity = 0.5;
 
   constructor() {}
 
@@ -35,10 +36,10 @@ class Cell {
 
   private buffer = 0;
 
-  private angle1 = new Lerper(0, Math.PI);
-  private angle2 = new Lerper(Math.PI, Math.PI * 2);
+  private angle1 = new Lerper(0, Math.PI * 2);
+  private angle2 = new Lerper(0, Math.PI * 2);
   private radius = new Lerper(0, 1);
-  private filled = Math.random() < 0.5;
+  private filled = Math.random() < 0.75;
 
   constructor(
     private color: string,
@@ -59,13 +60,14 @@ class Cell {
   }
 
   render = (ctx: CanvasRenderingContext2D) => {
-    this.renderSquare(ctx);
+    // this.renderSquare(ctx);
+    this.renderArc(ctx);
   };
 
   renderSquare = (ctx: CanvasRenderingContext2D) => {
     ctx.beginPath();
     ctx.fillStyle = this.color;
-    ctx.strokeStyle = 'white';
+    // ctx.strokeStyle = 'white';
     ctx.rect(
       this.x + this.buffer,
       this.y + this.buffer,
@@ -73,7 +75,7 @@ class Cell {
       this.size - this.buffer * 2,
     );
     ctx.fill();
-    ctx.stroke();
+    // ctx.stroke();
   };
 
   renderCircle = (ctx: CanvasRenderingContext2D) => {
@@ -99,6 +101,21 @@ class Cell {
     } else {
       ctx.stroke();
     }
+  };
+
+  renderArc = (ctx: CanvasRenderingContext2D) => {
+    if (this.filled) return;
+    ctx.beginPath();
+    ctx.strokeStyle = this.color;
+    // ctx.lineWidth = Math.floor(Math.random() * 3);
+    const r = this.radius.to();
+    const radius = Math.round(2 * r) * this.size;
+    const start = quantize(this.angle1.to(), Math.PI / 2);
+    const end = quantize(this.angle2.to(), Math.PI / 2);
+    ctx.arc(this.x - radius, this.y - radius, radius, start, end);
+    // ctx.arc(this.x - radius, this.y - radius, radius, 0, Math.PI * 2);
+
+    ctx.stroke();
   };
 }
 

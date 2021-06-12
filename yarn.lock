@@ -383,6 +383,11 @@
   resolved "https://registry.yarnpkg.com/@next/react-refresh-utils/-/react-refresh-utils-10.1.3.tgz#65b3e1b9846c02452787fde1d54ad9c54b506dbd"
   integrity sha512-P4GJZuLKfD/o42JvGZ/xP4Hxg68vd3NeZxOLqIuQKFjjaYgC2IrO+lE5PTwGmRkytjfprJC+9j7Jss/xQAS6QA==
 
+"@njkleiner/micropub-parser@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@njkleiner/micropub-parser/-/micropub-parser-1.0.2.tgz#2400d68bcd658debaef614b174abb077e6ae8cbc"
+  integrity sha512-xezVSQVlFa/MH6e4Uo0argq6WHPQ95YkP6Coug7hNiFluBlbcdaiqkeoTtKvz7otwo9ebohN6wtPscDOcGfTOA==
+
 "@opentelemetry/api@0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-0.14.0.tgz#4e17d8d2f1da72b19374efa7b6526aa001267cae"

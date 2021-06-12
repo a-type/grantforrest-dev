@@ -11,7 +11,7 @@ import { Frontmatter } from 'types/post';
 export default function Home({ posts }: { posts: Frontmatter[] }) {
   const { load } = useArt();
   useEffect(() => {
-    load('/images/cloud.jpg');
+    load('/images/horseshoe.jpg');
   }, [load]);
 
   return (
