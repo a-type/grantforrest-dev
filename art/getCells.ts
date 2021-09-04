@@ -1,4 +1,4 @@
-export async function getCells(imgSrc: string, width = 1920) {
+export async function getCells(imgSrc: string, cellSize = 20, width = 1920) {
   const img = await new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image();
     img.width = width;
@@ -14,16 +14,14 @@ export async function getCells(imgSrc: string, width = 1920) {
 
   const ctx = canvas.getContext('2d');
 
-  const scaledWidth = img.width / 20;
-  const scaledHeight = img.height / 20;
+  const scaledWidth = img.width / cellSize;
+  const scaledHeight = img.height / cellSize;
 
   canvas.width = scaledWidth;
   canvas.height = scaledHeight;
   ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
 
   const data = ctx.getImageData(0, 0, scaledWidth, scaledHeight);
-
-  console.log(data);
 
   return data;
 }

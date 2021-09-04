@@ -1,10 +1,13 @@
-import { globalStyles } from '@styles/global';
-import { IdProvider } from '@radix-ui/react-id';
-import Head from 'next/head';
-import { box } from '@styles/box';
 import { ArtCanvas } from '@components/ArtCanvas';
+import { useScrollSnap } from '@hooks/useScrollSnap';
+import { IdProvider } from '@radix-ui/react-id';
+import { box } from '@styles/box';
+import { globalStyles } from '@styles/global';
+import Head from 'next/head';
+
 function App({ Component, pageProps }) {
   globalStyles();
+  useScrollSnap();
 
   return (
     <IdProvider>

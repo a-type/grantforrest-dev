@@ -2,16 +2,7 @@ import { useGridSize } from '@hooks/useGridSize';
 import { useWindowSize } from '@hooks/useWindowSize';
 import { quantize } from '@util/math';
 import { Art } from 'art/Art';
-import {
-  createContext,
-  HTMLAttributes,
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import { createContext, HTMLAttributes, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 
 const ArtCanvasContext = createContext<{
   load: (imgSrc: string) => Promise<void>;
@@ -26,14 +17,14 @@ export interface ArtCanvasProps extends HTMLAttributes<HTMLCanvasElement> {}
 export function ArtCanvas({ children, ...props }: ArtCanvasProps) {
   const ref = useRef(null);
 
-  const windowSize = useWindowSize();
+  const canvasSize = useWindowSize();
   const gridSize = useGridSize();
   const roundedSize = useMemo(
     () => ({
-      width: quantize(windowSize.width, gridSize, true),
-      height: quantize(windowSize.height, gridSize, true),
+      width: quantize(canvasSize.width, gridSize, true),
+      height: quantize(canvasSize.height, gridSize, true),
     }),
-    [windowSize],
+    [canvasSize],
   );
 
   const artRef = useRef<Art>(new Art());
@@ -62,7 +53,11 @@ export function ArtCanvas({ children, ...props }: ArtCanvasProps) {
         ref={ref}
         width={roundedSize.width}
         height={roundedSize.height}
-        style={{ width: roundedSize.width, height: roundedSize.height }}
+        style={{
+          width: roundedSize.width,
+          height: roundedSize.height,
+          position: 'fixed',
+        }}
         {...props}
       />
       {children}

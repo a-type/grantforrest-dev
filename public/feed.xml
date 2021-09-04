@@ -4,8 +4,14 @@
         <description><![CDATA[Recent articles from the Pedro's blog.]]></description>
         <link>https://ped.ro</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sat, 12 Jun 2021 17:11:20 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 04 Sep 2021 17:21:08 GMT</lastBuildDate>
         <atom:link href="https://ped.ro/feed.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[The Will of the Father]]></title>
+            <link>https://ped.ro/blog/the-will-of-the-father</link>
+            <guid isPermaLink="true">https://ped.ro/blog/the-will-of-the-father</guid>
+            <pubDate>Tue, 14 Jan 2020 00:00:00 GMT</pubDate>
+        </item>
         <item>
             <title><![CDATA[God is Love]]></title>
             <link>https://ped.ro/blog/god-is-love</link>
@@ -17,12 +23,6 @@
             <link>https://ped.ro/blog/the-name-of-god</link>
             <guid isPermaLink="true">https://ped.ro/blog/the-name-of-god</guid>
             <pubDate>Thu, 16 Apr 2020 00:00:00 GMT</pubDate>
-        </item>
-        <item>
-            <title><![CDATA[The Will of the Father]]></title>
-            <link>https://ped.ro/blog/the-will-of-the-father</link>
-            <guid isPermaLink="true">https://ped.ro/blog/the-will-of-the-father</guid>
-            <pubDate>Tue, 14 Jan 2020 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[ACT and the Letter to the Romans]]></title>

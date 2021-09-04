@@ -1,4 +1,4 @@
-import useMeasure from 'react-use-measure';
+import { useMeasure } from 'hooks/useMeasure';
 import { HTMLAttributes, useMemo } from 'react';
 import { styled, theme } from 'stitches.config';
 
@@ -17,9 +17,11 @@ export function GridBox({
   const [ref, size] = useMeasure();
 
   const gridSize = useMemo(() => {
-    const strV = theme.sizes[1].value;
+    const strV = theme.sizes.grid.value.toString();
     return parseInt(strV.replace('px', ''), 10);
   }, []);
+
+  console.log('grid size', gridSize);
 
   const offsetX = (() => {
     const remainder = size.width % gridSize;

@@ -1,12 +1,12 @@
-import React from 'react';
-import NextLink from 'next/link';
-import TitleAndMetaTags from '@components/TitleAndMetaTags';
 import { BlogCard } from '@components/BlogCard';
+import TitleAndMetaTags from '@components/TitleAndMetaTags';
 import { getAllFrontmatter } from '@lib/mdx';
-import { text } from '@styles/text';
 import { box } from '@styles/box';
 import { container } from '@styles/container';
 import { link } from '@styles/link';
+import { text } from '@styles/text';
+import NextLink from 'next/link';
+import React from 'react';
 
 import type { Frontmatter } from 'types/post';
 
@@ -39,7 +39,7 @@ export default function Blog({ posts }: { posts: Frontmatter[] }) {
           })}
         >
           <NextLink href="/" passHref>
-            <a className={link({ variant: 'ghost' })}>
+            <a className={link({})}>
               <span
                 className={text({
                   role: 'body',

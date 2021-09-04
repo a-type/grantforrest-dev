@@ -1,5 +1,5 @@
 import { BODY_FONT, TITLE_FONT } from '@constants/fonts';
-import { createCss, StitchesCss } from '@stitches/react';
+import { createCss } from '@stitches/react';
 
 export const stitchesConfig = createCss({
   theme: {
@@ -27,7 +27,7 @@ export const stitchesConfig = createCss({
       5: '100px',
       6: '120px',
       7: '140px',
-      grid: '20px',
+      grid: '40px',
       container: '800px',
     },
     fonts: {
