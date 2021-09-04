@@ -5,7 +5,6 @@ import { getCells } from './getCells';
 export class Art {
   private opacity = 0.5;
   // cell properties
-  private buffer = 0;
   private size = parseInt(theme.sizes.grid.value.toString());
   private linesCount = 6;
   private color = '#000';
@@ -76,23 +75,19 @@ export class Art {
     if (Math.random() < 0.11) this.renderCross(ctx);
     if (Math.random() < 0.12) this.renderHLines(ctx);
     if (Math.random() < 0.12) this.renderVLines(ctx);
+    this.renderDot(ctx);
     ctx.stroke();
   };
 
   renderSquare = (ctx: CanvasRenderingContext2D) => {
-    // ctx.beginPath();
-    ctx.rect(
-      this.x + this.buffer,
-      this.y + this.buffer,
-      this.size - this.buffer * 2,
-      this.size - this.buffer * 2,
-    );
+    ctx.moveTo(this.x, this.y);
+    ctx.rect(this.x, this.y, this.size * 2, this.size * 2);
   };
 
   renderCircle = (ctx: CanvasRenderingContext2D) => {
     const r = 1;
 
-    // ctx.beginPath();
+    ctx.moveTo(this.centerX + this.size / 2, this.centerY);
     ctx.ellipse(
       this.centerX,
       this.centerY,
@@ -105,38 +100,30 @@ export class Art {
   };
 
   renderCross = (ctx: CanvasRenderingContext2D) => {
-    // ctx.beginPath();
-    ctx.moveTo(this.x + this.buffer, this.y + this.buffer);
-    ctx.lineTo(
-      this.x + this.size - this.buffer,
-      this.y + this.size - this.buffer,
-    );
-    ctx.moveTo(this.x + this.buffer, this.y + this.size - this.buffer);
-    ctx.lineTo(this.x + this.size - this.buffer, this.y + this.buffer);
+    ctx.moveTo(this.x, this.y);
+    ctx.lineTo(this.x + this.size, this.y + this.size);
+    ctx.moveTo(this.x, this.y + this.size);
+    ctx.lineTo(this.x + this.size, this.y);
   };
 
   renderHLines = (ctx: CanvasRenderingContext2D) => {
-    // ctx.beginPath();
     for (let i = 0; i < this.linesCount; i++) {
-      const x =
-        this.x +
-        this.buffer +
-        ((this.size - this.buffer * 2) / this.linesCount) * i;
-      ctx.moveTo(x, this.y + this.buffer);
-      ctx.lineTo(x, this.y + this.size - this.buffer);
+      const x = this.x + ((this.size * 2) / this.linesCount) * i;
+      ctx.moveTo(x, this.y);
+      ctx.lineTo(x, this.y + this.size);
     }
   };
 
   renderVLines = (ctx: CanvasRenderingContext2D) => {
-    // ctx.beginPath();
-
     for (let i = 0; i < this.linesCount; i++) {
-      const y =
-        this.y +
-        this.buffer +
-        ((this.size - this.buffer * 2) / this.linesCount) * i;
-      ctx.moveTo(this.x + this.buffer, y);
-      ctx.lineTo(this.x + this.size - this.buffer, y);
+      const y = this.y + ((this.size * 2) / this.linesCount) * i;
+      ctx.moveTo(this.x, y);
+      ctx.lineTo(this.x + this.size, y);
     }
+  };
+
+  renderDot = (ctx: CanvasRenderingContext2D) => {
+    ctx.moveTo(this.centerX, this.centerY);
+    ctx.arc(this.centerX, this.centerY, 2, 0, Math.PI * 2);
   };
 }

@@ -1,1 +1,1 @@
-export const CONTENT_PATH = 'c';
+export const CONTENT_PATH = '/c';
