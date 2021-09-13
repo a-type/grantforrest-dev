@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title><![CDATA[Pedro Duarte]]></title>
-        <description><![CDATA[Recent articles from the Pedro's blog.]]></description>
-        <link>https://ped.ro</link>
+        <title><![CDATA[Grant Forrest]]></title>
+        <description><![CDATA[Latest articles from Grant's blog.]]></description>
+        <link>https://gfor.rest</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sat, 04 Sep 2021 17:21:08 GMT</lastBuildDate>
-        <atom:link href="https://ped.ro/feed.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Mon, 13 Sep 2021 01:21:26 GMT</lastBuildDate>
+        <atom:link href="https://gfor.rest/feed.xml" rel="self" type="application/rss+xml"/>
         <item>
-            <title><![CDATA[The Will of the Father]]></title>
-            <link>https://ped.ro/blog/the-will-of-the-father</link>
-            <guid isPermaLink="true">https://ped.ro/blog/the-will-of-the-father</guid>
-            <pubDate>Tue, 14 Jan 2020 00:00:00 GMT</pubDate>
+            <title><![CDATA[ACT and the Letter to the Romans]]></title>
+            <link>https://gfor.rest/c/act-and-the-letter-to-the-romans</link>
+            <guid isPermaLink="true">https://gfor.rest/c/act-and-the-letter-to-the-romans</guid>
+            <pubDate>Sun, 16 Aug 2020 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[God is Love]]></title>
-            <link>https://ped.ro/blog/god-is-love</link>
-            <guid isPermaLink="true">https://ped.ro/blog/god-is-love</guid>
+            <link>https://gfor.rest/c/god-is-love</link>
+            <guid isPermaLink="true">https://gfor.rest/c/god-is-love</guid>
             <pubDate>Tue, 31 Dec 2019 00:00:00 GMT</pubDate>
         </item>
         <item>
             <title><![CDATA[The Name of God]]></title>
-            <link>https://ped.ro/blog/the-name-of-god</link>
-            <guid isPermaLink="true">https://ped.ro/blog/the-name-of-god</guid>
+            <link>https://gfor.rest/c/the-name-of-god</link>
+            <guid isPermaLink="true">https://gfor.rest/c/the-name-of-god</guid>
             <pubDate>Thu, 16 Apr 2020 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[ACT and the Letter to the Romans]]></title>
-            <link>https://ped.ro/blog/act-and-the-letter-to-the-romans</link>
-            <guid isPermaLink="true">https://ped.ro/blog/act-and-the-letter-to-the-romans</guid>
-            <pubDate>Sun, 16 Aug 2020 00:00:00 GMT</pubDate>
+            <title><![CDATA[The Will of the Father]]></title>
+            <link>https://gfor.rest/c/the-will-of-the-father</link>
+            <guid isPermaLink="true">https://gfor.rest/c/the-will-of-the-father</guid>
+            <pubDate>Tue, 14 Jan 2020 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>

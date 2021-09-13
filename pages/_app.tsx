@@ -3,7 +3,10 @@ import { useScrollSnap } from '@hooks/useScrollSnap';
 import { IdProvider } from '@radix-ui/react-id';
 import { box } from '@styles/box';
 import { globalStyles } from '@styles/global';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
+
+const Scene = dynamic(() => import('@clouds/Scene'), { ssr: false });
 
 function App({ Component, pageProps }) {
   globalStyles();
@@ -14,12 +17,13 @@ function App({ Component, pageProps }) {
       <Head>
         <title>Grant Forrest</title>
       </Head>
+      <Scene style={{ position: 'absolute' }} />
       <ArtCanvas
         className={box({
           position: 'absolute',
           top: 0,
           left: 0,
-          zIndex: -1,
+          zIndex: 0,
         })}
       >
         <div

@@ -1,7 +1,5 @@
 import { theme } from 'stitches.config';
 
-import { getCells } from './getCells';
-
 export class Art {
   private opacity = 0.5;
   // cell properties
@@ -34,34 +32,22 @@ export class Art {
   constructor() {}
 
   load = async (imgSrc: string) => {
-    const { data, width } = await getCells(imgSrc, this.size);
-    this.data = data;
-    this.imageWidth = width;
+    // const { data, width } = await getCells(imgSrc, this.size);
+    // this.data = data;
+    // this.imageWidth = width;
   };
 
   draw = (canvas: HTMLCanvasElement) => {
-    if (!this.data) return;
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    let c = 0;
-    for (let i = 0; i < this.data.length; i += 4) {
-      this.color = `rgba(${this.data[i]}, ${this.data[i + 1]}, ${
-        this.data[i + 2]
-      }, ${(this.data[i + 3] / 255) * this.opacity})`;
-      this.cx = c % this.imageWidth;
-      this.cy = Math.floor(c / this.imageWidth);
-      this.renderCell(ctx);
-      c++;
-    }
-
-    // render remaining cells with final row color
-    const totalCanvasCells =
-      (canvas.width / this.size) * (canvas.height / this.size);
-    for (let i = c; i < totalCanvasCells; i++) {
-      this.cx = i % this.imageWidth;
-      this.cy = Math.floor(i / this.imageWidth);
-      this.renderCell(ctx);
+    for (let y = 0; y < canvas.height / this.size; y++) {
+      for (let x = 0; x < canvas.width / this.size; x++) {
+        this.cx = x;
+        this.cy = y;
+        this.color = 'rgba(255, 255, 255, 1)';
+        this.renderCell(ctx);
+      }
     }
   };
 
@@ -70,11 +56,11 @@ export class Art {
     ctx.fillStyle = this.color;
     ctx.strokeStyle = this.color;
     ctx.lineWidth = 1;
-    if (Math.random() < 0.15) this.renderSquare(ctx);
-    if (Math.random() < 0.13) this.renderCircle(ctx);
-    if (Math.random() < 0.11) this.renderCross(ctx);
-    if (Math.random() < 0.12) this.renderHLines(ctx);
-    if (Math.random() < 0.12) this.renderVLines(ctx);
+    // if (Math.random() < 0.15) this.renderSquare(ctx);
+    // if (Math.random() < 0.13) this.renderCircle(ctx);
+    // if (Math.random() < 0.11) this.renderCross(ctx);
+    // if (Math.random() < 0.12) this.renderHLines(ctx);
+    // if (Math.random() < 0.12) this.renderVLines(ctx);
     this.renderDot(ctx);
     ctx.stroke();
   };
@@ -124,6 +110,6 @@ export class Art {
 
   renderDot = (ctx: CanvasRenderingContext2D) => {
     ctx.moveTo(this.centerX, this.centerY);
-    ctx.arc(this.centerX, this.centerY, 2, 0, Math.PI * 2);
+    ctx.arc(this.centerX, this.centerY, 1, 0, Math.PI * 2);
   };
 }

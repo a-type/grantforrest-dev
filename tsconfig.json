@@ -28,7 +28,8 @@
       "@providers/*": ["providers/*"],
       "@layouts/*": ["layouts/*"],
       "@constants/*": ["constants/*"],
-      "@util/*": ["util/*"]
+      "@util/*": ["util/*"],
+      "@clouds/*": ["clouds/*"]
     }
   },
   "include": [
