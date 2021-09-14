@@ -69,10 +69,8 @@ const InnerScene: React.FC<SceneProps> = ({ style }) => {
             <Outline
               selection={cloudRefs.refs}
               blendFunction={BlendFunction.ALPHA}
-              visibleEdgeColor={0x080808}
-              hiddenEdgeColor={0x101010}
-              edgeStrength={1}
-              blur={false}
+              visibleEdgeColor={0x000000}
+              edgeStrength={0.5}
             />
           </EffectComposer>
         )}
