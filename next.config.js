@@ -18,6 +18,8 @@ const nextConfig = {
       patchSsrPlugin(ssrPlugin);
     }
 
+    config.externals.push('esbuild');
+
     return config;
   },
 };
