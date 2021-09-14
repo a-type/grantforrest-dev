@@ -1,4 +1,4 @@
-This is my website.
+This is my website. It changes occasionally.
 
 ### Credit
 
