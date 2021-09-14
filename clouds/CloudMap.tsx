@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { Vector3 } from 'three';
 
-import { useWindowSize } from '../hooks/useWindowSize';
 import { Cloud, CloudProps } from './Cloud';
-import { CloudShaderMaterial } from './CloudShaderMaterial';
-import { useColors } from './colorContext';
+import { Ground } from './Ground';
 
-const planeSize = 1000;
-const baseFieldSize = [400, 25];
+const planeSize = 500;
+const fieldSize = 100;
+const baseFieldSize = [fieldSize, fieldSize] as [number, number];
+const cloudHeight = 0;
+const cloudMinSize = 500;
+const cloudSizeVariance = 200;
 
 export type CloudFieldProps = Omit<
   CloudProps,
@@ -17,15 +19,11 @@ export type CloudFieldProps = Omit<
 };
 
 export const CloudMap: React.FC<CloudFieldProps> = ({
-  numClouds = 2,
+  numClouds = 6,
   ...cloudProps
 }) => {
-  const { width: windowWidth, height: windowHeight } = useWindowSize();
-  const aspectRatio = windowWidth / windowHeight;
-  const fieldWidth = baseFieldSize[0] * (aspectRatio / (16.0 / 9));
-  const size: [number, number] = [fieldWidth, baseFieldSize[1]];
+  const size = baseFieldSize;
 
-  const colors = useColors();
   const [clouds, setClouds] = React.useState<{ [id: string]: CloudData }>({});
 
   React.useEffect(() => {
@@ -35,7 +33,7 @@ export const CloudMap: React.FC<CloudFieldProps> = ({
     const firstId = randomId();
     initClouds[firstId] = {
       id: firstId,
-      initialPosition: new Vector3(0, 0, -size[1] / 2),
+      initialPosition: new Vector3(0, cloudHeight, 0),
       size: randomSize(),
     };
 
@@ -62,14 +60,7 @@ export const CloudMap: React.FC<CloudFieldProps> = ({
           {...cloudProps}
         />
       ))}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
-        <planeGeometry args={[planeSize, planeSize]} attach="geometry" />
-        <CloudShaderMaterial
-          attach="material"
-          baseColor={colors.ground}
-          shadeColor1={colors.groundShadow}
-        />
-      </mesh>
+      <Ground planeSize={planeSize} />
     </>
   );
 };
@@ -85,8 +76,8 @@ const randomId = () => `${Math.random() * 10000000}`;
 const randomPosition = (boundarySize: [number, number]) =>
   new Vector3(
     Math.random() * boundarySize[0] - boundarySize[0] / 2,
-    0,
-    Math.random() * (boundarySize[1] / 8) - boundarySize[1] / 2,
+    cloudHeight,
+    Math.random() * boundarySize[1] - boundarySize[1] / 2,
   );
 
-const randomSize = () => Math.random() * 424 + 420;
+const randomSize = () => Math.random() * cloudSizeVariance + cloudMinSize;

@@ -1,38 +1,19 @@
-import React from 'react';
-import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
-import { getCssString } from '../stitches.config';
 import { BODY_FONT_SOURCE, TITLE_FONT_SOURCE } from '@constants/fonts';
+import NextDocument, { Head, Html, Main, NextScript } from 'next/document';
+import React from 'react';
+
+import { getCssText } from '../stitches.config';
 
 export default class Document extends NextDocument {
-  static async getInitialProps(ctx) {
-    try {
-      const initialProps = await NextDocument.getInitialProps(ctx);
-
-      return {
-        ...initialProps,
-        styles: (
-          <>
-            {initialProps.styles}
-            <style
-              id="stitches"
-              dangerouslySetInnerHTML={{ __html: getCssString() }}
-            />
-          </>
-        ),
-      };
-    } finally {
-    }
-  }
-
   render() {
     return (
       <Html lang="en">
         <Head>
           <style
             id="stitches"
-            dangerouslySetInnerHTML={{ __html: getCssString() }}
+            dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon32.png" />
 
           <link
             rel="preconnect"

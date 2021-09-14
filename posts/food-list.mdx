@@ -1,0 +1,23 @@
+---
+title: 'Food List'
+theme: 'sunrise'
+publishedAt: '2020-07-23'
+---
+
+I was recently joking with a friend that I suppose everyone who considers launching a startup has to have a hard lesson in scope creep at some point.
+
+Even with the all the books and blog posts, even with my own insistence that I was building an "MVP," my old project [Toast](https://github.com/a-type/toast) still turned into quite the ambitious project. "Pre-launch," no less. Over the course of a year, I had convinced myself I needed to make a full-fledged content distribution platform for recipe bloggers. I was running 4 microservices in the cloud and I had long since forgotten my original motivations.
+
+Well, all that comes full circle with Food List. My explicit objective in this project is to think small. My meal planning and grocery shopping habits have changed, and the needs are clearer. I just want a magic shopping list that lets me paste in copied ingredients from various places and consolidates them into one, unified list.
+
+With this new and truly minimum viable product in mind, I did a bit of gravedigging in the Toast codebase. A good bit of my time was spent in ingredient parsing, and I was able to pull out that code and retrofit it into a reusable library, [ingredient-merge](https://github.com/a-type/ingredient-merge), which runs in the browser.
+
+Running in the browser is important because I don't want a server for this one. Maintaining a backend costs money and time, and that's not my goal for this app. I want something that will remain available and functional without any investment. A tool, not a startup.
+
+The nice thing about keeping it small is that I can spend more time polishing the small stuff. This might be my best outing yet in terms of user experience. I owe a great deal to Material UI and react-beautiful-dnd, of course.
+
+For now, Food List remains an unoriginally-named but effective little product. For now, I'll just put it through its paces on grocery day.
+
+<Image src="/images/food-list/site-screencap.webp" width="1212" height="1297" />
+
+[Try it yourself!](https://foodlist.grantforrest.dev/)

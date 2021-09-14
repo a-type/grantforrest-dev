@@ -1,133 +1,94 @@
-import React from 'react';
-import NextLink from 'next/link';
 import NextImage from 'next/image';
-import { box } from '@styles/box';
-import { text } from '@styles/text';
-import { link } from '@styles/link';
-import { container } from '@styles/container';
+import NextLink from 'next/link';
+import React from 'react';
+
+import { Box } from './Box';
+import { Link } from './Link';
+import { Typography } from './Typography';
 
 export const components = {
-  Box: ({ css, as: Comp = 'div', ...props }: any) => (
-    <Comp className={box(css)} {...props} />
-  ),
-  Container: ({ css, as: Comp = 'div', ...props }: any) => (
-    <Comp className={container(css)} {...props} />
-  ),
+  Box: ({ css, ...props }: any) => <Box css={css} {...props} />,
   h1: (props) => (
-    <h1
-      className={text({ size: 5, gutter: 3, css: { mb: '$5' } })}
-      {...props}
-    />
+    <Typography kind="h2" as="h2" css={{ mt: '$1', mb: '$3' }} {...props} />
   ),
   h2: (props) => (
-    <h2
-      className={text({
-        size: 4,
-        gutter: 2,
-        css: { mb: '$4', mt: '$5', mx: 'auto' },
-      })}
-      {...props}
-    />
+    <Typography kind="h3" as="h3" css={{ mt: '$1', mb: '$2' }} {...props} />
   ),
   h3: (props) => (
-    <h3
-      className={text({
-        size: 3,
-        gutter: 2,
-        css: { mb: '$3', mt: '$5', mx: 'auto', fontWeight: 'bold' },
-      })}
-      {...props}
-    />
+    <Typography kind="h4" as="h4" css={{ mt: '$1', mb: '$1' }} {...props} />
   ),
-  h4: (props) => (
-    <h4
-      className={text({
-        size: 3,
-        gutter: 1,
-        css: { mb: '$3', mt: '$4', mx: 'auto', textTransform: 'uppercase' },
-      })}
-      {...props}
-    />
-  ),
-  p: (props) => <p className={text({ size: 2, gutter: 1 })} {...props} />,
+  h4: (props) => <Typography kind="h4" as="h5" css={{ my: '0' }} {...props} />,
+  p: (props) => <Typography kind="p1" css={{ mb: '$1' }} {...props} />,
   a: ({ href = '', ...props }) => {
     if (href.startsWith('http')) {
-      return (
-        <a
-          className={link()}
-          href={href}
-          target="_blank"
-          rel="noopener"
-          {...props}
-        />
-      );
+      return <Link href={href} target="_blank" rel="noopener" {...props} />;
     }
 
     return (
       <NextLink href={href} passHref>
-        <a className={link()} {...props} />
+        <Link {...props} />
       </NextLink>
     );
   },
   Image: ({ children, ...props }) => (
-    <figure className={box({ my: '$5', mx: '-$3', '@bp1': { mx: '-$5' } })}>
+    <Box as="figure" css={{ my: '$3' }}>
       <NextImage {...(props as any)} />
       {children && (
-        <figcaption
-          className={box({
+        <Box
+          as="figcaption"
+          css={{
             textAlign: 'center',
             fontSize: '$1',
             lineHeight: 1,
-            color: '$gray',
-          })}
+            color: '$black',
+            opacity: 0.8,
+          }}
         >
           {children}
-        </figcaption>
+        </Box>
       )}
-    </figure>
+    </Box>
   ),
   img: ({ children, ...props }) => (
-    <div className={box({ my: '$5', mx: '-$3', '@bp1': { mx: '-$5' } })}>
+    <Box css={{ my: '$5', mx: '-$3', '@bp1': { mx: '-$5' } }}>
       <NextImage {...(props as any)} />
-    </div>
+    </Box>
   ),
   video: (props) => (
-    <div
-      className={box({
+    <Box
+      css={{
         my: '$4',
         mx: '-$3',
         border: '1px solid $gray',
         overflow: 'hidden',
         '@bp1': { mx: '-$5' },
-      })}
+      }}
     >
-      <video
+      <Box
+        as="video"
         {...props}
         autoPlay
         playsInline
         muted
         loop
-        className={box({ width: '100%', display: 'block' })}
-      ></video>
-    </div>
+        css={{ width: '100%', display: 'block' }}
+      />
+    </Box>
   ),
   iframe: ({ ...props }) => (
-    <div className={box({ mb: '$4' })}>
+    <Box css={{ mb: '$4' }}>
       <iframe {...props} />
-    </div>
+    </Box>
   ),
   blockquote: (props) => (
-    <blockquote
-      className={box({
-        my: '$3',
+    <Box
+      as="blockquote"
+      css={{
+        my: '$1',
         mx: '$1',
         pl: '$1',
         borderLeft: '2px solid $gray',
-        color: '$gray',
-        '@bp1': {
-          pl: '$2',
-        },
-      })}
+      }}
       {...props}
     />
   ),

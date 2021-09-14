@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react';
-import NextLink from 'next/link';
-import { getMDXComponent } from 'mdx-bundler/client';
-import { getAllFrontmatter, getMdxBySlug } from '@lib/mdx';
-import { parseISO, format } from 'date-fns';
-import TitleAndMetaTags from '@components/TitleAndMetaTags';
+import { useColors } from '@clouds/colors';
+import { Box } from '@components/Box';
+import { Link } from '@components/Link';
 import { components } from '@components/mdx';
-import type { Post } from 'types/post';
-import { text } from '@styles/text';
-import { box } from '@styles/box';
-import { container } from '@styles/container';
-import { link } from '@styles/link';
+import TitleAndMetaTags from '@components/TitleAndMetaTags';
+import { Typography } from '@components/Typography';
 import { CONTENT_PATH } from '@constants/paths';
-import { GridBox } from '@components/GridBox';
-import { GridText } from '@components/GridText';
-import { useArt } from '@components/ArtCanvas';
+import { getAllFrontmatter, getMdxBySlug } from '@lib/mdx';
+import { format, parseISO } from 'date-fns';
+import { getMDXComponent } from 'mdx-bundler/client';
+import NextLink from 'next/link';
+import React, { useEffect } from 'react';
 
+import type { Post } from 'types/post';
 export default function PostPage({ frontmatter, code }: Post) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
+
+  useEffect(() => {
+    useColors.getState().setTheme(frontmatter.theme ?? 'day');
+  }, [frontmatter.theme]);
 
   const twitterShare = `
 	https://twitter.com/intent/tweet?
@@ -24,76 +25,77 @@ export default function PostPage({ frontmatter, code }: Post) {
 	&url=https://grantforrest.dev/${CONTENT_PATH}/${frontmatter.slug}
 	`;
 
-  const { load } = useArt();
-  useEffect(() => {
-    if (!frontmatter.image) return;
-    load(frontmatter.image);
-  }, [frontmatter.image, load]);
-
   return (
-    <div className={container({})}>
+    <Box
+      css={{
+        position: 'relative',
+        p: '$4',
+      }}
+    >
       <TitleAndMetaTags description={frontmatter.title} />
 
-      <GridText className={box({ mb: '$2', p: '$1' })}>
-        <NextLink href="/" passHref>
-          <a className={link({})}>
-            <span
-              className={text({
-                size: '2',
-                css: { textTransform: 'uppercase' },
-              })}
-            >
-              Home
-            </span>
-          </a>
-        </NextLink>
-      </GridText>
+      <NextLink href="/" passHref>
+        <Link>
+          <Typography
+            kind="h4"
+            css={{
+              textTransform: 'uppercase',
+            }}
+          >
+            Home
+          </Typography>
+        </Link>
+      </NextLink>
 
-      <GridText>
-        <h1
-          className={text({
-            size: '6',
-          })}
-        >
-          {frontmatter.title}{' '}
-          {frontmatter.draft && (
-            <span className={box({ variant: 'white', css: { ml: '$2' } })}>
-              Draft
-            </span>
-          )}
-        </h1>
-      </GridText>
+      <Typography
+        kind="h1"
+        css={{
+          mb: '$4',
+        }}
+      >
+        {frontmatter.title}{' '}
+        {frontmatter.draft && (
+          <Box as="span" css={{ variant: 'white', css: { ml: '$2' } }}>
+            Draft
+          </Box>
+        )}
+      </Typography>
 
-      <GridText>
-        <time
-          className={text({
-            size: '1',
-            css: { my: '$1', mx: 'auto', fontFamily: '$mono', color: '$gray' },
-          })}
-        >
-          {format(parseISO(frontmatter.publishedAt), 'MMMM dd, yyyy')}
-          {/* —{' '}{frontmatter.readingTime.text} */}
-        </time>
-      </GridText>
+      <Typography
+        as="time"
+        css={{
+          my: '$1',
+          fontFamily: '$mono',
+          color: '$gray',
+        }}
+      >
+        {format(parseISO(frontmatter.publishedAt), 'MMMM dd, yyyy')}
+        {/* —{' '}{frontmatter.readingTime.text} */}
+      </Typography>
 
-      <GridBox padded className={box({ my: '$5' })}>
+      <Box
+        css={{
+          bc: '$white',
+          color: '$black',
+          p: '$2',
+          br: '$3',
+          width: '100%',
+          maxWidth: '800px',
+        }}
+      >
         <Component components={components as any} />
-      </GridBox>
-
-      <GridBox className={box({ mb: '$5' })}>
-        <p className={text({ size: '1' })}>
+        <Typography kind="p2" css={{ mt: '$1' }}>
           Share this post on{' '}
-          <a
-            className={link()}
+          <Link
             href={twitterShare}
             target="_blank"
             title="Share this post on Twitter"
           >
             Twitter
-          </a>
-        </p>
-      </GridBox>
-    </div>
+          </Link>
+        </Typography>
+      </Box>
+    </Box>
   );
 }
 

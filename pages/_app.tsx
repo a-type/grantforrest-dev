@@ -1,49 +1,63 @@
-import { ArtCanvas } from '@components/ArtCanvas';
-import { useScrollSnap } from '@hooks/useScrollSnap';
+import { Box } from '@components/Box';
 import { IdProvider } from '@radix-ui/react-id';
-import { box } from '@styles/box';
-import { globalStyles } from '@styles/global';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { globalCss } from 'stitches.config';
 
 const Scene = dynamic(() => import('@clouds/Scene'), { ssr: false });
 
+export const globalStyles = globalCss({
+  body: {
+    backgroundColor: '#408eaf',
+    color: '$white',
+    fontFamily: '$body',
+    lineHeight: '$1',
+    margin: 0,
+    overflow: 'overlay',
+    letterSpacing: '0.02em',
+  },
+
+  '*': {
+    boxSizing: 'border-box',
+  },
+
+  ul: {
+    paddingLeft: '$2',
+  },
+
+  figure: { margin: 0 },
+
+  'pre, code': { margin: 0, fontFamily: '$mono' },
+
+  svg: { display: 'inline-block', verticalAlign: 'middle' },
+});
+
 function App({ Component, pageProps }) {
   globalStyles();
-  useScrollSnap();
 
   return (
     <IdProvider>
       <Head>
         <title>Grant Forrest</title>
       </Head>
-      <Scene style={{ position: 'absolute' }} />
-      <ArtCanvas
-        className={box({
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          zIndex: 0,
-        })}
+      <Scene style={{ position: 'fixed' }} />
+      <Box
+        css={{
+          display: 'flex',
+          minHeight: '100vh',
+          flexDirection: 'column',
+        }}
       >
-        <div
-          className={box({
+        <Box
+          css={{
+            flex: 1,
             display: 'flex',
-            minHeight: '100vh',
             flexDirection: 'column',
-          })}
+          }}
         >
-          <div
-            className={box({
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-            })}
-          >
-            <Component {...pageProps} />
-          </div>
-        </div>
-      </ArtCanvas>
+          <Component {...pageProps} />
+        </Box>
+      </Box>
     </IdProvider>
   );
 }

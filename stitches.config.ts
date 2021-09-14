@@ -1,12 +1,12 @@
 import { BODY_FONT, TITLE_FONT } from '@constants/fonts';
-import { createCss } from '@stitches/react';
+import { createStitches, PropertyValue } from '@stitches/react';
 
-export const stitchesConfig = createCss({
+export const stitchesConfig = createStitches({
   theme: {
     colors: {
-      black: 'black',
+      black: '#323238',
       white: 'white',
-      gray: 'gray',
+      gray: '#e0e0f0',
     },
     space: {
       0: '0',
@@ -36,20 +36,20 @@ export const stitchesConfig = createCss({
       mono: 'monospace',
     },
     fontSizes: {
-      1: '12px',
-      2: '16px',
-      3: '24px',
-      4: '36px',
-      5: '64px',
-      6: '120px',
+      p2: '12px',
+      p1: '16px',
+      h4: '24px',
+      h3: '36px',
+      h2: '64px',
+      h1: '120px',
     },
     lineHeights: {
-      1: '20px',
-      2: '20px',
-      3: '40px',
-      4: '60px',
-      5: '80px',
-      6: '140px',
+      p2: '20px',
+      p1: '30px',
+      h4: '40px',
+      h3: '60px',
+      h2: '80px',
+      h1: '140px',
     },
     radii: {
       1: '2px',
@@ -66,109 +66,99 @@ export const stitchesConfig = createCss({
   },
   utils: {
     // Abbreviated margin properties
-    m:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        marginTop: value,
-        marginBottom: value,
-        marginLeft: value,
-        marginRight: value,
-      }),
-    mt:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        marginTop: value,
-      }),
-    mr:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        marginRight: value,
-      }),
-    mb:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        marginBottom: value,
-      }),
-    ml:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        marginLeft: value,
-      }),
-    mx:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        marginLeft: value,
-        marginRight: value,
-      }),
-    my:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        marginTop: value,
-        marginBottom: value,
-      }),
+    m: (value: PropertyValue<'marginTop'>) => ({
+      marginTop: value,
+      marginBottom: value,
+      marginLeft: value,
+      marginRight: value,
+    }),
+    mt: (value: PropertyValue<'marginTop'>) => ({
+      marginTop: value,
+    }),
+    mr: (value: PropertyValue<'marginTop'>) => ({
+      marginRight: value,
+    }),
+    mb: (value: PropertyValue<'marginTop'>) => ({
+      marginBottom: value,
+    }),
+    ml: (value: PropertyValue<'marginTop'>) => ({
+      marginLeft: value,
+    }),
+    mx: (value: PropertyValue<'marginTop'>) => ({
+      marginLeft: value,
+      marginRight: value,
+    }),
+    my: (value: PropertyValue<'marginTop'>) => ({
+      marginTop: value,
+      marginBottom: value,
+    }),
 
     // Abbreviated padding properties
-    p:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        paddingTop: value,
-        paddingBottom: value,
-        paddingLeft: value,
-        paddingRight: value,
-      }),
-    pt:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        paddingTop: value,
-      }),
-    pr:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        paddingRight: value,
-      }),
-    pb:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        paddingBottom: value,
-      }),
-    pl:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        paddingLeft: value,
-      }),
-    px:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        paddingLeft: value,
-        paddingRight: value,
-      }),
-    py:
-      (config) =>
-      (value: `$${keyof typeof config['theme']['space'] | (string & {})}`) => ({
-        paddingTop: value,
-        paddingBottom: value,
-      }),
+    p: (value: PropertyValue<'paddingTop'>) => ({
+      paddingTop: value,
+      paddingBottom: value,
+      paddingLeft: value,
+      paddingRight: value,
+    }),
+    pt: (value: PropertyValue<'paddingTop'>) => ({
+      paddingTop: value,
+    }),
+    pr: (value: PropertyValue<'paddingTop'>) => ({
+      paddingRight: value,
+    }),
+    pb: (value: PropertyValue<'paddingTop'>) => ({
+      paddingBottom: value,
+    }),
+    pl: (value: PropertyValue<'paddingTop'>) => ({
+      paddingLeft: value,
+    }),
+    px: (value: PropertyValue<'paddingTop'>) => ({
+      paddingLeft: value,
+      paddingRight: value,
+    }),
+    py: (value: PropertyValue<'paddingTop'>) => ({
+      paddingTop: value,
+      paddingBottom: value,
+    }),
 
-    // A property to apply linear gradient
-    linearGradient: (config) => (value) => ({
-      backgroundImage: `linear-gradient(${value})`,
+    // A property for applying width/height together
+    size: (value: PropertyValue<'width'>) => ({
+      width: value,
+      height: value,
     }),
 
     // An abbreviated property for border-radius
-    br: (config) => (value: number) => ({
+    br: (value: PropertyValue<'borderRadius'>) => ({
       borderRadius: value,
     }),
 
     // background color
-    bc:
-      (config) =>
-      (
-        value: `$${keyof typeof config['theme']['colors'] | (string & {})}`,
-      ) => ({ backgroundColor: value }),
+    bc: (value: PropertyValue<'backgroundColor'>) => ({
+      backgroundColor: value,
+    }),
+
+    // Creates focus ring effects
+    focusRing: (color: string) => ({
+      boxShadow:
+        color === 'none'
+          ? 'inset 0 0 0 0 transparent'
+          : `inset 0 0 0 2px ${color}`,
+    }),
+
+    outerFocusRing: (color: string) => ({
+      boxShadow:
+        color === 'none' ? '0 0 0 0 transparent' : `0 0 0 2px ${color}`,
+    }),
+
+    // Easing animation
+    transitionEase: () => (propertyNames: string) => ({
+      transition: propertyNames
+        .split(/,\s+/)
+        .map((propName) => `${propName} 300ms cubic-bezier(0.4, 0, 0.2, 1)`)
+        .join(','),
+    }),
   },
 });
 
-export type CSS = StitchesCss<typeof stitchesConfig>;
-
-export const { styled, css, keyframes, getCssString, global, theme } =
+export const { styled, css, keyframes, getCssText, globalCss, theme } =
   stitchesConfig;

@@ -1,4 +1,4 @@
-import { Color, UniformsLib, UniformsUtils, Vector3 } from 'three';
+import { Color, ShaderChunk, UniformsLib, UniformsUtils, Vector3 } from 'three';
 
 export default {
   uniforms: UniformsUtils.merge([
@@ -15,33 +15,25 @@ export default {
   ]),
 
   vertexShader: `
-  #include <common>
-  #include <fog_pars_vertex>
-  #include <shadowmap_pars_vertex>
-
   varying vec3 vNormal;
   varying vec3 vWorldPosition;
 
   void main() {
-    #include <begin_vertex>
-    #include <project_vertex>
-    #include <worldpos_vertex>
-    // #include <shadowmap_vertex>
-    #include <fog_vertex>
+    ${ShaderChunk.beginnormal_vertex}
+    ${ShaderChunk.defaultnormal_vertex}
+    ${ShaderChunk.begin_vertex}
+    ${ShaderChunk.project_vertex}
+    ${ShaderChunk.worldpos_vertex}
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     vNormal = normalize(normalMatrix * normal);
   }
   `,
 
   fragmentShader: `
-    #include <common>
-    #include <packing>
-    #include <fog_pars_fragment>
-    #include <bsdfs>
-    #include <lights_pars_begin>
-    #include <shadowmap_pars_fragment>
-    #include <shadowmask_pars_fragment>
-    #include <dithering_pars_fragment>
+    ${ShaderChunk.common}
+    ${ShaderChunk.packing}
+    ${ShaderChunk.bsdfs}
+    ${ShaderChunk.lights_pars_begin}
 
     uniform vec3 uBaseColor;
     uniform vec3 uLineColor1;
@@ -59,16 +51,16 @@ export default {
       float directionalLightWeighting = max(dot(normalize(vNormal), uDirLightPos), 0.0);
       vec3 lightWeighting = uDirLightColor * directionalLightWeighting;
 
-      gl_FragColor = vec4( mix(uBaseColor, uLineColor1, (1.0 - getShadowMask() ) * shadowPower), 1.0);
+      gl_FragColor = vec4( mix(uBaseColor, uLineColor1, (1.0) * shadowPower), 1.0);
 
       if (length(lightWeighting) < 1.0) {
-        gl_FragColor = vec4( mix(uLineColor1, uLineColor1, (1.0 - getShadowMask() ) * shadowPower), 1.0);
+        gl_FragColor = vec4( mix(uLineColor1, uLineColor1, (1.0) * shadowPower), 1.0);
       }
 
       if (length(lightWeighting) < 0.5) {
-        t = (mod(gl_FragCoord.x + gl_FragCoord.y, 6.0));
-        if (t > 4.0 && t < 6.0) {
-          gl_FragColor = vec4( mix(uLineColor2, uLineColor1, (1.0 - getShadowMask() ) * shadowPower), 1.0);
+        t = (mod(gl_FragCoord.x + gl_FragCoord.y, 4.0));
+        if (t > 2.0 && t < 4.0) {
+          gl_FragColor = vec4( mix(uLineColor2, uLineColor1, (1.0) * shadowPower), 1.0);
         }
       }
     }

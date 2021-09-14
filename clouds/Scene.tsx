@@ -1,13 +1,16 @@
+import { AdaptiveDpr, AdaptiveEvents, Preload, useDetectGPU } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
+import { DepthOfField, EffectComposer, Outline, SSAO } from '@react-three/postprocessing';
+import { BlendFunction } from 'postprocessing';
 import { Suspense, useContext } from 'react';
-import { Color, PCFSoftShadowMap, Vector3 } from 'three';
+import { Color, PCFShadowMap, Vector3 } from 'three';
 
 import { Camera } from './Camera';
 import { CloudMap } from './CloudMap';
-import { ColorContextProvider, useColors } from './colorContext';
+import { useColors } from './colors';
 import LightContext from './LightContext';
-import { Ray } from './Ray';
 import { Sun } from './Sun';
+import { useCloudRefs } from './useCloudRefs';
 
 export type SceneProps = {
   style?: any;
@@ -19,15 +22,9 @@ const lightValues = {
   ambientLightColor: new Color('#aaa'),
 };
 
-const windVelocity = new Vector3(0.006, 0, 0);
+const windVelocity = new Vector3(0.003, 0, 0.0006);
 
-const cameraPosition = [32, 58, 18];
-
-const rays = new Array(4).fill(null).map((_, idx) => {
-  const z = idx % 2 === 0 ? 2 : -50;
-  const y = 10 + idx;
-  return [new Vector3(-100, y, z), new Vector3(100, y, z)];
-});
+const cameraPosition = [8, 30, 14];
 
 const isSsr = typeof window === 'undefined';
 
@@ -47,13 +44,17 @@ const defaultPixelRatio =
     : 0;
 
 const InnerScene: React.FC<SceneProps> = ({ style }) => {
-  const colors = useColors();
+  const bgColor = useColors((c) => c.ground);
   const lightContext = useContext(LightContext);
+
+  const gpu = useDetectGPU();
+
+  const cloudRefs = useCloudRefs();
 
   return (
     <Canvas
-      shadows={{ type: PCFSoftShadowMap }}
-      style={{ backgroundColor: `#${colors.sky.getHexString()}`, ...style }}
+      shadows={{ type: PCFShadowMap, enabled: true }}
+      style={{ backgroundColor: bgColor, ...style }}
       dpr={defaultPixelRatio}
     >
       <Suspense fallback={null}>
@@ -61,9 +62,23 @@ const InnerScene: React.FC<SceneProps> = ({ style }) => {
         <Sun />
         <ambientLight color={lightContext.ambientLightColor} />
         <CloudMap velocity={windVelocity} />
-        {rays.map(([start, end], idx) => (
-          <Ray start={start} end={end} key={idx} />
-        ))}
+        {gpu.tier >= 2 && (
+          <EffectComposer autoClear={false}>
+            <SSAO />
+            <DepthOfField />
+            <Outline
+              selection={cloudRefs.refs}
+              blendFunction={BlendFunction.ALPHA}
+              visibleEdgeColor={0x080808}
+              hiddenEdgeColor={0x101010}
+              edgeStrength={1}
+              blur={false}
+            />
+          </EffectComposer>
+        )}
+        <AdaptiveDpr />
+        <AdaptiveEvents />
+        <Preload all />
       </Suspense>
     </Canvas>
   );
@@ -71,11 +86,11 @@ const InnerScene: React.FC<SceneProps> = ({ style }) => {
 
 export const Scene: React.FC<SceneProps> = (props) => {
   return (
-    <ColorContextProvider>
-      <LightContext.Provider value={lightValues}>
+    <LightContext.Provider value={lightValues}>
+      <Suspense fallback={null}>
         <InnerScene {...props} />
-      </LightContext.Provider>
-    </ColorContextProvider>
+      </Suspense>
+    </LightContext.Provider>
   );
 };
 

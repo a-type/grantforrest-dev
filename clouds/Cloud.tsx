@@ -5,6 +5,7 @@ import { BufferGeometry, Group, Vector3 } from 'three';
 
 import { CloudShaderMaterial } from './CloudShaderMaterial';
 import generateVoxelGeometries from './generateVoxelGeometries';
+import { useCloudRef } from './useCloudRefs';
 
 export type CloudProps = {
   velocity: Vector3;
@@ -84,6 +85,7 @@ export const Cloud: React.FC<CloudProps> = ({
     y: !!lodGeometries.size ? initialPosition.y : 100,
     config: config.gentle,
   });
+  const cloudRef = useCloudRef();
 
   if (!lodGeometries.size) {
     return null;
@@ -116,8 +118,10 @@ export const Cloud: React.FC<CloudProps> = ({
           geometry={geometry}
           position={[0, 2 * (480 / size), 0]}
           castShadow
+          ref={cloudRef}
         >
           <CloudShaderMaterial attach="material" />
+          {/* <meshBasicMaterial attach="material" color="white" /> */}
         </mesh>
       </a.group>
     </>

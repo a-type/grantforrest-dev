@@ -4,31 +4,31 @@
         <description><![CDATA[Latest articles from Grant's blog.]]></description>
         <link>https://gfor.rest</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Mon, 13 Sep 2021 01:21:26 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 13 Sep 2021 23:12:35 GMT</lastBuildDate>
         <atom:link href="https://gfor.rest/feed.xml" rel="self" type="application/rss+xml"/>
         <item>
-            <title><![CDATA[ACT and the Letter to the Romans]]></title>
-            <link>https://gfor.rest/c/act-and-the-letter-to-the-romans</link>
-            <guid isPermaLink="true">https://gfor.rest/c/act-and-the-letter-to-the-romans</guid>
-            <pubDate>Sun, 16 Aug 2020 00:00:00 GMT</pubDate>
+            <title><![CDATA[Alarm Clock]]></title>
+            <link>https://gfor.rest/c/alarm-clock</link>
+            <guid isPermaLink="true">https://gfor.rest/c/alarm-clock</guid>
+            <pubDate>Mon, 22 Jun 2020 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[God is Love]]></title>
-            <link>https://gfor.rest/c/god-is-love</link>
-            <guid isPermaLink="true">https://gfor.rest/c/god-is-love</guid>
-            <pubDate>Tue, 31 Dec 2019 00:00:00 GMT</pubDate>
+            <title><![CDATA[With Labs]]></title>
+            <link>https://gfor.rest/c/with-labs</link>
+            <guid isPermaLink="true">https://gfor.rest/c/with-labs</guid>
+            <pubDate>Mon, 13 Sep 2021 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[The Name of God]]></title>
-            <link>https://gfor.rest/c/the-name-of-god</link>
-            <guid isPermaLink="true">https://gfor.rest/c/the-name-of-god</guid>
-            <pubDate>Thu, 16 Apr 2020 00:00:00 GMT</pubDate>
+            <title><![CDATA[Clouds]]></title>
+            <link>https://gfor.rest/c/clouds</link>
+            <guid isPermaLink="true">https://gfor.rest/c/clouds</guid>
+            <pubDate>Wed, 18 Dec 2019 00:00:00 GMT</pubDate>
         </item>
         <item>
-            <title><![CDATA[The Will of the Father]]></title>
-            <link>https://gfor.rest/c/the-will-of-the-father</link>
-            <guid isPermaLink="true">https://gfor.rest/c/the-will-of-the-father</guid>
-            <pubDate>Tue, 14 Jan 2020 00:00:00 GMT</pubDate>
+            <title><![CDATA[Food List]]></title>
+            <link>https://gfor.rest/c/food-list</link>
+            <guid isPermaLink="true">https://gfor.rest/c/food-list</guid>
+            <pubDate>Thu, 23 Jul 2020 00:00:00 GMT</pubDate>
         </item>
     </channel>
 </rss>

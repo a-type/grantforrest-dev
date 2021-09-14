@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Vector3 } from 'three';
 
-import { useColors } from './colorContext';
+import { useColors } from './colors';
 
 export const Ray: React.FC<{ start: Vector3; end: Vector3 }> = ({
   start,
@@ -22,7 +22,7 @@ export const Ray: React.FC<{ start: Vector3; end: Vector3 }> = ({
           array={vertices}
         />
       </bufferGeometry>
-      <lineBasicMaterial attach="material" color={colors.ray} />
+      <lineBasicMaterial attach="material" color="white" />
     </line>
   );
 };

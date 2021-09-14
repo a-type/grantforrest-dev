@@ -1,3 +1,5 @@
+import { ThemeName } from '@clouds/colors';
+
 export interface Frontmatter {
   title: string;
   publishedAt?: string;
@@ -5,7 +7,7 @@ export interface Frontmatter {
   readingTime?: { text: string; minutes: number; time: number; words: number };
   slug?: any;
   layout?: 'article' | 'full';
-  image?: string;
+  theme?: ThemeName;
 }
 
 export interface Post {

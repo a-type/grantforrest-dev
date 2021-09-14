@@ -1,53 +1,70 @@
-import React from 'react';
-import NextLink from 'next/link';
-import { parseISO, format } from 'date-fns';
-import type { Post } from 'types/post';
-import { text } from '@styles/text';
-import { box } from '@styles/box';
-import { link } from '@styles/link';
+import { useColors } from '@clouds/colors';
 import { CONTENT_PATH } from '@constants/paths';
-import { GridBox } from './GridBox';
+import { format, parseISO } from 'date-fns';
+import NextLink from 'next/link';
+import React from 'react';
 
+import { Box } from './Box';
+import { Link } from './Link';
+import { Typography } from './Typography';
+
+import type { Post } from 'types/post';
 export const BlogCard = ({ frontmatter, ...props }: Post) => {
+  const onHover = () => {
+    useColors.getState().setTheme(frontmatter.theme ?? 'day');
+  };
+
+  const onHoverLeave = () => {
+    useColors.getState().setTheme('day');
+  };
+
   return (
-    <GridBox
-      padded
-      className={box({
-        mb: '$2',
-      })}
-      {...props}
-    >
-      <NextLink href={`${CONTENT_PATH}/${frontmatter.slug}`} passHref>
-        <a
-          className={link({
-            css: {
-              display: 'inline-block',
-              lineHeight: '$3',
+    <NextLink href={`${CONTENT_PATH}/${frontmatter.slug}`} passHref>
+      <Link
+        css={{
+          lineHeight: '$3',
+          textDecoration: 'none',
+          height: '100%',
+        }}
+      >
+        <Box
+          onPointerOver={onHover}
+          onPointerLeave={onHoverLeave}
+          css={{
+            padding: '$2',
+            borderWidth: '$1',
+            borderColor: 'currentColor',
+            borderStyle: 'solid',
+            mixBlendMode: 'soft-light',
+            height: '100%',
+            '&:hover': {
+              backgroundColor: '$white',
+              color: '$black',
+              borderColor: '$black',
+              mixBlendMode: 'normal',
             },
-          })}
+          }}
+          {...props}
         >
-          <span
-            className={text({
-              size: 3,
-              gutter: 1,
-              css: { display: 'flex', alignItems: 'center' },
-            })}
+          <Typography
+            kind="h4"
+            as="h2"
+            css={{ display: 'flex', alignItems: 'center', color: 'inherit' }}
           >
-            {frontmatter.title}{' '}
+            {frontmatter.title}
             {frontmatter.draft && (
-              <span className={box({ css: { ml: '$1' } })}>Draft</span>
+              <Typography as="span" kind="p2" css={{ ml: '$1' }}>
+                Draft
+              </Typography>
             )}
-          </span>
+          </Typography>
 
           {frontmatter.publishedAt && (
-            <time
-              className={text({
-                size: 1,
-                css: {
-                  fontFamily: '$mono',
-                  color: '$gray',
-                },
-              })}
+            <Typography
+              as="time"
+              css={{
+                fontFamily: '$mono',
+              }}
             >
               {(() => {
                 try {
@@ -59,10 +76,10 @@ export const BlogCard = ({ frontmatter, ...props }: Post) => {
                   return '';
                 }
               })()}
-            </time>
+            </Typography>
           )}
-        </a>
-      </NextLink>
-    </GridBox>
+        </Box>
+      </Link>
+    </NextLink>
   );
 };

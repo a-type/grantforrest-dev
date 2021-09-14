@@ -3,9 +3,6 @@ import { useLoader } from '@react-three/fiber';
 import * as React from 'react';
 import { FontLoader, Mesh, Vector3 } from 'three';
 
-import { CloudShaderMaterial } from './CloudShaderMaterial';
-import { useColors } from './colorContext';
-
 export type TextProps = {
   children: string;
   size?: number;
@@ -17,7 +14,6 @@ export const Text: React.FC<TextProps> = ({
   size = 1,
   position = new Vector3(),
 }) => {
-  const colors = useColors();
   const font = useLoader(FontLoader as any, '/fonts/Poiret One_Regular.json');
   const config = React.useMemo(
     () => ({
@@ -53,12 +49,7 @@ export const Text: React.FC<TextProps> = ({
           attach="geometry"
           args={[children, config] as [string, any]}
         />
-        <CloudShaderMaterial
-          attach="material"
-          baseColor={colors.text}
-          shadeColor1={colors.text}
-          shadeColor2={colors.text}
-        />
+        <meshStandardMaterial attach="material" color="#fff" />
       </mesh>
     </group>
   );
