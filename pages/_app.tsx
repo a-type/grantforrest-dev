@@ -13,7 +13,6 @@ export const globalStyles = globalCss({
     fontFamily: '$body',
     lineHeight: '$1',
     margin: 0,
-    overflow: 'overlay',
     letterSpacing: '0.02em',
   },
 
