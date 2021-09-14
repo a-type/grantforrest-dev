@@ -10,7 +10,7 @@
   "dependencies": {
     "@mdx-js/loader": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "@next/mdx": "^10.2.0",
+    "@next/mdx": "^11.1.2",
     "@njkleiner/micropub-parser": "^1.0.2",
     "@radix-ui/react-aspect-ratio": "^0.0.12",
     "@radix-ui/react-collapsible": "^0.0.14",
